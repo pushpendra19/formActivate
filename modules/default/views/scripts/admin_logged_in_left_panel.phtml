@@ -1,0 +1,21 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: header.thtml	#
+#			Description 	: this is header to work in the front end site #
+#			Created date	: 19/01/2011	#	
+#			Created By		: Manoj Kumar Chauhan	#
+######################################################
+?>
+<!--header start here-->
+<h3>My <span>Account</span></h3> 
+     <div class="account">
+                                <ul>
+									<li class="title1"><strong>Account</strong></li>
+									<li <?php if($this->actionNameLeftPanel == 'changepassword'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/changepassword/id/<?php echo $this->loggedin_customer_id;?>">Change Password</a></li>									
+									<li><a href="<?php echo WEBSITE_URL?>admin/pages">Corporate Page</a></li>																									
+									<li><a href="<?php echo WEBSITE_URL?>admin/businessrule">Business Rule</a></li>																										<li><a href="<?php echo WEBSITE_URL?>admin/inquiry">Inquiry</a></li>						
+								</ul>
+                            </div>
+     
+<!--==============================content================================-->

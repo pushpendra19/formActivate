@@ -1,0 +1,90 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<?php echo$this->headScript()->prependFile(__JS_DIRECTORY__.'gen_validatorv2.js',$type='text/javascript'); ?>
+<div class="row-1 wrapper">   
+  <article class="maxheight" >
+                <div class="maxheight box">
+                    <div class="padding"> 	
+                    <span style="float:right;margin-right:27px;"><a class="buttonsNextEdit" href="#" onClick="history.back()">Back</a></span>
+						<div class="topRow"> 
+						<!-- <strong> From:</strong> <select class="select1"><option>select</option></select>
+						
+						<strong> Select Billing Period:</strong> <select class="select2"><option>10/2/2001 - 10/12/2011</option></select>-->
+						<!-- <strong> Show:</strong> <select class="selectcustomer" value="0" style="margin-right:0;"><option>All Customers</option></select> -->
+						</div>				           		
+                        <h3>Business Rule </h3>
+                          <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+
+							if(isset($obj->deleteError))
+								{?>
+									<label><span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['deleteError'];
+									unset($_SESSION['Zend_Auth']['deleteError']);?><br><br> </span></label>
+								<? }
+				 		?>
+                        <div id="formcompanyDetails">
+						
+						<div class="table">
+					  <?php
+                    	if(!empty($this->businessrules) && count($this->businessrules)>0)
+						{
+							?>
+							<div class="topRow1">								
+								<span class="coloms">Rule Id</span>								
+								<span class="coloms"  style="width:665px;">Rule Name</span>								
+								<span class="coloms last">Action</span>									
+							</div>
+					<?php 
+					$i=0; 
+					//print_r($this->businessrules);
+					foreach ($this->businessrules as $data_key =>$data_val) {
+						
+					?>
+							<div <?php if( (($i)%2) == 0 ) { echo 'class="grayRow"';} else { echo 'class="whiteRow"'; } ?>>							
+								<span class="coloms"><?php echo stripslashes(ucfirst($data_val->rule_id)); ?></span>
+								<span class="coloms call2" style="width:665px;"><?php echo stripslashes(ucfirst($data_val->rule_desc)); ?></span>							
+								
+								 <span class="" id="first_act_deact<?php echo $data_val->rule_id; ?>" style="cursor:pointer;color :black;" onclick="chagestatus('<?php echo $data_val->rule_id; ?>','<?php echo $data_val->status;?>')">					 
+						 		 <?php if($data_val->status==1){?>
+						 		 <span  class="coloms last" style="cursor:pointer;color :black;"><?php echo "Active";?></span> 
+						 		 <?php  }else{?> 
+ 						         <span style="cursor:pointer;color :red;" class="coloms last">
+						         <?php echo "Deactive";?></span> <?php } ?>
+						 		</span>
+						 						 
+						 		<span class="coloms last" id="first_act<?php echo $data_val->rule_id;?>" style="cursor:pointer;display:none;color : black;" onclick="chagestatus('<?php echo $data_val->rule_id; ?>','1')">					 
+						 		Active</span>
+						 		<span  class="coloms last" id="first_deact<?php echo $data_val->rule_id;?>" style="cursor:pointer;display:none;color : red;" onclick="chagestatus('<?php echo $data_val->rule_id; ?>','0')">					 
+						 		Deactive</span>
+							</div>							
+						<?php 					
+							$i++;
+							}?>
+						</div>											
+						<!--<div class="total"><span><?php echo $this->paginator; ?></span></div>	
+						<div class="total"> <span>Total Customers: <?php echo $this->total_customer;?></span>  <span>Active Customers: <?php echo $this->total_active_customer;?></span>  <span>Total Active Monthly Income: <?php echo $this->total_monthly_income;?></span></div>											
+						-->
+						<? }?>						
+                        </div>
+                    </div>
+                </div>
+            </article>  
+			  </div> 
+<script type="text/javascript">
+ function chagestatus(rule_id,status){ 		
+		jQuery.post("<?php echo WEBSITE_URL?>admin/changestatus",{dos:'eck', rule_id: rule_id,status: status},function(response){		
+			//alert(response);				
+			jQuery('#first_act_deact'+rule_id).hide();													
+			//alert(response)
+			if(response==1){				
+			jQuery('#first_deact'+rule_id).hide();
+			jQuery('#first_act'+rule_id).show();						
+			}else{
+			jQuery('#first_deact'+rule_id).show();
+			jQuery('#first_act'+rule_id).hide();						
+			}			
+		});	
+}
+</script>			  

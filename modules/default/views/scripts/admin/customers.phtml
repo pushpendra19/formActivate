@@ -1,0 +1,204 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<?php echo$this->headScript()->prependFile(__JS_DIRECTORY__.'gen_validatorv2.js',$type='text/javascript'); ?>
+<div class="row-1 wrapper">   
+  <article class="maxheight" >
+                <div class="maxheight box">
+                    <div class="padding"> 	
+						<div class="topRow"> 
+						<!-- <strong> From:</strong> <select class="select1"><option>select</option></select>
+						
+						<strong> Select Billing Period:</strong> <select class="select2"><option>10/2/2001 - 10/12/2011</option></select>-->
+						<strong> Show:</strong>
+						<select class="selectcustomer" value="0" style="margin-right:0;" onchange="serach(this.value,'limit','<?=$this->page_number?>')">						
+						<option value="1" <?php if($this->selectcustomer==1){ echo "selected";}?>>All Customers</option>
+						<option value="2" <?php if($this->selectcustomer==2){ echo "selected";}?>>Active Customers</option>
+						<option value="3" <?php if($this->selectcustomer==3){ echo "selected";}?>>Inactive Customers</option>
+						</select>
+						</div>				           		
+                        <h3>Customers </h3>
+                          <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+
+							if(isset($obj->deleteError))
+								{?>
+                                                                <label><span class="loginmessage" style="margin: -20px -20px -20px 0;" > <?php echo $_SESSION['Zend_Auth']['deleteError'];
+									unset($_SESSION['Zend_Auth']['deleteError']);?><br><br> </span></label>
+								<? }
+				 		?>
+                        
+						<?php 
+						if(!empty($this->paginator) && count($this->paginator)>0)
+							{?>
+							<div id="formcompanyDetails">						
+							<div class="table">
+							    <div class="topRow1">
+							    <span class="firstname">
+								
+								<? if($this->columnname!='firstname'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/firstname/sort/asc/page/<?php echo $this->page_number?>">
+								First Name
+								</a><? }?>							
+								
+								<? if($this->columnname=='firstname' && $this->sortby=='desc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/firstname/sort/asc/page/<?php echo $this->page_number?>">First Name
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle"></a>
+								<? } ?>
+								
+								<? if($this->columnname=='firstname' && $this->sortby=='asc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/firstname/sort/desc/page/<?php echo $this->page_number?>">
+								First Name<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;">
+								</a><? }?>
+								</span>
+								
+								<span class="lastname">
+								<? if($this->columnname!='lastname'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/lastname/sort/asc/page/<?php echo $this->page_number?>">Last Name
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='lastname' && $this->sortby=='desc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/lastname/sort/asc/page/<?php echo $this->page_number?>">Last Name
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle"></a>
+								<? }?>
+																
+								<? if($this->columnname=='lastname' && $this->sortby=='asc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/lastname/sort/desc/page/<?php echo $this->page_number?>">Last Name
+								<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;">
+								</a>
+								<? } ?>
+								</span>
+								
+								<span class="colomsphone">
+								<? if($this->columnname!='phone'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/phone/sort/asc/page/<?php echo $this->page_number?>">Phone
+								</a>
+								<? }?>
+								<? if($this->columnname=='phone' && $this->sortby=='desc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/phone/sort/asc/page/<?php echo $this->page_number?>">Phone
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle">
+								</a>
+								<? }?>								
+								<? if($this->columnname=='phone' && $this->sortby=='asc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/phone/sort/desc/page/<?php echo $this->page_number?>">Phone
+								<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;"></a><? }?>
+								</span>
+								
+								<span class="colomcity">
+								<? if($this->columnname!='city'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/city/sort/desc/page/<?php echo $this->page_number?>">City
+								</a>
+								<? }?>
+								<? if($this->columnname=='city' && $this->sortby=='desc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/city/sort/asc/page/<?php echo $this->page_number?>">City
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle"></a><? }?>
+								
+								<? if($this->columnname=='city' && $this->sortby=='asc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/city/sort/desc/page/<?php echo $this->page_number?>">City
+								<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;">
+								</a>
+								<? }?></span>
+								
+								<span class="colomstate">
+								<? if($this->columnname!='state'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/state/sort/desc/page/<?php echo $this->page_number?>">State
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='state' && $this->sortby=='desc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/state/sort/asc/page/<?php echo $this->page_number?>">State
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle"></a><? }?>
+								
+								<? if($this->columnname=='state' && $this->sortby=='asc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/state/sort/desc/page/<?php echo $this->page_number?>">
+								State<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;">
+								</a>
+								<? }?>
+								</span>
+								
+								<span class="colomsprice">
+								<? if($this->columnname!='price'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/price/sort/asc/page/<?php echo $this->page_number?>">Price
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='price' && $this->sortby=='desc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/price/sort/asc/page/<?php echo $this->page_number?>">Price
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle">
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='price' && $this->sortby=='asc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/price/sort/desc/page/<?php echo $this->page_number?>">Price
+								<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;"></a><? }?>
+								</span>							
+								
+								<span class="colomsstatus">
+								<? if($this->columnname!='status'){?><a  style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/status/sort/desc/page/<?php echo $this->page_number?>">Status</a><? }?>
+								<? if($this->columnname=='status' && $this->sortby=='desc'){?>
+								<a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/status/sort/asc/page/<?php echo $this->page_number?>">
+								Status<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle">
+								</a>
+								<? }?>								
+								<? if($this->columnname=='status' && $this->sortby=='asc'){?><a style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/customers/name/status/sort/desc/page/<?php echo $this->page_number?>">Status<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;"></a><? }?>
+								</span>								
+								<span class="coloms  last" style="width:80px;">Action</span>
+							</div>		
+							
+					<?php 
+					$i=0; 
+					foreach ($this->paginator as $data_key =>$data_val) {
+						if($data_val->override_price != null && $data_val->override_price != 0)
+							$data_val->price = $data_val->override_price;
+					?>
+							<div <?php if( (($i)%2) == 0 ) { echo 'class="grayRow"';} else { echo 'class="whiteRow"'; } ?>>							
+								<span class="firstname"><?php  echo !empty($data_val->firstname) ? stripslashes(ucfirst($data_val->firstname)) : '&nbsp;'; ?></span>
+								<span class="lastname"><?php echo !empty($data_val->firstname) ? stripslashes(ucfirst($data_val->lastname)) : '&nbsp;'; ?></span>
+								<span class="colomsphone"><?php echo !empty($data_val->phone) ? stripslashes($data_val->phone) : '&nbsp;'; ?></span>
+								<span class="colomcity"><?php echo !empty($data_val->city) ? stripslashes(ucfirst($data_val->city)) : '&nbsp;'; ?></span>
+								<span class="colomstate"><?php echo !empty($data_val->state) ? stripslashes(ucfirst($data_val->state)) : '&nbsp;'; ?></span>
+								<span class="colomsprice"><?php echo !empty($data_val->price) ? stripslashes($data_val->price) : '&nbsp;'; ?></span>
+								<span class="colomsstatus">
+								<form method="POST" action="<?=WEBSITE_URL?>admin/changecustomerstatus/id/<?php echo stripslashes($data_val->id); ?>" name="frm<?php echo $data_val->id; ?>">
+                                                                    <select style="width:100px;" onchange="document.frm<?php echo $data_val->id; ?>.submit();" name="status">
+                                                                        <?php echo ($data_val->status=='Active') ? '<option value="Active" selected>Active</option><option value="Inactive">Inactive</option>' : '<option value="Active">Active</option><option value="Inactive" selected>Inactive</option>'; ?>
+                                                                    </select>
+                                                                    <input type="hidden" name="id" value="<?php echo $data_val->id; ?>">
+								</form>
+								</span>
+								<span class="coloms last" style="width:80px;"><a href="<?=WEBSITE_URL?>customers/edit/id/<?php echo stripslashes($data_val->id); ?>"><img src="<?=WEBSITE_URL?>images/pen.png" alt="Edit Customer" title="Edit Customer"></A>&nbsp;<a onclick="return confirm('Are you sure you want to delete this customer?')" href="<?=WEBSITE_URL?>customers/delete/id/<?php echo stripslashes($data_val->id); ?>"><img src="<?=WEBSITE_URL?>images/Close.png" alt="Delete Customer" title="Delete Customer"></A></span>
+							</div>							
+						<?php 					
+							$i++;
+							}?>
+						</div>											
+						<div class="total"><?php echo $this->paginator; ?></div><br>
+						<div class="total"> <span>Total Customers: <?php echo $this->total_customer;?></span>
+						<span>Active Customers: <?php echo $this->total_active_customer;?></span>
+						<span>Total Active Monthly Income:						
+						<?php
+						$amounts_val=0;
+
+						foreach ($this->total_monthly_income as $keys_i=>$keys_val){
+						$amounts_val=$amounts_val+ ($keys_val->amount);
+						} echo number_format($amounts_val, 2, '.', '');?></span></div></div>
+						<? }else{ ?>
+						 <div id="formcompanyDetails">	
+							 <div>								
+							   <span>							   
+							   <font color='black'><b>No customer found.</b></font>
+							   </span>							
+							 </div>
+						</div>	 
+						<? }?>	
+                    </div>
+                </div>
+            </article>  
+			  </div> 
+<script type="text/javascript">
+function serach(id,columnname,page_number){
+window.location.href='<?=WEBSITE_URL?>admin/customers/name/'+columnname+'/id/'+id+'/page/'+page_number
+}
+</script>

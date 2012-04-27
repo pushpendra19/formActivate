@@ -1,0 +1,32 @@
+<?php   echo $this->render('forms_left_panel.phtml'); ?>
+
+<div class="js_code" style="margin: 30px 0px 0px 30px;float: left;">
+
+<h2 class="entry-title">
+	<cufon class="cufon cufon-canvas" alt="Generate HTML " style="width: 56px; height: 22px;margin-bottom: 25px;">
+		<canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas>
+			<cufontext>Generate HTML </cufontext></cufon>
+</h2>
+
+<h4 style="">Please copy and paste the following code to your website:</h4><br/>
+
+<textarea cols="85" rows="6" name="formhtml" id="formhtml" readonly onClick="SelectAll('formhtml');" style="scrollbar-base-color:orange;;width: 420px">
+<script type="text/javascript">
+  var _form_id   = <?php echo $this->form_id; ?>;
+  var _member_id = <?php echo $this->member_id; ?>;
+</script>
+<script type="text/javascript" src="<?php echo PROCESS_URL ?>js/fa.js"></script> 
+</textarea>
+</div>
+
+<div style="clear: both;"></div>
+
+<script type="text/javascript">
+
+function SelectAll(id)
+{
+    document.getElementById(id).focus();
+    document.getElementById(id).select();
+}
+
+</script>

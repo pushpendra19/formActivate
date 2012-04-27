@@ -1,0 +1,42 @@
+<?php if ($this->pageCount): ?>
+<div class="pagingContainr">
+	<ul>
+	
+		<!-- Previous page link -->
+		<li>
+			<?php if (isset($this->previous)): ?>
+			<a href="<?= $this->url(array('searchkeyword' => $this->searchkeyword, 'sortby'=>$this->sortby, 'page' => $this->previous)); ?>"><img src="<?=WEBSITE_URL;?>images/Previous.png" alt="Previous" /></a>
+			<?php else: ?>
+			<img src="<?=WEBSITE_URL;?>images/Previous.png" alt="Previous" />
+			<?php endif; ?>
+		</li>
+		
+		<!-- Numbered page links -->
+		<li>
+		<span style="margin-bottom:5px;padding:0px;vertical-align:middle;">
+		<?php foreach ($this->pagesInRange as $page): ?>
+		  <?php if ($page != $this->current): ?>
+		    <a href="<?= $this->url(array('searchkeyword' => $this->searchkeyword, 'sortby'=>$this->sortby, 'page' => $page)); ?>">
+		        <?= $page; ?>
+		    </a>&nbsp;
+		  <?php else: ?>
+		    <a class="selected"><?= $page; ?></a>&nbsp;
+		  <?php endif; ?>
+		<?php endforeach; ?>
+		<!--<a href="#" class="selected">1</a>-->
+		</span>
+		</li>
+
+		<!-- Next page link -->
+		<li class="last">
+		<?php if (isset($this->next)): ?>
+		  <a href="<?= $this->url(array('searchkeyword' => $this->searchkeyword, 'sortby'=>$this->sortby, 'page' => $this->next)); ?>"><img src="<?=WEBSITE_URL;?>images/Next.png" alt="Next" /></a>
+		<?php else: ?>
+		  <img src="<?=WEBSITE_URL;?>images/Next.png" alt="Next" />
+		<?php endif; ?>
+		</li>
+		
+	</ul>
+</div>
+
+<?php endif; ?>

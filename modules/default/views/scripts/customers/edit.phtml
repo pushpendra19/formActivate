@@ -1,0 +1,182 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<form id="formID1" name="formID1" class="formular" method="post" >
+ 	<div class="row-1 wrapper">
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+           <div class="maxheight box">
+                        <div class="padding">    
+                        
+                        <?php /* if($this->admin_left_tab == 'admin_left_tab_for_customer'){ */ ?> 
+                        <?php //echo $this->render('admin_logged_in_left_panel.phtml'); 
+                       // } else {*/?>
+                            <?php echo $this->render('logged_in_left_panel.phtml'); //} ?>
+                            
+                        </div>
+                    </div>
+            </article>     
+           
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-2" style="width:548px;" <? }else{?> class="maxheight col-4" style="width:706px;"<? }?> >
+                <div class="maxheight box">
+                    <div class="padding">
+
+                        
+                    <span style="float:right;margin-right:-15px;"><a class="buttonsNextEdit" href="<?php echo WEBSITE_URL?>admin/customers">Back to Customer List</a></span>
+                     
+<h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Overview " style="width: 56px; height: 22px;margin-bottom: 25px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Overview </cufontext></cufon></h2>
+                     
+
+                      <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+							if(isset($obj->loginError)){?>
+									<span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['loginError'];					unset($_SESSION['Zend_Auth']['loginError']);?><br><br> </span>								<? }?>                  
+                        <div id="formcompanyDetails" <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?> style="width:548px;float: left;"<? }else{?> style="width:706px;" <? }?>>
+                            <fieldset style="border:0 none;padding-top:22px;">
+                            
+                            
+		                         <?php if($this->firstname!=''){ ?>   <p class="black12" style="margin-bottom: 4px;color:#666666;""><strong><?php echo htmlspecialchars(stripslashes(ucfirst($this->firstname)));?><?php if($this->lastname!=''){ echo " ".htmlspecialchars(stripslashes(ucfirst($this->lastname))); }?></strong>
+		                         <span class="buttonsNext180"><a class="buttonsNextEdit1" href="<?php echo WEBSITE_URL?>customers/editaccountdetails/id/<?php echo $this->id?>">Edit Account Details</a></span>
+		                         </p> <?php }?>
+								 <?php if($this->companyname!=''){ ?>  <p class="black12" style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes(ucfirst($this->companyname)));?></p><?php }?>
+								 <?php if($this->email!=''){ ?>  <p class="black12"  style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes($this->email));?>
+								 
+								 </p><?php }?>
+								 <?php if($this->address1!=''){ ?>  <p class="black12"  style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes(ucfirst($this->address1)));?></p><?php }?>
+								 <?php if($this->address2!=''){ ?>  <p class="black12"  style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes(ucfirst($this->address2)));?></p>   <?php }?>
+								 <?php if($this->city!=''){ ?>  <p class="black12"  style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes(ucfirst($this->city))).", ";?> <?php }?>
+								 <?php if($this->state!=''){ ?>  <?php echo htmlspecialchars(stripslashes(ucfirst($this->state)))." ";?><?php }?>
+								 <?php if($this->zip!=''){ ?>   <?php echo htmlspecialchars(stripslashes($this->zip));?></p><?php }?>
+								 <?php if($this->phone!=''){ ?>  <p class="black12"  style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes($this->phone));?></p> <?php }?>  <br>
+                                <?php if($this->card_type!=''){ ?><p class="black12"  style="margin-bottom: 4px;color:#666666;""><strong><?php echo htmlspecialchars(stripslashes($this->card_type));?></strong>
+                                <span class="buttonsNext106"><a class="buttonsNextEdit2" href="<?php echo WEBSITE_URL?>customers/editpaymentdetails/id/<?php echo $this->id?>">Edit Payment Details</a></span>
+                                </p>                              	
+                              <?php }?>
+                                
+                                <?php if($this->card_num!=''){ 
+                                	if($this->card_type!='American Express'){
+                                	?>                               
+                          		  <p class="black12" style="margin-bottom: 4px;">XXXX XXXX XXXX XXXX<?php //echo htmlspecialchars(stripslashes($this->card_num));?></p> 
+                                <?php }else {
+                                ?>
+                                 <p class="black12" style="margin-bottom: 4px;">XXXX XXXXXX XXXXX<?php //echo htmlspecialchars(stripslashes($this->card_num));?></p> 
+                                
+                                <?php }
+                                 }?>                        
+                                
+                               <?php if($this->expiry_month!=''){ ?>
+                                 
+                          		<p class="black12" style="margin-bottom: 4px;color:#666666;"">Exp: <?php echo htmlspecialchars(stripslashes($this->expiry_month));?> /
+                          		<?php if($this->expiry_year!=''){ ?><?php echo htmlspecialchars(stripslashes($this->expiry_year));?><?php }?>
+                          		</p>
+                                               
+                                <?php }?>
+                                
+                                <?php if($this->card_name!=''){ ?>                              
+                          		 <p class="black12" style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(ucfirst(stripslashes($this->card_name)));?></p>                                
+                                <?php }?>
+                                <?php if($this->card_cvv!=''){ ?>                               
+                          		 <p class="black12" style="margin-bottom: 4px;color:#666666;""><?php echo htmlspecialchars(stripslashes($this->card_cvv));?></p>                                
+                                <?php }?>
+                                <br>
+                                <?php if($this->plan_name!='')
+                                { ?>
+                                	
+                                	<?php echo $this->errorMessage; ?>
+                                	<div id="loadImage" style="background-color: white;display: none;z-index:999;position:absolute;margin-left: 300px;margin-top:50px;">
+							        	<img  src="<?php  echo WEBSITE_URL?>images/ajaxloader.gif">
+							        </div>	
+                                	<p class="black12"  style="margin-bottom: 4px;color:#666666;"><strong>Plan: </strong>
+			                                <span class="black12" style="margin-left: 10px">
+				                                <select name="plan[]" style="margin-left: 150px" onchange="showPlanDetail()">
+				                                <?php
+				                                	foreach($this->subscriptions_all_data as $row)
+				                                	{ 
+				                                ?>
+				                                	<option  value="<?php echo $row->id ?>" <?php if(trim($this->plan_name) == trim($row->name)) { echo "selected" ;} ?>> <?php echo $row->name ?></option>
+				                                	
+				                                	<?php }?>
+				                                </select>
+			                                </span>
+			                         </p>
+			                         <div id="statusForFreeTrail" style="width: 100%;display: none">
+				                           <p class="black12" style="margin-bottom: 4px;">
+				                          	Extend Free Trial Indefinitely: <Select name="LoginOveride" id="LoginOveride" >
+				                          			<option value="NO" <?php if($this->login_override == 'NO') echo "SELECTED";?>>NO</option> 
+				                          			<option value="YES" <?php if($this->login_override == 'YES') echo "SELECTED";?>>YES</option>
+				                          	</Select>
+				                          </p> 
+			                          </div>
+			                          <p class="black12" style="margin-bottom: 4px;">
+			                          	Minutes Per Month: <input type="text" name="MinutesPerMonth" id="MinutesPerMonth" style="margin-left: 66px" value="<?php echo $this->plan_code ?>" > 
+			                          </p> 
+			                          
+			                          <p class="black12" style="margin-bottom: 4px;">
+			                          	Monthly Cost: $ <input type="text" name="MonthlyCost"  id="MonthlyCost" value="<?php echo $this->plan_price ?>" style="margin-left: 88px" > 
+			                          </p>
+			                          
+			                          <p class="black12" style="margin-bottom: 4px;">
+			                          	Current Minutes Remaining: <input type="text" name="CurrentMinutesRemaining" value="<?php echo $this->total_remaining_calls;?>" style="margin-left: 12px" > 
+			                          </p>
+			                          
+			                          <br/>
+			                          
+			                          	<input type="hidden" name="planId" id="planId" value="<?php echo $this->plan_id;?>">
+			                          	
+		                                <span class="buttonsNext152" style="border: 0pt solid red" ><a class="buttonsNextEdit3" style="text-decoration: none" href="javascript:void(0)" onclick="document.formID1.submit()" >Override Plan Details</a></span>
+                               
+                               
+                               <?php }?>                                 
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </article>      
+			  </div>            
+        </form>  
+       
+
+        
+<script type="text/javascript">
+
+function reRenderDiv()
+{
+	
+	if(document.getElementById("planId").value == 5)
+		document.getElementById("statusForFreeTrail").style.display = 'block';
+	else
+		document.getElementById("statusForFreeTrail").style.display = 'none';
+}
+function showPlanDetail()
+{
+	var ansArray = document.getElementsByName('plan[]');
+		
+		var selectedValue = ansArray[0].options[ansArray[0].selectedIndex].value;
+		
+			$("#loadImage").fadeIn(300);
+		jQuery.post("<?php echo WEBSITE_URL;?>customers/overrideplane",{dos:'eck', planId: selectedValue},function(response){		
+			var response = response.split('-');
+
+				document.getElementById('planId').value = '';
+				document.getElementById('planId').value = selectedValue;
+			
+			if(response[0] != '' || response[0] != null)
+			{
+				document.getElementById('MinutesPerMonth').value = '';
+				document.getElementById('MinutesPerMonth').value = response[0];
+			}
+			if(response[1] != '' || response[1] != null)
+			{
+				document.getElementById('MonthlyCost').value = '';
+				document.getElementById('MonthlyCost').value = response[1];
+			}
+			reRenderDiv();
+			$("#loadImage").fadeOut(300);
+		});	
+		
+	
+}
+
+javascript:reRenderDiv();
+
+</script>

@@ -1,0 +1,22 @@
+<div id="formUserDetails" class="hr1b1" style="position: absolute; left: 37%;top:258px;width: 520px;line-height: 27px;">
+            <img onclick="hideme2('div_prorate', '<?php echo $this->number; ?>' ,'<?php echo $this->number_type ?>','database')" src="<?=WEBSITE_URL?>images/Close.png" style="float:right;">
+                           <span class="popupmsg" style="width: 500px;">
+
+    <?php if(empty ($this->ErrorMessage)): ?>
+        In order to validate your phone number,
+        we will place a call to this(<?php echo $this->client_number; ?>) number now.
+        Please answer the phone and enter the validation code shown below
+<br />
+<h1 align="center"><?php echo $this->ValidationCode; ?></h1>
+
+<div class="buttonsNextPrev">
+    <input type="button" onclick="hideme2('div_prorate', '<?php echo $this->number; ?>' ,'<?php echo $this->number_type ?>','database')" value="OK" style="width:90px;" class="buttonsNext">
+    <input type="button" onclick="hideme2('div_prorate', '<?php echo $this->number; ?>' ,'<?php echo $this->number_type ?>','database')" value="CANCEL" style="width:90px;" class="buttonsNext">
+</div>
+
+<?php else: ?>
+    <h1 align="center"> <?php echo $this->ErrorMessage;  ?></h1>
+<?php endif; ?>
+
+</span>
+</div>

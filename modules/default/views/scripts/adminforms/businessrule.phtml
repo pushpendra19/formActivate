@@ -1,0 +1,146 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: overview.phtml	#
+#			Description 	: this is First step to create form builder
+#			Created date	: 16/02/2011	#	
+#			Created By		:						#
+######################################################
+?> 
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<div class="row-1 wrapper">
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+           <div class="maxheight box">
+                        <div class="padding">    
+                        
+                        <?php /* if($this->admin_left_tab == 'admin_left_tab_for_customer'){ */ ?> 
+                        <?php //echo $this->render('admin_logged_in_left_panel.phtml'); 
+                       // } else {*/?>
+                            <?php echo $this->render('admin_form_logged_in_left_panel.phtml'); //} ?>
+                            
+                        </div>
+                    </div>
+            </article>     
+           
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-2" style="width:548px;" <? }else{?> class="maxheight col-4" style="width:706px;"<? }?> >        <div class="maxheight box">
+                    <div class="forms-padding">  
+                     <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+
+							if(isset($obj->deleteError))
+								{?>
+									<span style="float: left; padding-right: 290px;"><?php echo $_SESSION['Zend_Auth']['deleteError'];
+									unset($_SESSION['Zend_Auth']['deleteError']);?><br><br> </span>
+								<? }
+				 		?>              		
+                       <div style="float:left"> <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Business Rules " style="width: 56px; height: 22px;margin-bottom: 25px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Business Rules </cufontext></cufon></h2></div>
+                          <div class="btn2"><a href="<?php echo WEBSITE_URL?>adminforms/newbusinessrule/form_id/<?=$this->form_id?>/cid/<?=$this->cid?>" class="buttonsNext">Create New Rule</a></div>
+ 		<div class="clear"></div> 
+                        <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+
+							if(isset($obj->deleteError))
+								{?>
+									<label><span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['deleteError'];
+									unset($_SESSION['Zend_Auth']['deleteError']);?><br><br> </span></label>
+								<? }
+				 		?>
+                        <div id="formUserDetailsStd">
+              		<?php 
+				if(!empty($this->paginator) && count($this->paginator)>0)
+				{
+					 
+				?>
+                        	<table cellpadding="0" cellspacing="0" width="100%">
+                        	<tr>
+		          
+		                  		<td><b>Rule Name</b></td>
+		                  		<td><b>Status</b></td>
+		                  		<td><b>Actions</b></td>
+		                  		                  		
+		                  	</tr>
+                        <?php
+                        $i=0;
+                        foreach ($this->paginator as $rule_data)
+                        {
+                        	//echo $fields['label'].'<br/>';	
+                        	
+                        	if($i%2==0)
+                        	{
+                        		$style="style='background-color:#EFF0F0'";
+                        	}
+                        	else {
+                        		$style="";
+                        	}
+                        ?>
+                  	      	<tr>
+		            
+		                  		<td <?=$style?>><?php echo htmlspecialchars(stripslashes(ucfirst($rule_data['rule_name'])));?></td>
+		                  		<td <?=$style?>>                 		
+		                  			<form method="POST" action="<?=WEBSITE_URL?>adminforms/changebusinessstatus/form_id/<?=$this->form_id?>/cid/<?=$this->cid?>?>/id/<?php echo stripslashes($rule_data['id']); ?>" name="frm<?php echo $rule_data['id']; ?>"><select style="width:100px;" onchange="document.frm<?php echo $rule_data['id'] ?>.submit();" name="status"><?php echo ($rule_data['status']=='1') ? '<option value="1" selected="selected">Active</option><option value="0">Inactive</option>' : '<option value="1">Active</option><option value="0" selected="selected">Inactive</option>'; ?></select><input type="hidden" name="id" value="<?php echo $rule_data['id']; ?>">
+								</form>
+                                
+                               </td>
+		                  		<td <?=$style?>><A title="Edit Rule"  href="<?=WEBSITE_URL?>adminforms/newbusinessrule/form_id/<?=$this->form_id?>/cid/<?=$this->cid?>/id/<? echo stripslashes($rule_data['id']); ?>"><img src="<?=WEBSITE_URL?>images/pen.png"></A>&nbsp;<A title="Delete Rule"  onclick="return confirm('Are you sure you want to delete this rule?')" href="<?=WEBSITE_URL?>adminforms/deleterule/form_id/<?=$this->form_id?>/cid/<?=$this->cid?>/id/<?php echo stripslashes($rule_data['id']); ?>"><img src="<?=WEBSITE_URL?>images/Close.png"></A></td>
+		                  	
+		                  		
+		                  	</tr>
+                          	
+                        <?php
+						$i++; 
+                         }
+                        ?>
+                        
+                        </table>
+                        
+                        <table>
+					<tr><td align="center">&nbsp;</td></tr>
+					<tr>
+					 <td width="400px;" style="font-weight:bold;"><?php echo $this->paginator;?></td>
+					</tr>
+					<tr><td colspan="2" align="center">&nbsp;</td></tr>
+				</table>
+				<?php 
+				}else{
+					echo "No records found."; 
+				}
+				?>
+                    </div>
+                    <?php 
+				//	if(!empty($this->paginator) && count($this->paginator)>0)
+				//	{?>
+                         <div class="buttonsNextPrev" style="padding-right:20px;">                                
+                           <input class="buttonsNext" style="width: 90px;" type="button" value="Previous" onclick="go_prev();" />
+                           <input class="buttonsNext" style="width: 90px;" type="submit" value="Next"  onclick="go_next();" />
+                         </div> 
+                        <?php // }?> 
+                     </div>
+                </div>
+              
+            </article>
+</div> 
+<script type="text/javascript">
+ function validate_form(){
+              // binds form submission and fields to the validation engine
+             // jQuery("#formID1").validationEngine('attach', {promptPosition : "topLeft"});
+				jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
+              // jQuery("#formID1").validationEngine('attach', {promptPosition : "bottomLeft"});
+		      // jQuery("#formID1").validationEngine('attach', {promptPosition : "bottomRight"});
+		     //  jQuery("#formID1").validationEngine('attach', {promptPosition : "topLeft"});
+		     //document.formID1.submit();
+ }
+ 
+ function go_prev()
+ {
+	var myString = '<?=WEBSITE_URL?>'+'adminforms/opthrs/form_id/'+'<?=$this->form_id;?>/cid/<?=$this->cid?>';	window.location=myString;
+ }
+  function go_next()
+ {
+	var myString = '<?=WEBSITE_URL?>'+'adminforms/emailnotification/form_id/'+'<?=$this->form_id;?>/cid/<?=$this->cid?>';	window.location=myString;
+ }
+ 
+ 
+</script>

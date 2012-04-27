@@ -1,0 +1,128 @@
+<div id="content_box">
+<div id="pricing-box">
+<div class="popular"></div>
+<table id="pricing-table">
+<thead>
+	<tr>
+		<th class="desc-col"></th>
+		<th class="plan-1 plan-col"><cufon class="cufon cufon-canvas" alt="Basic" style="width: 46px; height: 20px;"><canvas width="58" height="20" style="width: 58px; height: 20px; top: 0px; left: 0px;"></canvas><cufontext>Basic</cufontext></cufon></th>
+		<th class="plan-2 plan-col"><cufon class="cufon cufon-canvas" alt="Standard" style="width: 75px; height: 20px;"><canvas width="86" height="20" style="width: 86px; height: 20px; top: 0px; left: 0px;"></canvas><cufontext>Standard</cufontext></cufon></th>
+		<th class="plan-3 plan-col"><cufon class="cufon cufon-canvas" alt="Pro" style="width: 28px; height: 20px;"><canvas width="40" height="20" style="width: 40px; height: 20px; top: 0px; left: 0px;"></canvas><cufontext>Pro</cufontext></cufon></th>
+		<th class="plan-4 plan-col"><cufon class="cufon cufon-canvas" alt="All " style="width: 27px; height: 20px;"><canvas width="43" height="20" style="width: 43px; height: 20px; top: 0px; left: 0px;"></canvas><cufontext>All </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Star" style="width: 34px; height: 20px;"><canvas width="49" height="20" style="width: 49px; height: 20px; top: 0px; left: 0px;"></canvas><cufontext>Star</cufontext></cufon></th>
+	</tr>
+</thead>
+<tbody>
+	<tr class="no-border">
+		<td class="desc-col"></td>
+		<td class="plan-1 plan-col"><div class="price"><cufon class="cufon cufon-canvas" alt="$<?php echo $this->data[1]->price; ?>" style="width: 107px; height: 40px;"><canvas width="130" height="39" style="width: 130px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>$<?php echo $this->data[1]->price; ?></cufontext></cufon></div> per month</td>
+		<td class="plan-2 plan-col"><div class="price"><cufon class="cufon cufon-canvas" alt="$<?php echo $this->data[2]->price; ?>" style="width: 107px; height: 40px;"><canvas width="130" height="39" style="width: 130px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>$<?php echo $this->data[2]->price; ?></cufontext></cufon></div> per month</td>
+		<td class="plan-4 plan-col"><div class="price"><cufon class="cufon cufon-canvas" alt="$<?php echo $this->data[5]->price; ?>" style="width: 127px; height: 40px;"><canvas width="149" height="39" style="width: 149px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>$<?php echo $this->data[5]->price; ?></cufontext></cufon></div> per month</td>
+		<td class="plan-3 plan-col"><div class="price"><cufon class="cufon cufon-canvas" alt="$<?php echo $this->data[3]->price; ?>" style="width: 107px; height: 40px;"><canvas width="130" height="39" style="width: 130px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>$<?php echo $this->data[3]->price; ?></cufontext></cufon></div> per month</td>
+	</tr>
+	<tr class="no-border">
+		<td class="desc-col"></td>
+		<td class="plan-1 plan-col"><a class="select-plan-bt" href="javascript:void(0)">select plan</a></td>
+		<td class="plan-2 plan-col"><a class="select-plan-bt" href="javascript:void(0)">select plan</a></td>
+		<td class="plan-3 plan-col"><a class="select-plan-bt" href="javascript:void(0)">select plan</a></td>
+		<td class="plan-4 plan-col"><a class="select-plan-bt" href="javascript:void(0)">select plan</a></td>
+	</tr>
+	<tr>
+		<td class="desc-col">Website Minutes Generated per Month.</td>
+		<td class="plan-1 plan-col"><?php echo $this->data[1]->code; ?><small>(30 cents per<br>minute over <?php echo $this->data[1]->code; ?>)</small></td>
+		<td class="plan-2 plan-col"><?php echo $this->data[2]->code; ?><small>(25 cents per<br>minute over <?php echo $this->data[2]->code; ?>)</small></td>
+		<td class="plan-4 plan-col"><?php echo $this->data[5]->code; ?><small>(15 cents per<br>minute over <?php echo $this->data[5]->code; ?>)</small></td>
+		<td class="plan-3 plan-col"><?php echo $this->data[3]->code; ?><small>(10 cents per<br>minute over <?php echo $this->data[3]->code; ?>)</small></td>
+	</tr>
+	<tr>
+		<td class="desc-col">Number of Forms</td>
+		<td class="plan-1 plan-col">1</td>
+		<td class="plan-2 plan-col">3</td>
+		<td class="plan-3 plan-col">5</td>
+		<td class="plan-4 plan-col">10</td>
+	</tr>
+	<tr>
+		<td class="desc-col">Business Rules</td>
+		<td class="plan-1 plan-col"><?php echo ucfirst($this->data[1]->available_rule); ?></td>
+		<td class="plan-2 plan-col"><?php echo ucfirst($this->data[2]->available_rule); ?></td>
+                <td class="plan-3 plan-col"><?php echo ucfirst($this->data[3]->available_rule); ?></td>
+		<td class="plan-4 plan-col">Unlimited</td>
+	</tr>
+	<tr>
+		<td class="desc-col">Reporting Dashboard with Real Time Stats &amp; Call Reporting  </td>
+		<td class="plan-1 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-2 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-3 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-4 plan-col"><div class="yes">yes</div></td>
+	</tr>
+	<tr>
+		<td class="desc-col">Data Export</td>
+		<td class="plan-1 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-2 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-3 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-4 plan-col"><div class="yes">yes</div></td>
+	</tr>
+	<tr>
+		<td class="desc-col">Redirect inquiries to landing page</td>
+		<td class="plan-1 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-2 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-3 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-4 plan-col"><div class="yes">yes</div></td>
+	</tr>
+	<tr>
+		<td class="desc-col">Automatic generation of HTML code to be inserted into website <small>(no programming knowledge needed)</small></td>
+		<td class="plan-1 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-2 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-3 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-4 plan-col"><div class="yes">yes</div></td>
+	</tr>
+	<tr>
+		<td class="desc-col">Data validation of any form field to ensure forms are submitted successfully</td>
+		<td class="plan-1 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-2 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-3 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-4 plan-col"><div class="yes">yes</div></td>
+	</tr>
+	<tr>
+		<td class="desc-col">Ability to select exactly which fields are to be announced to business owner</td>
+		<td class="plan-1 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-2 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-3 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-4 plan-col"><div class="yes">yes</div></td>
+	</tr>
+	<tr>
+		<td class="desc-col">Redirect phone numbers based on user-selected hours of operation</td>
+		<td class="plan-1 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-2 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-3 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-4 plan-col"><div class="yes">yes</div></td>
+	</tr>
+	<tr>
+		<td class="desc-col">Receive calls for specific types of inquiries only</td>
+		<td class="plan-1 plan-col"><div class="no">no</div></td>
+		<td class="plan-2 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-3 plan-col"><div class="yes">yes</div></td>
+		<td class="plan-4 plan-col"><div class="yes">yes</div></td>
+	</tr>
+	<tr>
+		<td class="desc-col">Customer Support</td>
+		<td class="plan-1 plan-col">Email</td>
+		<td class="plan-2 plan-col">Email &amp; Phone</td>
+		<td class="plan-3 plan-col">Email &amp; Phone</td>
+		<td class="plan-4 plan-col">Email &amp; Phone</td>
+	</tr>
+</tbody>
+<tfoot>
+	<tr>
+		<td class="desc-col"></td>
+		<td class="plan-1 plan-col"><a class="select-plan-bt" href="javascript:void(0)">select plan</a></td>
+		<td class="plan-2 plan-col"><a class="select-plan-bt" href="javascript:void(0)">select plan</a></td>
+		<td class="plan-3 plan-col"><a class="select-plan-bt" href="javascript:void(0)">select plan</a></td>
+		<td class="plan-4 plan-col"><a class="select-plan-bt" href="javascript:void(0)">select plan</a></td>
+	</tr>
+</tfoot>
+
+</table>
+
+<?php //echo '<pre>'; print_r($this->data); ?>
+
+</div>	</div>

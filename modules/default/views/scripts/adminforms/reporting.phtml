@@ -1,0 +1,217 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: overview.phtml	#
+#			Description 	: this is First step to create form builder
+#			Created date	: 16/02/2011	#	
+#			Created By		:						#
+######################################################
+?> 
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<script>
+function chk_count()
+{
+var total=0;
+for(var i=0; i < document.formID1.selected_field_id.length; i++){
+if(document.formID1.selected_field_id[i].checked){
+total++;
+}
+}
+
+var total1=0;
+for(var n=0; n<document.formID1.selected_field_id1.length;n++){		
+if(document.formID1.selected_field_id1[n].checked){
+		total1++;	
+	}
+}
+	
+if((total+total1)>5){	
+	jQuery('#errorfivecolumn').show();	
+}
+
+if((total+total1)>=5){
+	var totalchk=(total+total1);		
+	for(var np=0; np<document.formID1.selected_field_id1.length;np++){
+		if(document.formID1.selected_field_id1[np].checked==false){		
+		document.formID1.selected_field_id1[np].disabled = true;
+		}		
+	}
+	
+	for(var ip=0; ip < document.formID1.selected_field_id.length; ip++){		
+		if(document.formID1.selected_field_id[ip].checked==false){
+		document.formID1.selected_field_id[ip].disabled = true;
+		}		
+	}	
+}else{
+	
+	for(var npy=0; npy<document.formID1.selected_field_id1.length;npy++){				
+			document.formID1.selected_field_id1[npy].disabled=false;			
+		}
+		
+		for(var ipk=0; ipk < document.formID1.selected_field_id.length; ipk++){
+			document.formID1.selected_field_id[ipk].disabled =false;
+		}
+		jQuery('#errorfivecolumn').hide();		
+}
+}
+</script>
+<div class="row-1 wrapper">
+
+
+
+ <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+           <div class="maxheight box">
+                        <div class="padding">    
+                        
+                        <?php /* if($this->admin_left_tab == 'admin_left_tab_for_customer'){ */ ?> 
+                        <?php //echo $this->render('admin_logged_in_left_panel.phtml'); 
+                       // } else {*/?>
+                            <?php echo $this->render('admin_form_logged_in_left_panel.phtml'); //} ?>
+                            
+                        </div>
+                    </div>
+            </article>     
+           
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-2" style="width:548px;" <? }else{?> class="maxheight col-4" style="width:706px;"<? }?> >
+               <form id="formID1" name="formID1" class="formular"  onsubmit='return validate(this)' method="post" action="<?php echo WEBSITE_URL?>adminforms/reporting/form_id/<?=$this->form_id?>/cid/<?=$this->cid?>">
+                <div <?php 	if((count($this->formstd_data)>6)) { ?>class="maxheight box" style="width:706px;height:407px;" <? }else{?> class=" box" style="width:706px;height:407px;" <? }?>>
+                    <div class="forms-padding">  
+
+
+                        <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Reporting " style="width: 56px; height: 22px;margin-bottom: 25px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Reporting </cufontext></cufon></h2>
+                        
+                    	<?php
+                     		$obj=new Zend_Session_Namespace('Zend_Auth');
+							if(isset($obj->deleteError))
+								{?>
+									<div style="height:30px;" id="errormsgid"><?php echo $_SESSION['Zend_Auth']['deleteError'];
+									unset($_SESSION['Zend_Auth']['deleteError']);?></div>
+								<? }
+				 		?>  
+                        <div id="errorfivecolumn" style="display:none;color: black;width: 600px;word-wrap: break-word;height: 40px;"><b>
+	Please select up to five columns to be included in the reports. You <br /> may update your column selections at any time</b>
+</div> 
+<div id="errorfivecolumn1" style="display:block;color:#303030;height:40px;">
+	<b> Please limit your selection to five columns. You may remove any existing <br /> column by  unchecking it from the list.</b> <br>
+</div>                            
+                        <div id="formUserDetails" style="float: left; min-height: 250px;">
+                            <fieldset>             
+                                <?php 													
+								if(count($this->formstd_data)>0) { ?>														
+                            	<label style="color:#000000;">Default Sort Column &nbsp;&nbsp;&nbsp;
+                                <select name="field_sort" id="field_sort">
+                                <?php 													
+								foreach ($this->formstd_data as $data_key =>$data_val) { ?>
+                                <option value="<?php echo stripslashes($data_val['id']); ?>" <?php if($this->default_selected_sorting_column==$data_val['id']){?>  selected<? }?>><?php echo stripslashes(ucfirst($data_val['label'])); ?></option>
+                                <? }?>
+                                </select>
+                                </label>  
+                                <? }?>
+                                
+                            <!-- 
+                              -->
+                             <div class="tables_without_line" style="height:35px;color:#303030;">
+                            Select Columns to be inclucded in the Report:</div>
+                                          
+                        <div class="tables_without_line" style="height:35px;">
+    				  		<?php if(count($this->formstd_data_standard)>0){?>
+                        	<span class="coloms_without_line">
+    				  		Standard Field:
+							</span><? }?>
+							<?php if(count($this->formstd_data_custom)>0){?>
+							<span class="coloms_without_line">
+							Custom Field:
+							</span><? }?>        	
+						</div>	
+    				  	<div class="tables_without_line">
+							<span class="coloms_without_line">							
+							<?php 
+								if(count($this->formstd_data_standard)>0){ 					
+								foreach ($this->formstd_data_standard as $data_key =>$data_val) { ?>
+								<span style="display: block; height: 20px;">
+								<input type="checkbox" name="selected_field_id[]" id="selected_field_id" value="<?php echo stripslashes($data_val['id']); ?>" <?php if($this->selected_field_id!=''){ if(in_array($data_val['id'],$this->selected_field_id)){ echo "checked";} }?> style="width: 19px;"  onclick="chk_count();">&nbsp;<?php echo stripslashes(ucfirst($data_val['label'])); ?></span> <? } }?></span>
+															
+								<span class="coloms_without_line">
+								<?php 
+								if(count($this->formstd_data_custom)>0){ 									
+								foreach ($this->formstd_data_custom as $data_key =>$data_val) { ?>
+								<span style="display: block; height: 20px;">
+								<input type="checkbox" name="selected_field_id1[]" id="selected_field_id1" value="<?php echo stripslashes($data_val['id']);?>" <?php if($this->selected_field_id!=''){ if(in_array($data_val['id'],$this->selected_field_id)){ echo "checked";} }?> style="width: 19px;"  onclick="chk_count();">&nbsp;<?php echo stripslashes(ucfirst($data_val['label'])); ?></span> <? }} ?>
+							</span>
+						</div>	 
+                                
+								<div class="buttonsNextPrev" style="padding-right:114px;margin-right: 78px">
+								   <input type="hidden"  name="reporting_id" id="reporting_id"   value="<?php echo (isset($this->reporting_id))? htmlspecialchars(stripslashes($this->reporting_id)) : '';?>" />   
+								   <input type="hidden"  name="form_id" id="form_id"   value="<?php echo (isset($this->form_id))? htmlspecialchars(stripslashes($this->form_id)) : '';?>" />  
+								   <input class="buttonsNext" style="width:90px;" type="button" value="Previous"   onclick="go_prev('Previous');" />
+								   <input class="buttonsNext" style="width:90px;" type="button" value="Save"  onclick="go_prev('Next');"/>
+								   <input type="hidden" name="form_action" id="form_action" value="">    
+ 								</div>     
+                            </fieldset>
+                            </div>                       
+                    </div>
+                </div>
+                </form>
+            </article>
+</div> 
+<script type="text/javascript">
+function validate_form(){
+}
+ 
+function go_prev(type)
+ {
+	jQuery('#form_action').val(type);
+ 	validate('formID1'); 	
+ 	document.formID1.submit(); 	
+ }
+ 
+ //
+</script>
+
+<script type="text/javascript">
+function validate(form) {
+// Checking if at least one period button is selected. Or not.
+/*if (!document.form1.sex[0].checked && !document.form1.sex[1].checked){
+alert("Please Select Sex"); return false;}*/
+jQuery('#errormsgid').hide();
+var total=0;
+for(var i=0; i < document.formID1.selected_field_id.length; i++){
+if(document.formID1.selected_field_id[i].checked){
+//total +=document.form1.scripts[i].value + "\n"
+//alert('total');
+
+total++;
+}
+}
+
+var total1=0;
+if(document.formID1.selected_field_id1)
+for(var i=0; i < document.formID1.selected_field_id1.length; i++){
+if(document.formID1.selected_field_id1[i].checked){
+//total +=document.form1.scripts[i].value + "\n"
+//alert('total1');
+total1++;
+}
+}
+
+if((total+total1)>5){
+	jQuery('#errorfivecolumn').show();
+	
+	/*for(var k=0; k < document.formID1.selected_field_id.length; k++){
+	if(document.formID1.selected_field_id[k].checked==false){
+		document.formID1.selected_field_id[k].disabled;
+		}
+	}
+	for(var p=0; p < document.formID1.selected_field_id1.length; p++){
+		if(document.formID1.selected_field_id1[p].checked==false){
+			document.formID1.selected_field_id1[p].disabled;
+		}
+	}*/
+	return false;	
+//alert (total+total1);
+}
+//return false;
+} </script>

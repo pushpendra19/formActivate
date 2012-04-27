@@ -1,0 +1,48 @@
+<!--==============================content start here================================-->
+
+<div id="title-box"><h1><cufon style="width: 102px; height: 40px;" alt="Sign in" class="cufon cufon-canvas"><canvas style="width: 124px; height: 39px; top: 0px; left: -1px;" height="39" width="124"></canvas><cufontext>Sign in</cufontext></cufon></h1></div>
+<div id="content_box">
+
+    <?php
+                $obj=new Zend_Session_Namespace('Zend_Auth');
+
+                if(isset($obj->loginError))
+                        {?>
+                                <span class="signinmessage" id="signinmessage" > <?php echo $_SESSION['Zend_Auth']['loginError'];
+                                unset($_SESSION['Zend_Auth']['loginError']);?><br><br> </span>
+                        <? }
+        ?>    
+
+    <div id="signin-form">
+
+        <form id="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>customers/login">
+
+            <div class="input-item">
+                <label for="log">Email Address</label>
+                <input name="email" id="email" class="text" value="" size="20" maxlength="125" type="text">
+            </div>
+
+            <div class="input-item">
+                <label for="pwd">Password</label>
+                <input name="pass" id="pass" size="20" class="text" type="password">
+            </div>
+
+            <div class="input-item">
+                <a href="<?php echo WEBSITE_URL?>customers/forgotpassword">Forgot your password?</a>
+            </div>
+
+            <div class="input-item">
+                <input name="submit" value="Sign in" class="big-orange-bt" type="submit">
+            </div>            
+
+        </form>
+
+
+    </div>	</div>
+
+<div id="bottom-box">
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+
+<!--==============================content end here================================-->    

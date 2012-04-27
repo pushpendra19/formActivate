@@ -1,0 +1,167 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: signup.phtml	#
+#			Description 	: this is First signup Page  to work in the front end site #
+#			Created date	: 19/01/2011	#	
+#			Created By		: Manoj Kumar Chauhan	#
+######################################################
+?> 
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<script type="text/javascript">
+ function validate_signup(){
+ 	
+ 				var emails=jQuery('#email').val(); 				
+				jQuery('#email').val(jQuery.trim(emails));	
+ 	
+              // binds form submission and fields to the validation engine
+             // jQuery("#formID1").validationEngine('attach', {promptPosition : "topLeft"});
+				jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
+              // jQuery("#formID1").validationEngine('attach', {promptPosition : "bottomLeft"});
+		      // jQuery("#formID1").validationEngine('attach', {promptPosition : "bottomRight"});
+		     //  jQuery("#formID1").validationEngine('attach', {promptPosition : "topLeft"});
+		     //document.formID1.submit();
+ }
+</script>
+
+<div id="title-box"><h1><cufon style="width: 102px; height: 40px;" alt="Sign up" class="cufon cufon-canvas"><canvas style="width: 124px; height: 39px; top: 0px; left: -1px;" height="39" width="124"></canvas><cufontext>Sign up</cufontext></cufon></h1></div>
+
+<form id="formID1" name="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>customers/signup">
+ 		<div class="row-1 wrapper" style="margin-top: -30px;">
+            <article class="maxheight col-3">                
+                <div class="maxheight box"  style="width: 434px !important;float: left;">
+                    
+                    <div class="padding">            		
+                        <div id="formUserDetails">
+                            <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="User Details " style="width: 56px; height: 22px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>User Details </cufontext></cufon></h2>
+
+                            <br /><br />
+                            
+                            <fieldset>
+                                <label><span>First Name<strong>*</strong></span>
+                            	 <input name="firstname" id="firstname" class="validate[required,custom[firstname]]" value="<?php echo (isset($this->data->firstname))? htmlspecialchars(stripslashes($this->data->firstname)) : '';?>" maxlength="50"/>
+                                </label>
+                                
+                                <label><span>Last Name<strong>*</strong></span><input name="lastname" id="lastname" class="validate[required,custom[lastname]]"  value="<?php echo (isset($this->data->lastname))? htmlspecialchars(stripslashes($this->data->lastname)) : '';?>"  maxlength="50"/></label>
+                                
+                                <label><span>Company Name</span><input name="companyname" id="companyname"  value="<?php echo (isset($this->data->companyname))? htmlspecialchars(stripslashes($this->data->companyname)) : '';?>" maxlength="100"/></label>
+                                
+                                <label><span>Email Address<strong>*</strong></span><input  name="email" id="email"  value="<?php echo (isset($this->data->email))? htmlspecialchars(stripslashes($this->data->email)) : '';?>"  class="validate[required,custom[email]]" onblur="validate_email()"  maxlength="50"/>
+                                <div id="div_email" style="color:red;padding-left: 130px;font-weight:bold;"></div>
+                                </label>
+                                
+                                
+                                <label><span>Password<strong>*</strong></span><input type="password"  name="pass" id="pass"  value="<?php //echo (isset($this->data->pass))? htmlspecialchars(stripslashes($this->data->pass)) : '';?>"  class="validate[required,custom[pass]]"  maxlength="20"/></label>
+                                
+                                <label><span>Re-type Password<strong>*</strong></span><input type="password"   name="re_pass" id="re_pass"  value="<?php //echo (isset($this->data->pass))? htmlspecialchars(stripslashes($this->data->pass)) : '';?>"  class="validate[required,custom[re_pass]]" onblur="validate_confirm_pass()" maxlength="20"/><br>
+                                <br>
+                               
+                                <div id="passwordnotmatched" class="formError"  style="top: 530px; left: 198px;  margin-top: 0px; opacity: 0.87;display:none;" onclick="hide_by_id('passwordnotmatched')"><div class="formErrorContent">* Please confirm your password</div> </div>
+                                
+                                </label>
+                                
+                            </fieldset>
+                            </div>                       
+                    </div>
+                </div>
+            </article>
+            <article class="maxheight col-4">
+                <div class="maxheight box" style="width: 403px !important;float: left;">
+                    
+                    <div class="padding">                        
+                        <div id="formcompanyDetails">
+                            <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Company Details " style="width: 56px; height: 22px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Company Details </cufontext></cufon></h2>
+
+                            <br /><br />
+
+                            <fieldset>
+                                <label><span>Address 1<strong>*</strong></span><input name="address1"  id="address1" maxlength="250"   value="<?php echo (isset($this->data->address1))? htmlspecialchars(stripslashes($this->data->address1)) : '';?>" class="validate[required,custom[address1]]"/></label>
+                                
+                                <label><span>Address 2</span><input name="address2" id="address2" maxlength="250"  value="<?php echo (isset($this->data->address2))? htmlspecialchars(stripslashes($this->data->address2)) : '';?>"/></label>
+                                
+                                <label><span>City<strong>*</strong></span><input name="city" id="city"  value="<?php echo (isset($this->data->city))? htmlspecialchars(stripslashes($this->data->city)) : '';?>"  maxlength="50"  class="validate[required,custom[city]]"/></label>
+                                
+                                <label><span>State<strong>*</strong></span><input name="state" id="state"  value="<?php echo (isset($this->data->state))? htmlspecialchars(stripslashes($this->data->state)) : '';?>"  maxlength="50"  class="validate[required,custom[state]]"/></label>
+                                
+                                <label><span>Zip<strong>*</strong></span><input name="zip" id="zip"  value="<?php echo (isset($this->data->city))? htmlspecialchars(stripslashes($this->data->zip)) : '';?>"  maxlength="8"  class="validate[required,custom[zip]]"/></label>
+                                
+                                <!-- <label>
+                                    <span>State<strong>*</strong></span><input name="state" id="state"   value="<?php echo (isset($this->data->state))? htmlspecialchars(stripslashes($this->data->state)) : '';?>" style="width:50px; float:left;" maxlength="50"  class="validate[required,custom[state]]"/>
+                                    <span style="width:40px; padding-left:18px;">Zip<strong>*</strong></span><input name="zip" maxlength="8"   value="<?php echo (isset($this->data->zip))? htmlspecialchars(stripslashes($this->data->zip)) : '';?>" style="width:80px;" id="zip"  class="validate[required,custom[zip]]"/>
+                                </label> Old design-->
+                                <label><span>Phone<strong>*</strong></span><input  name="phone" id="phone"   value="<?php echo (isset($this->data->phone))? htmlspecialchars(stripslashes($this->data->phone)) : '';?>" maxlength="15" class="validate[required,custom[phone]]"/></label>                                
+                                
+                                    <div class="input-item float_right">
+                                        <input name="submit" value="Next" class="big-orange-bt pad_0" onclick="validate_signup()" type="submit">
+                                  
+                               	
+                               	<input type="hidden"  name="id" id="id"   value="<?php echo (isset($this->data->id))? htmlspecialchars(stripslashes($this->data->id)) : '';?>"/>                                
+                       			<input type="hidden"  name="oldemail" id="oldemail"   value="<?php echo (isset($this->data->id))? htmlspecialchars(stripslashes($this->data->email)) : '';?>"/>                                
+                               	<!--	<a class="buttonsNext" onclick="validate_signup()">Next</a>-->
+                                </div>
+
+                            </fieldset> 
+                            </div>                        
+                    </div>
+                </div>
+            </article>
+        </div>
+
+ 	</form>
+
+<div id="bottom-box">
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+ //function validate_signup(){
+              // binds form submission and fields to the validation engine
+             // jQuery("#formID1").validationEngine('attach', {promptPosition : "topLeft"});
+			//	jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
+              // jQuery("#formID1").validationEngine('attach', {promptPosition : "bottomLeft"});
+		      // jQuery("#formID1").validationEngine('attach', {promptPosition : "bottomRight"});
+		     //  jQuery("#formID1").validationEngine('attach', {promptPosition : "topLeft"});
+		     //document.formID1.submit();
+ //}
+ 
+ function validate_email(){ 
+		var email=jQuery('#email').val();	
+		var oldemail=jQuery('#oldemail').val();	
+		
+		var id=jQuery('#id').val();
+		jQuery.post("<?php echo WEBSITE_URL?>customers/emailvalidation",{dos:'eck', email: email, id: id},function(response){		
+			//alert(response);
+				if(response>0){
+				jQuery('#email').val('');
+				jQuery('#email').val(oldemail);				
+				//jQuery('#email').focus();						
+				jQuery('#div_email').show();						
+				jQuery('#div_email').html(email+' already exists.');				
+				setTimeout("jQuery('#div_email').fadeOut(1000);", 3000 );				
+				}else{
+				jQuery('#div_email').html('');				
+				}				
+		});	
+}
+	
+ function validate_confirm_pass(){ 	
+	var pass1=jQuery('#pass').val();
+	var pass2=jQuery('#re_pass').val();
+	if(pass1!=pass2){		
+		jQuery('#passwordnotmatched').show();
+		jQuery('#re_pass').val('');
+		//jQuery('#re_pass').focus();
+	}else{
+	jQuery('#passwordnotmatched').hide();
+	}
+ }
+
+ function hide_by_id(idvalue){ 	
+		jQuery('#'+idvalue).hide();
+ }
+ 
+ 
+</script>

@@ -1,0 +1,56 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<form id="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>members/login">
+ 	<div class="row-1 wrapper">
+            <article>
+                <div class="maxheight box">
+                    <div class="padding">            		
+                        <h3>Sign <span>In</span></h3>
+                        <div id="formPlanDetails">
+                          <fieldset>
+                          
+                          <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+
+							if(isset($obj->loginError))
+								{?>
+									<span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['loginError'];
+									unset($_SESSION['Zend_Auth']['loginError']);?><br><br> </span>
+								<? }
+				 		?>
+                          
+                          
+                          <p><strong>Please enter your email address and password to access your account.</strong></p>
+                                <label><p>Email Address<strong  class="loginrequired">*</strong>
+                                <span style="padding-left: 35px;">
+                                <input name="email" type="text" id="email"  class="validate[required,custom[email]]" maxlength="25" size="30"/>
+                              	</span>
+                                </p>
+                                </label>                                
+                                <label><p>Passwords<strong class="loginrequired">*</strong>
+                                <span style="padding-left: 52px;">
+                                <input name="pass"  type="password" id="pass"  class="validate[required]" maxlength="25" size="30"/>
+                                </span>
+                               <p></label> 
+                                <label><p>Forgot your password?</p></label> 
+                                <label>
+                               <p><a href="<?php echo WEBSITE_URL?>members/forgetpassword">Click here to have it sent to you.</a>
+                                </p></label> 
+                                  <div class="buttonsSignin" style="padding-left: 218px;">
+                                   <input class="buttonsNext" type="submit" value="Sign In"  onclick="validate_signup()"/> 
+                                 </div>                               
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </article>     
+			  </div>            
+        </form>              
+<script type="text/javascript">
+ function validate_signup(){
+              // binds form submission and fields to the validation engine
+                jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});				
+  } 
+</script>

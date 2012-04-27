@@ -1,0 +1,28 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: overview.phtml	#
+#			Description 	: this is First step to create form builder
+#			Created date	: 16/02/2011	#	
+#			Created By		:						#
+######################################################
+?>
+<div class="row-1 wrapper">
+<?php   //echo $this->render('forms_left_panel.phtml'); ?>  
+            <article class="maxheight col-2">
+            <form id="formID1" name="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>forms/formsubmit">
+                <div class="maxheight box" style="width:706px;height:407px;">
+                    <div class="forms-padding">   
+                    <span style="float:right; cursor:pointer;"><input  style="width:240px;" class="buttonsNext" type="button" value="Launch Visual Form Editor" onclick="getpreview('<?php echo $this->form_id;?>');"/></span> 
+                    	        		
+                        <h3>Form  <span>Preview</span></h3>
+                        <div id="formUserDetails">
+                           <fieldset>                         
+                           <label><span>Please check the form.</span></label>                                
+                            </fieldset>
+                           </div>                          
+                    </div>
+                </div>
+                </form>
+            </article>
+</div> 

@@ -1,0 +1,126 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<?php echo$this->headScript()->prependFile(__JS_DIRECTORY__.'gen_validatorv2.js',$type='text/javascript'); ?>
+
+<div class="row-1 wrapper">   
+  <article class="maxheight" >
+                <div class="maxheight box">
+                    <div class="padding"> 	
+						<div class="topRow"> 											
+						 <span>
+						 <a class="buttonsNext" href="<?=WEBSITE_URL?>adminforms/overview/cid/<?php echo $this->cid;?>">Create New Form</a>
+						 </span>
+						</div>
+
+                        <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="View Form Listing " style="width: 56px; height: 22px;margin-bottom: 25px;clear: both;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>View Form Listing </cufontext></cufon></h2>
+
+ 						<?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+
+							if(isset($obj->deleteError))
+								{?>
+                                                                        <label style="margin-bottom: 50px;"><span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['deleteError'];
+									unset($_SESSION['Zend_Auth']['deleteError']);?><br><br> </span></label>
+								<? }
+				 		?>
+                       
+						<?php 
+						if(!empty($this->paginator) && count($this->paginator)>0)
+							{?>
+							 <div id="formcompanyDetails">						
+							 <div class="table">
+							 <div class="topRow1">								
+							   <span class="coloms">
+								
+								<? if($this->columnname!='date'){?>
+								<a href="<?=WEBSITE_URL?>adminforms/index/name/date/sort/asc/page/<?php echo $this->page_number?>/cid/<?php echo $this->cid?>" style="text-decoration:none;">
+								<b>Date Created</b>
+								</a><? }?>							
+								
+								<? if($this->columnname=='date' && $this->sortby=='desc'){?>
+								<a href="<?=WEBSITE_URL?>adminforms/index/name/date/sort/asc/page/<?php echo $this->page_number?>/cid/<?php echo $this->cid?>" style="text-decoration:none;">
+								<b>Date Created</b><img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle">
+								</a>
+								<? } ?>
+								
+								<? if($this->columnname=='date' && $this->sortby=='asc'){?>
+								<a href="<?=WEBSITE_URL?>adminforms/index/name/date/sort/desc/page/<?php echo $this->page_number?>/cid/<?php echo $this->cid?>" style="text-decoration:none;">
+								<b>Date Created</b><img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle;">
+								</a><? }?>
+								</span>	
+								
+								<span class="coloms" style="width:470px;">
+								
+							<? if($this->columnname!='form_name'){?>
+								<a href="<?=WEBSITE_URL?>adminforms/index/name/form_name/sort/asc/page/<?php echo $this->page_number?>/cid/<?php echo $this->cid?>" style="text-decoration:none;"><b>Form Name</b>
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='form_name' && $this->sortby=='desc'){?>
+								<a href="<?=WEBSITE_URL?>adminforms/index/name/form_name/sort/asc/page/<?php echo $this->page_number?>/cid/<?php echo $this->cid?>" style="text-decoration:none;"><b>Form Name</b>
+								<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle"></a>
+								<? }?>
+																
+								<? if($this->columnname=='form_name' && $this->sortby=='asc'){?>
+								<a href="<?=WEBSITE_URL?>adminforms/index/name/form_name/sort/desc/page/<?php echo $this->page_number?>/cid/<?php echo $this->cid?>" style="text-decoration:none;"><b>Form Name</b>
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle;">
+								</a>
+								<? } ?>
+								</span>						
+											
+								<span class="coloms" style="width:106px;">							
+								
+							<? if($this->columnname!='status'){?><a href="<?=WEBSITE_URL?>adminforms/index/name/status/sort/desc/page/<?php echo $this->page_number?>/cid/<?php echo $this->cid?>" style="text-decoration:none;"><b>Status</b></a><? }?>
+								<? if($this->columnname=='status' && $this->sortby=='desc'){?>
+								<a href="<?=WEBSITE_URL?>adminforms/index/name/status/sort/asc/page/<?php echo $this->page_number?>/cid/<?php echo $this->cid?>"  style="text-decoration:none;">
+								<b>Status</b><img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle">
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='status' && $this->sortby=='asc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>adminforms/index/status/sort/desc/page/<?php echo $this->page_number?>/cid/<?php echo $this->cid?>"><b>Status</b><img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle;"></a><? }?>
+								
+								</span>
+								
+								<span class="coloms last">
+								Action								
+								</span>																	
+							</div>
+							
+						
+					<?php 
+					$i=0; 					
+					foreach ($this->paginator as $forms_key =>$forms_data) {
+					?>
+						<div <?php if( (($i)%2) == 0 ) { echo 'class="grayRow"';} else { echo 'class="whiteRow"'; } ?>">
+        						<span class="coloms"><?php echo date('m/d/Y',strtotime($forms_data['date_created'])); ?></span>
+								<span class="coloms"  style="width:470px;"><?php echo stripslashes($forms_data['form_name']); ?></span>
+								<span class="coloms" style="width:106px;"><form method="POST" action="<?=WEBSITE_URL?>adminforms/changeformstatus/page/<?php echo $this->page_number?>/id/<?php echo stripslashes($forms_data['id']); ?>/cid/<?php echo $this->cid?>" name="frm<?php echo $forms_data['id']; ?>"><select style="width:100px;" onchange="document.frm<?php echo $forms_data['id'] ?>.submit();" name="status"><?php echo ($forms_data['status']=='1') ? '<option value="1" selected="selected">Active</option><option value="0">Inactive</option>' : '<option value="1">Active</option><option value="0" selected="selected">Inactive</option>'; ?></select><input type="hidden" name="id" value="<?php echo $forms_data['id']; ?>">
+								</form></span>
+								<span class="coloms last">
+                                                                    <a title="Edit Form" href="<?=WEBSITE_URL?>adminforms/overview/form_id/<?php echo stripslashes($forms_data['id']); ?>/cid/<?php echo $this->cid; ?>"><img src="<?=WEBSITE_URL?>images/pen.png"></A>&nbsp;<A title="Delete Form"  onclick="return confirm('Are you sure you want to delete this form?')" href="<?=WEBSITE_URL?>adminforms/delete/id/<?php echo stripslashes($forms_data['id']); ?>/cid/<?php echo $this->cid; ?>"><img style="margin-top: -4px;"  src="<?=WEBSITE_URL?>images/Close.png"></a>
+								</span>
+							</div>							
+						<?php 					
+							$i++;							
+							}?>
+						</div>											
+						<div class="total"><?php echo $this->paginator; ?></div><br>
+						<div class="total"> <span>Total Forms: <?php echo $this->total_forms;?></span>
+						<span>Total Active Forms: <?php echo $this->total_active_forms;?></span></div>	
+						</div>										
+						<? }else{ ?>
+						 <div id="formcompanyDetails">						
+							 <div>								
+							  <span>							   
+							   <font color='black'><b>No Forms found.</b></font>
+							   </span>
+							 </div>
+						</div>	 
+						<? }?>
+                    </div>
+                </div>
+            </article>  
+			  </div> 

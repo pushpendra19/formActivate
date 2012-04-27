@@ -1,0 +1,36 @@
+<div style='border: 1px solid #DDDDDD;min-height: 250px;overflow: hidden;padding: 15px;'>
+    <img src='<?php echo WEBSITE_IMG_URL."branding.png"; ?>' /> <hr />
+
+<div style='color:black;'>Hello <?php echo $this->firstname; ?> ,<br><br>
+            Thanks for siging up in <?php echo WEBSITE_NAME; ?><br><br>
+            Please find the details of your filled data.<br><br>
+            First name: <?php echo $this->firstname; ?><br><br>
+            Last name: <?php echo $this->lastname; ?><br><br>
+            Email: <?php echo $this->email; ?><br><br>
+            
+            <?php if ($this->companyname != '') : ?>
+                Company Name: <?php echo $this->companyname; ?><br><br>
+            <?php endif; ?>
+
+            <?php if($this->price != 0): ?>
+                Address1: <?php echo $this->address1; ?><br><br>
+                <?php if ($this->address2 != ''): ?>
+                    Address2: <?php echo $this->address2; ?><br><br>
+                <?php endif; ?>
+                City: <?php echo $this->city; ?><br><br>
+                State: <?php echo $this->state; ?><br><br>
+                Zip: <?php echo $this->zip; ?><br><br>
+                Phone: <?php echo $this->phone; ?><br><br>
+            <?php endif; ?>
+
+            <div style='color:black;'>Plan name: <?php echo $this->name; ?><br><br>
+            <?php if($this->price != 0): ?>
+                Price: <?php echo $this->price; ?><br><br>
+            <?php endif; ?>
+
+            <a href="<?php echo WEBSITE_URL . "customers/activate/link/" . $this->reset_link; ?>">Click here to activate your account.</a>
+            <br><br> Thanks <br><span style='color:black;'> <?php echo WEBSITE_NAME; ?></span></div>
+
+</div>
+
+</div>

@@ -1,0 +1,99 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: overview.phtml	#
+#			Description 	: this is First step to create form builder
+#			Created date	: 16/02/2011	#	
+#			Created By		:						#
+######################################################
+?>
+
+<style type="text/css">
+#formUserDetails label span {
+    width: 160px !important;
+}
+
+.preview_form{
+    padding: 30px;
+    border: solid 4px #A7A7A7;
+    -moz-border-radius: 5px;
+}
+</style>
+<div class="row-1 wrapper">
+    <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+           <div class="maxheight box">
+                        <div class="padding">    
+                        
+                        <?php /* if($this->admin_left_tab == 'admin_left_tab_for_customer'){ */ ?> 
+                        <?php //echo $this->render('admin_logged_in_left_panel.phtml'); 
+                       // } else {*/?>
+                            <?php echo $this->render('admin_form_logged_in_left_panel.phtml'); //} ?>
+                            
+                        </div>
+                    </div>
+            </article>     
+           
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-2" style="width:548px;" <? }else{?> class="maxheight col-4" style="width:706px;"<? }?> >            <form id="formID1" name="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>forms/formsubmit">
+                <div <?php 	if((count($this->fields)>6)) { ?>class="maxheight box" style="width:706px;height:407px;" <? }else{?> class=" box" style="width:706px;height:407px;" <? }?>> 
+                    <div class="forms-padding" style="padding-left: 0px !important;">
+                  <!--  <span style="float:right; cursor:pointer;"><input  style="width:240px;" class="buttonsNextSignin" type="button" value="Launch Visual Form Editor" onclick="getpreview('<?php echo $this->form_id;?>');"/></span>  -->
+                  
+                        <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Form Preview " style="width: 56px; height: 22px;margin-bottom: 25px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Form Preview </cufontext></cufon></h2>
+
+                        <div id="formUserDetails" style="min-height: 250px;float: left;overflow: hidden;" class="preview_form">
+                           <fieldset>
+                           <?php if(count($this->fields)>0){
+                           	 foreach ($this->fields as $data_key =>$data_val) { ?> 
+                           <label><span><?php echo stripslashes($data_val['label']); ?>
+                           <?php if(($data_val['field_required']=='yes') || $data_val['field_validate']!='none'){?> <strong>*</strong> <?php } ?>
+                           </span>
+                            	 <input name="<?php echo stripslashes($data_val['id']); ?>" id="<?php echo stripslashes($data_val['id']); ?>" <?php if(($data_val['field_required']=='yes') && $data_val['field_validate']!='none'){?> class="validate[required,custom[<?php echo $data_val['validate_class'];?>]]" <?php } else if($data_val['field_required']=='yes'){ ?> class="validate[required],custom[<?php echo $data_val['validate_class'];?>]" <? }?> value="" maxlength="50"/>                                </label>                                
+                              <? }
+                               ?>
+                              <div class="buttonsNextPrev" style="padding-top: 0px">
+                               	<input type="hidden"  name="form_id" id="form_id"   value="<?php echo (isset($this->form_id))? htmlspecialchars(stripslashes($this->form_id)) : '';?>"/>
+                                <input  style="width:130px;" class="buttonsNext" onclick="window.location='<?php echo WEBSITE_URL.'adminforms/formhtml/form_id/'.$this->form_id.'/cid/'.$this->cid; ?>'" type="button" value="GENERATE HTML" />
+                                <input  style="width:110px;" class="buttonsNext" type="button" value="Submit" />
+                             </div> 
+                              <?php }else { ?>
+
+                               <div class="no_proview">
+                                   No Form Preview, Because you must have to complete at least this step :  <br />
+
+                                   * Overview <br />
+                                   * Standard Form Fields or Custom Form Fields (at least 1 form field)  <br />
+
+                               </div>
+
+                              <?php }?>
+                               
+                            </fieldset>
+                           </div>                          
+                    </div>
+                </div>
+                </form>
+            </article>
+</div> 
+<div id="previewhiddendiv"></div>
+<script type="text/javascript">
+function validate_form(){
+              // binds form submission and fields to the validation engine
+           	  jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
+ }
+ 
+function getpreview(formid){ 		
+		var id=formid;
+		jQuery.post("<?php echo WEBSITE_URL?>adminforms/popuppreview/cid/<?=$this->cid?>",{form_id:id},function(response){		
+				if(response!=''){
+					jQuery("#previewhiddendiv").show();
+					jQuery('#previewhiddendiv').html(response);	
+				}else{
+				jQuery('#previewhiddendiv').html('');				
+				}				
+		});	
+}
+function hideme(hidediv){              
+           	  jQuery("#"+hidediv).hide();
+ }
+
+</script>

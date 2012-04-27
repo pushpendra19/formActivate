@@ -1,0 +1,20 @@
+<div style='border: 1px solid #DDDDDD;min-height: 250px;overflow: hidden;padding: 15px;'>
+    <img src='<?php echo WEBSITE_IMG_URL."branding.png"; ?>' /> <hr />
+
+    <div style='color:black;'>Dear <?php echo ucfirst($this->firstname); ?>,<br><br>
+        We have processed your request to downgrade your account.
+                                                Your new subscription plan entitles you to <?php echo $this->planname; ?> at a rate of $<?php echo $this->price; ?>
+        <?php if ((int)$this->prorated_price == 0) : ?>
+            Remember, you can upgrade and downgrade your account as frequently as you would like.<br><br>
+        <?php else : ?>
+            The difference of $<?php echo number_format($this->prorated_price, 2); ?> has been charged to your account. Remember, you can upgrade and downgrade your account as frequently as you would like.<br><br>
+        <?php endif; ?>
+
+        Thank you, <br><span style='color:black;'> <?php echo WEBSITE_NAME; ?> Team</span></div>
+
+</div>
+
+
+
+
+

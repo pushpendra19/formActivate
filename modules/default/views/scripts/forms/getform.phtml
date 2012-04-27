@@ -1,0 +1,305 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: overview.phtml	#
+#			Description 	: this is First step to create form builder
+#			Created date	: 16/02/2011	#
+#			Created By		:						#
+######################################################
+?>
+
+<style type="text/css">
+article, aside, audio, canvas, command, datalist, details, embed, figcaption, figure, footer, header, hgroup, keygen, meter, nav, output, progress, section, source, video {display:block;}
+mark, rp, rt, ruby, summary, time {display:inline;}
+* {margin:0; padding:0;}
+.bg {width:40%; background:url(<?php echo WEBSITE_URL?>images/tail-bot.gif) 0 bottom repeat-x;}
+img {border:0; vertical-align:top; text-align:left;}
+object {outline:none;}
+fieldset {border:0;}
+.clear {clear:both; width:100%; line-height:0; font-size:0;}
+.wrapper {width:100%; overflow:hidden;}
+.extra-wrap {overflow:hidden;}
+.extra-box {overflow:hidden;}
+.container {width:100%;}
+#content {width:100%; padding:36px 0px 0px 0px;}
+#content .row-1 {margin-bottom:5px;}
+#content .row-1 p strong {color:#5b5b5b;}
+#content .row-2 {color:#c1c1c1;}
+#content .row-2 p a {color:#c1c1c1;}
+#content .row-2 .button {color:#303030; background:#fff;}
+#content .row-2 .button:hover {color:#fff; background:#5b5b5b;}
+#content .row-2 h3 {color:#fff;}
+.spacer-1 {width:100%; background:url(<?php echo WEBSITE_URL?>images/pic-1.gif) 217px 0 repeat-y;}
+.spacer-2 {width:100%; background:url(<?php echo WEBSITE_URL?>images/pic-1.gif) 460px 0 repeat-y;}
+h3 {font-size:20px; line-height:1.2em; margin:0px 0 20px; color:#0a0a08; text-transform:uppercase; font-weight:normal; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;}
+h3 span {color:#7f7f7f;}
+.head {padding-bottom:18px; margin-bottom:17px; background:url(<?php echo WEBSITE_URL?>images/pic-1.gif) 0 bottom repeat-x;}
+.buttons {padding-top:30px; overflow:hidden;}
+.buttons a {width:110px; text-align:center; padding:12px 0;}
+#formUserDetails {display:block;}
+#formUserDetails label {display:block; height:49px; overflow:hidden;}
+#formUserDetails label span{padding:7px 0px; font-size:12px; color:#303030; float:left; display:block; width:130px; font-weight:bold;}
+#formUserDetails label span strong{color:#FF0000; font-weight:bold;}
+#formUserDetails input {width:200px; font-size:12px; color:#303030; padding:7px 5px; font-family:Arial, Helvetica, sans-serif; border-top:1px solid #6f7070; border-left:1px solid #8e8e8e; border-right:1px solid #d5d6d6; border-bottom:1px solid #e0e0e0;  background:#FAFAFA;}
+#formUserDetails textarea {height:203px; overflow:auto; width:200px; font-size:12px; color:#303030; padding:7px 5px; font-family:Arial, Helvetica, sans-serif; border-top:1px solid #6f7070; border-left:1px solid #8e8e8e; border-right:1px solid #d5d6d6; border-bottom:1px solid #e0e0e0;  background:#eff0f0;}
+#formUserDetails p{padding:0px; margin:0px; font-size:12px;}
+#formcompanyDetails {display:block;}
+#formcompanyDetails label {display:block; height:49px; overflow:hidden;}
+#formcompanyDetails label span{padding:7px 0px; font-size:12px; color:#303030; float:left; display:block; width:130px; font-weight:bold;}
+#formcompanyDetails label span strong{color:#FF0000; font-weight:bold;}
+#formcompanyDetails input {width:200px; font-size:12px; color:#303030; padding:7px 5px; font-family:Arial, Helvetica, sans-serif; border-top:1px solid #6f7070; border-left:1px solid #8e8e8e; border-right:1px solid #d5d6d6; border-bottom:1px solid #e0e0e0;  background:#eff0f0;}
+#formcompanyDetails textarea {height:203px; overflow:auto; width:200px; font-size:12px; color:#303030; padding:7px 5px; font-family:Arial, Helvetica, sans-serif; border-top:1px solid #6f7070; border-left:1px solid #8e8e8e; border-right:1px solid #d5d6d6; border-bottom:1px solid #e0e0e0;  background:#eff0f0;}
+#formcompanyDetails select {width:212px; font-size:12px; color:#303030; padding:7px 5px; font-family:Arial, Helvetica, sans-serif; border-top:1px solid #6f7070; border-left:1px solid #8e8e8e; border-right:1px solid #d5d6d6; border-bottom:1px solid #e0e0e0;  background:#eff0f0; outline:none;}
+.buttonsNextPrev {padding-top:10px; overflow:hidden; text-align:left;padding-left:240px;}
+.buttonsNextPrev a { text-align:center; padding:12px 0; text-decoration:none;}
+
+
+#formUserDetails div input {background:none repeat scroll 0 0 #5B5B5B;color:#FFFFFF;padding-left:14px;width:90px;}
+
+.buttonsNextSignin:hover {
+    background: none repeat scroll 0 0 #303030;
+}
+
+
+.buttonsNext {display:inline-block; color:#fff; padding:12px 19px; text-transform:uppercase; background:#5b5b5b;}
+.buttonsNext:hover {background:#303030;}
+.box {width:100%; background:#fff;}
+.box .padding {padding:30px;}
+.box .forms-padding {padding:0px; font-family:Arial, Helvetica, sans-serif;font-size:100%;color:#939393;min-width:931px;position:relative;}
+input {width:200px; font-size:12px; color:#303030; padding:7px 5px; font-family:Arial, Helvetica, sans-serif; border-top:1px solid #6f7070; border-left:1px solid #8e8e8e; border-right:1px solid #d5d6d6; border-bottom:1px solid #e0e0e0;  background:#FAFAFA;}
+input, textarea {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+  background: #FAFAFA;
+}
+input:focus, textarea:focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  outline: 0;
+  outline: thin dotted \9;
+  /* IE6-8 */
+
+}
+
+input,textarea,select {
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+	-moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+	-ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+	-o-transition: border linear 0.2s, box-shadow linear 0.2s;
+	transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
+input:focus,textarea:focus {
+	border-color: rgba(82, 168, 236, 0.8);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+		rgba(82, 168, 236, 0.6);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+		rgba(82, 168, 236, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+		rgba(82, 168, 236, 0.6);
+	outline: 0;
+	outline: thin dotted \9;
+}
+input,textarea,select,.uneditable-input {
+	display: inline-block;
+	width: 210px;
+	padding: 4px;
+	margin-bottom: 0px;
+	font-size: 13px;
+	line-height: 18px;
+	color: #555555;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	line-height: 18px;
+	color: #555555;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	line-height: 18px;
+	color: #555555;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+label input,label textarea,label select {
+	display: block;
+	  background: #FAFAFA;
+}
+input.buttonsNextSignin:HOVER{background-color: #000;cursor: pointer}
+
+</style>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+
+<form id="formID1" name="formID1" method="post" action="<?php echo WEBSITE_URL?>forms/inquiry">
+     <div class="maxheight box" style="width:406px;min-height: 250px;float: left;overflow: hidden;">
+        <div class="forms-padding">
+            <h3><span><?php echo $this->formname;?></span></h3>
+                  <div id="formUserDetails">
+                       <fieldset>
+                       <table cellpadding="0">
+			                       <?php $i=1; foreach ($this->fields as $data_key =>$data_val) 
+			                       { ?>
+			                            <tr>
+		                           	 	 	<td valign="top">
+		                         				  <label>
+		                         				  		<span><?php echo stripslashes($data_val['label']); ?>
+		                           								<?php if(($data_val['field_required']=='yes')){?> <strong>*</strong> <?php } ?>
+		                           							</span>
+		                           					</label>   
+		                           				</td>
+		                           			<td <?php if($data_val['data_type'] == "textarea") echo "style='height:68px'";?> valign="top">		
+				                           		<?php if($data_val['field_status']=='custom')
+				                           		{ ?>
+				                           		
+				                           			<?php
+					                           			if($data_val['data_type'] == '' || $data_val['data_type'] == null || $data_val['data_type'] == "text")
+					                           			{ 
+					                           			?>
+				                           			
+				                           			<input type="text" name="custom<?php echo $data_val['field_id']; ?>" id="custom<?php echo $data_val['field_id']; ?>" value="" maxlength="50"/>
+				                           			
+				                           			<?php
+						                           			} 	
+						                           		 	if($data_val['data_type'] == "textarea")	
+						                           		 	{		
+						                           		?>
+						                           			<textarea  style="height: 50px" name="custom<?php echo $data_val['field_id']; ?>" id="custom<?php echo $data_val['field_id']; ?>" ></textarea>
+						                           			
+						                           		<?php }?>
+				                           			
+				                           			<input type="hidden"  name="announce_custom<?php echo $data_val['field_id']; ?>" id="announce_custom<?php echo $data_val['field_id']; ?>"   value="<?php if($data_val['field_announce']=='yes'){  echo "1_".$data_val['id'];  }else{ echo "0_".$data_val['id'];}?>"/>
+				                           		<?  } 
+				                           			else
+				                           			{ ?>
+													<input name="standard<?php echo stripslashes($data_val['field_id']); ?>" id="standard<?php echo stripslashes($data_val['field_id']); ?>" value="" maxlength="50"/><input type="hidden"  name="announce_<?php echo stripslashes($data_val['field_id']); ?>" id="announce_<?php echo stripslashes($data_val['field_id']); ?>"   value="<?php if($data_val['field_announce']=='yes'){ echo "1"; }else{ echo "0";}?>"/>
+												<?}$i++;?>       
+										<? }?>
+									</td>
+								</tr>	
+							</table>
+				                  <div class="buttonsNextPrev">
+				                      <input type="hidden"  name="fid" id="fid" value="<?php echo (isset($this->form_id))? htmlspecialchars(stripslashes($this->form_id)) : '';?>"/>
+				                      <input type="hidden"  name="authorizationkey" id="authorizationkey"   value="<?php echo $this->authorizationkey;?>"/>
+				                      <input class="buttonsNextSignin" type="submit" value="Submit"  onclick="return validate_form()"/>
+				                  </div>
+                       </fieldset>
+               </div>
+        </div>
+     </div>
+</form>
+
+<script type="text/javascript">
+function trim(s)
+{
+	return s.replace(/^\s+|\s+$/g, '') ;
+}
+function validate_form()
+{
+	var ck_name = /^[A-Za-z ]{3,50}$/;
+	var zip_chk = /^[0-9]{6}$/;
+	var phone_chk = /^[0-9"'\-\(\)\ ]{3,20}$/;
+	var email_chk = /^([A-Za-z0-9_\-\.\'])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,6})$/;
+	var interest_chk= /^[A-Za-z0-9"'\,\.\-\_\&\ ]{3,1000}$/;
+	var company_chk= /^[A-Za-z0-9"'\,\.\-\_\@\&\ ]{3,1000}$/;
+
+
+<?php $ji=1; foreach ($this->fields as $data_key =>$data_val) {
+	if(($data_val['field_required']=='yes' || $data_val['field_announce'] == 'yes' || $data_val['field_validate']!='none') && $data_val['field_status']=='custom')
+	{
+	?>
+        <?php 
+        	if(($data_val['field_required']=='yes')) 
+       		{   ?>
+
+       				
+            	if(trim(document.formID1.custom<?php echo $data_val['field_id']; ?>.value) == '' || document.formID1.custom<?php echo $data_val['field_id']; ?>.value == null || document.formID1.custom<?php echo $data_val['field_id']; ?>.value == 'undefined' )
+            	 {
+					document.formID1.custom<?php echo $data_val['field_id']; ?>.focus();
+					alert('Please specify <?=$data_val['label']?>');
+					return false;
+				}
+       <?php }  ?>
+	<?php
+
+	if($data_val['field_validate']=='email')
+	{ ?>
+	if(trim(document.formID1.custom<?php echo $data_val['field_id']; ?>.value) != '' && !email_chk.test(document.formID1.custom<?php echo $data_val['field_id']; ?>.value))
+		{
+			alert('Please enter valid email.');
+			document.formID1.custom<?php echo $data_val['field_id']; ?>.focus();
+			return false;
+		 }
+	<? }
+
+	if($data_val['field_validate']=='phone'){ ?>
+	if(document.formID1.custom<?php echo $data_val['field_id']; ?>.value != '' && !phone_chk.test(document.formID1.custom<?php echo $data_val['field_id']; ?>.value)){
+			alert('Please enter valid phone.');
+			document.formID1.custom<?php echo $data_val['field_id']; ?>.focus();
+			return false;
+		 }
+	<? }
+
+	if($data_val['field_validate']=='zip'){ ?>
+	if(trim(document.formID1.custom<?php echo $data_val['field_id']; ?>.value) != '' && !zip_chk.test(document.formID1.custom<?php echo $data_val['field_id']; ?>.value)){
+			 alert('Please specify valid Zip.');
+			 document.formID1.custom<?php echo $data_val['field_id']; ?>.focus();
+			 return false;
+		 }
+	<? }
+	
+
+ }
+	if(($data_val['field_required']=='yes' || $data_val['field_announce'] == 'yes' || $data_val['field_validate']!='none') && $data_val['field_status']=='standard'){?>
+   <?php 
+   if(($data_val['field_required']=='yes')) 
+   {?>
+	if(trim(document.formID1.standard<?php echo $data_val['field_id'] ?>.value) == ''){
+		document.formID1.standard<?php echo $data_val['field_id']?>.focus();
+		alert('Please specify <?php echo $data_val['label']?>.');
+		return false;
+	}
+<?php } ?>
+
+	<?php if($data_val['field_validate']=='email'){ ?>
+		if(trim(document.formID1.standard<?php echo $data_val['field_id']; ?>.value) != '' && !email_chk.test(document.formID1.standard<?php echo $data_val['field_id']; ?>.value)){			 
+            alert('Please specify valid <?php echo $data_val['label']; ?>.');
+			 document.formID1.standard<?php echo $data_val['field_id'] ?>.focus();
+			 return false;
+		 }
+	<? }
+
+	if($data_val['field_validate']=='phone' ){ ?>
+		if(document.formID1.standard<?php echo $data_val['field_id']; ?>.value != '' && !phone_chk.test(document.formID1.standard<?php echo $data_val['field_id']; ?>.value)){
+			alert('Please specify valid <?php echo $data_val['label']; ?>.');
+			document.formID1.standard<?php echo $data_val['field_id'] ?>.focus();
+			return false;
+		 }
+	<? }
+
+	if($data_val['field_validate']=='zip'){ ?>
+		if(trim(document.formID1.standard<?php echo $data_val['field_id']; ?>.value) != '' && !zip_chk.test(document.formID1.standard<?php echo $data_val['field_id']; ?>.value)){
+			alert('Please specify valid <?php echo $data_val['label']; ?>.');
+			document.formID1.standard<?php echo $data_val['field_id'] ?>.focus();
+			return false;
+		}
+	<? }
+	 } $ji++; }  ?>
+}
+</script>

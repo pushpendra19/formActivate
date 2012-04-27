@@ -1,0 +1,94 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<form id="formID1" class="formular" method="post" action="#">
+ 	<div class="row-1 wrapper">
+            <article class="maxheight col-1" style="width:220px;" >
+                    <div class="maxheight box">
+                        <div class="padding">
+                             <?php   echo $this->render('logged_in_left_panel.phtml'); ?> 
+                        </div>
+                    </div>
+            </article>  
+            
+            
+              <article class="maxheight col-2" style="width:630px;"> 
+                <div class="maxheight box">
+                    <div class="padding">
+                        <h2 class="entry-title float_left" style="width: 100px;"><cufon class="cufon cufon-canvas" alt="Overview " style="width: 56px; height: 22px;margin-bottom: 25px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Overview </cufontext></cufon></h2>
+
+                        <span class="rem_class float_right" style="width: 453px; font-weight: bold; color: #666;text-align: right">(You have <?php echo $this->total_remaining_calls; ?> remaining minutes)</span>
+                         <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+							if(isset($obj->loginError)){?>
+							<span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['loginError'];									?><br></span><? }?> 
+                        <?php if($this->plan_status==2){?><span class="greencolor float_left"><br />Your plan will be canceled at the end of the billing cycle.<br><br></span><?}?>
+                         <?php
+						if($this->plan_status==4 && !empty($_SESSION['org_price'])){?><span class="greencolor float_left">You are currently subscribed to the $<?=$_SESSION['org_price']?> plan. At your request, we will be downgrading your service to the $<?=$this->plan_price?> plan at the end of your billing cycle, which is <?=$_SESSION['old_plan_end_date']?>
+						<br><br></span><?}?>          		                                                  					           	
+                         <?php if($this->plan_status==5){?><span class="greencolor float_left"><br />Your plan has been upgraded to the $<?=$this->plan_price?> plan.<br><br></span><?}?>          		                 <?php
+                         $_SESSION['old_plan_end_date']='';
+                         $_SESSION['org_price']='';
+                         unset($_SESSION['old_plan_end_date']);
+                         unset($_SESSION['org_price']);
+                        // echo $this->plan_status." ".$this->plan_price;
+                        // echo $_SESSION['old_plan_end_date']." $".$_SESSION['org_price'];
+                         ?>                                 					           			
+                        <div id="formcompanyDetails" style="clear: both !important;">
+                        
+                        	<?php 
+                        	unset($_SESSION['Zend_Auth']['loginError']);
+                        	//if($this->user_type!='1'){?>
+						
+							<div class="section">
+								<span class="btn buttonsNext" style="width: 180px;height: 20px"><a href="<?php echo WEBSITE_URL?>customers/editaccountdetails/id/<?php echo $this->id;?>" class="linkInsideButton">Edit Account Details</a></span>
+								<address><strong><?php if($this->firstname!=''){ echo htmlspecialchars(stripslashes(ucfirst($this->firstname))); }?><?php if($this->lastname!=''){ echo " ".htmlspecialchars(stripslashes(ucfirst($this->lastname))); }?></strong><br>
+								<?php if($this->companyname!=''){ echo htmlspecialchars(stripslashes(ucfirst($this->companyname))); echo "<br>"; }?>
+								<?php if($this->address1!=''){  echo htmlspecialchars(stripslashes($this->address1));  echo "<br>";}?>
+								<?php if($this->address2!=''){  echo htmlspecialchars(stripslashes($this->address2));  echo "<br>";}?>
+								<?php if($this->city!=''){  echo htmlspecialchars(stripslashes($this->city));  echo ", ";}?>
+								<?php if($this->state!=''){  echo htmlspecialchars(stripslashes($this->state));  echo " ";}?>								
+								<?php if($this->zip!=''){  echo htmlspecialchars(stripslashes($this->zip));  echo "<br>";}?>
+								<?php if($this->phone!=''){  echo htmlspecialchars(stripslashes($this->phone));  echo "<br>";}?>
+								
+								</address>
+							</div>
+							<div class="section">
+								<span class="btn buttonsNext" style="width: 180px;height: 20px"><a href="<?php echo WEBSITE_URL?>customers/editpaymentdetails/id/<?php echo $this->id;?>" class="linkInsideButton">Edit Payment Details</a></span>
+								<strong><?php if($this->card_type!=''){  echo htmlspecialchars(stripslashes($this->card_type));}?></strong><br>
+																
+								      <?php if($this->card_num!=''){ 
+                                	if($this->card_type!='American Express'){
+                                	?>                               
+                          		  XXXX XXXX XXXX XXXX<?php //echo htmlspecialchars(stripslashes($this->card_num));?>
+                                <?php }else {
+                                ?>
+                                 XXXX XXXXXX XXXXX<?php //echo htmlspecialchars(stripslashes($this->card_num));?>
+                                
+                                <?php }
+                                echo "<br>";
+                                 }?>  
+								
+								Exp: <?php if($this->expiry_month!=''){  echo htmlspecialchars(stripslashes($this->expiry_month));  echo " /";}?>
+								<?php if($this->expiry_year!=''){  echo htmlspecialchars(stripslashes($this->expiry_year));  echo "<br>";}?>
+								<?php if($this->card_name!=''){  echo htmlspecialchars(stripslashes($this->card_name));  echo "<br>";}?>								
+								<?php // if($this->card_cvv!=''){  echo htmlspecialchars(stripslashes($this->card_cvv));  echo "<br>";}?>
+								<?php //if($this->phone!=''){  echo htmlspecialchars(stripslashes($this->phone));  echo "<br>";}?>
+							</div>
+							<div class="section">
+								<span class="btn buttonsNext" style="width: 180px;height: 20px"><a href="<?php echo WEBSITE_URL?>customers/editplandetails/id/<?php echo $this->id;?>" class="linkInsideButton">Edit plan Details</a></span>
+								<strong>Plan:</strong><br>
+								 <?php echo htmlspecialchars(stripslashes($this->plan_id));?> $<?php echo htmlspecialchars(stripslashes($this->plan_price));?><br> Billing Cycle: <?php echo $this->start_date?>-<?php echo $this->end_date?>
+							</div>
+							<div class="section">
+								<strong>API Key:</strong><br>
+								 <?php echo htmlspecialchars(stripslashes($this->api_key));?> 
+							</div>
+							<?php //}?>
+                        </div>
+                    </div>
+                </div>
+            </article> 
+			  </div>            
+        </form> 

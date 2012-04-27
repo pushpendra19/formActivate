@@ -1,0 +1,482 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<?php echo$this->headScript()->prependFile(__JS_DIRECTORY__.'gen_validatorv2.js',$type='text/javascript'); ?>
+<script src="<?php echo WEBSITE_EXTERNALJS_URL.'ui.datepicker.js'?>" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="<?php echo WEBSITE_CSS_URL.'ui.datepicker.css'?>" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" charset="utf-8">
+jQuery(function($){
+$(".dateinput").datepicker();
+});
+</script>
+<script type="text/javascript" charset="utf-8">
+function getshow(id,position)
+{
+jQuery("#id").show();
+}
+function getpreview(id,position)
+{	
+	var first_call_id=jQuery("#first_call_id").val();
+	if(first_call_id!=id){
+	jQuery("#first_call_id").val(id);
+	//alert(id+"==>"+position);
+	if(jQuery("#first_call_id").val()==id){
+	 var preview_hidden_value=jQuery('#preview_hidden_value').val();	
+	if(id!=''){
+//  var id=jQuery('#formid').val();
+		jQuery.post("<?php echo WEBSITE_URL?>admin/popupinquirypreview",{inquiry_id:id,position:position},function(response){	
+		//alert(response);
+		//exit;
+				if(response!='' && (first_call_id!=id)){
+					
+					jQuery("#previewhiddendiv").show();
+					jQuery('#previewhiddendiv').html(response);	
+				}else{
+				//jQuery('#previewhiddendiv').html('');
+				//jQuery("#previewhiddendiv").hide();				
+				}									
+		});	
+		jQuery('#preview_hidden_value').val('');
+	}else{
+	jQuery('#preview_hidden_value').val('');	
+	}
+}
+
+	}else{
+	
+	jQuery("#previewhiddendiv").show();
+	}
+}
+function hideme(hidediv){              
+           	  jQuery("#"+hidediv).hide();
+ }
+
+</script>
+<div id="previewhiddendiv"></div>
+<div class="row-1 wrapper">   
+  <article class="maxheight" >
+                <div class="maxheight box">
+                    <div class="padding"> 	
+						<div class="topRow"> 
+						<strong> Customer:</strong>
+						<select class="select1" name="customers" id="customers_top_id" onchange="ajaxserach(this.value)" style="width:120px;">												
+						<option value="allcustomers">All Customers</option>
+						<?php foreach ($this->members_data as $data_key =>$data_val) {?>
+							<option value="<?php echo $data_val->id;?>"  <?php if($this->drop_down_customer_id==$data_val->id){ echo "selected";}?>><?php echo stripslashes(ucfirst($data_val->firstname)); ?> <?php echo stripslashes(ucfirst($data_val->lastname)); ?></option>
+						<? }?>
+						</select>
+						<img src="<?=WEBSITE_URL?>images/ajaxloader.gif" style="display:none;" id="ajaximageid">
+						<span id="formsdiv" <?php if($this->selectcustomer==1){?>style="display:none;" <? }?>>
+						<strong> Forms: </strong> <select class="select1" name="forms" id="forms_top_id"  onchange="serach(this.value,'form_id','<?=$this->page_number?>')" style="width:150px;">
+						<!--<option value="0">Select</option>-->
+						<?php foreach ($this->forms_data as $data_key =>$data_val) {?>
+							<option value="<?php echo $data_val->id;?>" <?php if($this->drop_down_form_id==$data_val->id){ echo "selected";}?>><?php echo stripslashes(ucfirst($data_val->form_name)); ?></option>
+						<? }?>
+						</select></span>
+						<strong> Billing Period:</strong>
+						<span id="admin_calender_first_time">				 
+						 <input class="dateinput" name="fromdate" type="text" id="fromdate" value="<?php echo $this->fromdates?>" style="width:70px;">&nbsp;-&nbsp; 
+						 <input class="dateinput" name="todate" type="text" id="todate" value="<?php echo $this->todates?>" style="width:70px;" onchange="serach_date('<?=$this->page_number?>')">
+						 </span>				
+						
+						<span id="user_calender_first_time">
+						
+						<input type="hidden" value="<?=$this->select_billing_ajax?>" name="select_billing_ajax_hidden_for_selected" id="select_billing_ajax_hidden_for_selected">
+						 <select class="selectcustomer" style="margin-right:0;width:185px;" id="select_billing_ajax"  onchange="serach_date_by_user(this.value)">						 
+						</select> 
+						</span> 	
+						
+						 
+						 <strong> Show:</strong> 
+						<select class="selectcustomer" style="margin-right:0;width:110px;" onchange="serach_all_calls(this.value,'limit','<?=$this->page_number?>')">						
+						<!--<option value="0">Select Calls</option>-->
+						<option value="1" <?php if($this->selectform==1){ echo "selected";}?>>All Inquiries</option>
+						<option value="2" <?php if($this->selectform==2){ echo "selected";}?>>Incomplete</option>
+						<option value="3" <?php if($this->selectform==3){ echo "selected";}?>>After hour</option>
+						<option value="4" <?php if($this->selectform==4){ echo "selected";}?>>Hang up</option>
+						<option value="5" <?php if($this->selectform==5){ echo "selected";}?>>Connected</option>		
+						</select> 
+						</div>				           		
+                        <h3>Reporting </h3>
+                          <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+
+							if(isset($obj->deleteError))
+								{?>
+									<label><span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['deleteError'];
+									unset($_SESSION['Zend_Auth']['deleteError']);?><br><br> </span></label>
+								<? }
+				 		?>
+                       
+						<?php 
+						if(!empty($this->paginator) && count($this->paginator)>0)
+							{?>
+							 <div id="formcompanyDetails">						
+							 <div class="table">
+							 <div class="topRow1">	
+							 <span class="coloms_reportings">
+							 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							 </span>
+							   <span class="coloms95">
+								<? if($this->columnname!='date_created'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/date_created/sort/asc/page/<?php echo $this->page_number?>">
+								Date
+								</a><? }?>							
+								
+								<? if($this->columnname=='date_created' && $this->sortby=='desc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/date_created/sort/asc/page/<?php echo $this->page_number?>">Date
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle"></a>
+								<? } ?>
+								
+								<? if($this->columnname=='date_created' && $this->sortby=='asc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/date_created/sort/desc/page/<?php echo $this->page_number?>">
+								Date<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;">
+								</a><? }?>
+								</span>	
+								
+								<span class="coloms95">
+								
+								<? if($this->columnname!='time'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/time/sort/asc/page/<?php echo $this->page_number?>">
+								Time
+								</a><? }?>							
+								
+								<? if($this->columnname=='time' && $this->sortby=='desc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/time/sort/asc/page/<?php echo $this->page_number?>">Time
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle"></a>
+								<? } ?>
+								
+								<? if($this->columnname=='time' && $this->sortby=='asc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/time/sort/desc/page/<?php echo $this->page_number?>">
+								Time<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;">
+								</a><? }?>
+								</span>						
+											
+								<span class="colomswidth">							
+								
+								<? if($this->columnname!='firstname'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/firstname/sort/asc/page/<?php echo $this->page_number?>">
+								First Name
+								</a><? }?>							
+								
+								<? if($this->columnname=='firstname' && $this->sortby=='desc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/firstname/sort/asc/page/<?php echo $this->page_number?>">First Name
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle"></a>
+								<? } ?>
+								
+								<? if($this->columnname=='firstname' && $this->sortby=='asc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/firstname/sort/desc/page/<?php echo $this->page_number?>">
+								First Name<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;">
+								</a><? }?>
+								</span>
+								
+								<span class="coloms95">
+								
+								<? if($this->columnname!='lastname'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/lastname/sort/asc/page/<?php echo $this->page_number?>">Last Name
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='lastname' && $this->sortby=='desc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/lastname/sort/asc/page/<?php echo $this->page_number?>">Last Name
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle"></a>
+								<? }?>
+																
+								<? if($this->columnname=='lastname' && $this->sortby=='asc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/lastname/sort/desc/page/<?php echo $this->page_number?>">Last Name
+								<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;">
+								</a>
+								<? } ?>
+								</span>
+								
+								<span class="colomswidth">
+								<? if($this->columnname!='caller_id'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/caller_id/sort/asc/page/<?php echo $this->page_number?>">Phone								
+								</a>
+								<? }?>
+								<? if($this->columnname=='caller_id' && $this->sortby=='desc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/caller_id/sort/asc/page/<?php echo $this->page_number?>">Phone
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle">
+								</a>
+								<? }?>								
+								<? if($this->columnname=='caller_id' && $this->sortby=='asc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/caller_id/sort/desc/page/<?php echo $this->page_number?>">Phone
+								<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;"></a><? }?>
+								</span>
+								
+								
+								
+								<span class="coloms95">
+								<? if($this->columnname!='call_duration'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/call_duration/sort/desc/page/<?php echo $this->page_number?>">Call Duration								
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='call_duration' && $this->sortby=='desc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/call_duration/sort/asc/page/<?php echo $this->page_number?>">Call Duration
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle"></a><? }?>
+								
+								<? if($this->columnname=='call_duration' && $this->sortby=='asc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/call_duration/sort/desc/page/<?php echo $this->page_number?>">
+								Call Duration<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;">
+								</a>
+								<? }?>								
+								</span>
+								
+								<!-- <span class="coloms call5">
+								
+								<? if($this->columnname!='connection_duration'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/connection_duration/sort/asc/page/<?php echo $this->page_number?>">Connection Duration							
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='connection_duration' && $this->sortby=='desc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/connection_duration/sort/asc/page/<?php echo $this->page_number?>">Connection Duration								
+								<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle">
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='connection_duration' && $this->sortby=='asc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/connection_duration/sort/desc/page/<?php echo $this->page_number?>">Connection Duration
+								<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;"></a><? }?>							
+								</span>
+								-->
+								
+								<span class="colomswidthlast last">
+								<? if($this->columnname!='inquiry_type'){?><A  style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/inquiry_type/sort/desc/page/<?php echo $this->page_number?>">Inquiry Type</a><? }?>
+								<? if($this->columnname=='inquiry_type' && $this->sortby=='desc'){?>
+								<A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/name/inquiry_type/sort/asc/page/<?php echo $this->page_number?>">
+								Inquiry Type<img src="<?=WEBSITE_URL?>images/down.png" style="vertical-align:middle">
+								</a>
+								<? }?>
+								
+								<? if($this->columnname=='inquiry_type' && $this->sortby=='asc'){?><A style="text-decoration: none;" href="<?=WEBSITE_URL?>admin/inquiry/customer_id/<?=$this->drop_down_customer_id?>/form_id/<?=$this->drop_down_form_id?>/name/inquiry_type/sort/desc/page/<?php echo $this->page_number?>">Inquiry Type<img src="<?=WEBSITE_URL?>images/up.png" style="vertical-align:middle;"></a><? }?>
+								
+								</span>
+																	
+							</div>
+					<?php 
+					$i=0; $top_position=316;	
+					foreach ($this->paginator as $data_key =>$data_val) {							
+					?>	
+					<input type="hidden" name="first_call_id" id="first_call_id" value="0">												
+					<div <?php if( (($i)%2) == 0 ) { echo 'class="grayRow"';} else { echo 'class="whiteRow"'; } ?> style="cursor:pointer;" onmouseover="getpreview('<?php echo $data_val->id;?>','<?=$top_position?>');"  onmouseout="hideme('previewhiddendiv')">							
+							<span class="coloms call5view">
+							<img src="<?=WEBSITE_URL?>images/magnifingimages.jpeg" alt="view" title="view">							
+							</span>
+	     		
+							<span class="coloms95"><?php echo date('m/d/Y',strtotime($data_val->date_created)); ?></span>
+							<span class="coloms95"><?php echo stripslashes($data_val->time); ?></span>
+								<span class="colomswidth"><?php if($data_val->firstname!=''){ echo stripslashes(ucfirst($data_val->firstname)); }else{ echo "-----";} ?></span>
+								<span class="coloms95"><?php if($data_val->lastname!=''){  echo stripslashes(ucfirst($data_val->lastname)); }else{ echo "-----";} ?></span>
+								<span class="colomswidth"><?php  if($data_val->caller_id!=''){ echo wordwrap(stripslashes($data_val->caller_id),12,"<br />\n",TRUE);}else{echo "-----";} ?></span>
+								<span class="colomswidth call5"><?php if($data_val->call_duration!=''){ 
+									//echo stripslashes(ucfirst($data_val->call_duration));
+									
+									if($data_val->call_duration>60)
+									{
+										$call_duration=$data_val->call_duration%60;
+										if($call_duration<10)
+										{
+											$call_duration='0'.$call_duration;
+										}
+										
+										$time=floor($data_val->call_duration/60);
+										echo $time.":".$call_duration;
+									}
+									else{
+										$call_duration=$data_val->call_duration;
+										if($call_duration<10)
+										{
+											$call_duration='0'.$call_duration;
+										}
+										echo "0:".$call_duration;
+									}
+								 }else{echo "-----";} ?></span>
+								<!--<span class="coloms call5"><?php if($data_val->connection_duration!=''){ 
+									//echo stripslashes(ucfirst($data_val->connection_duration)); 
+								if($data_val->connection_duration>60)
+									{
+										$connection_duration=$data_val->connection_duration%60;
+										if($connection_duration<10)
+										{
+											$connection_duration='0'.$connection_duration;
+										}
+										
+										$time=floor($data_val->connection_duration/60);
+										echo $time.":".$connection_duration;
+									}
+									else{
+										$connection_duration=$data_val->connection_duration;
+										if($connection_duration<10)
+										{
+											$connection_duration='0'.$connection_duration;
+										}
+										echo "0:".$connection_duration;
+									}
+								
+								}else{echo "-----";} ?></span> -->
+								<span class="colomswidthlast last">
+								<?php if(stripslashes(ucfirst($data_val->inquiry_type))=='Completed'){ echo "Connected";}else{echo stripslashes(ucfirst($data_val->inquiry_type)); } ?>
+								</span>
+															
+							</div>							
+						<?php 					
+							$i++;
+							$top_position=$top_position+21;?>
+							 <div id="formUserDetails<?php echo $data_val->id; ?>" style="background: none repeat scroll 0 0 #FFFFFF;border: 5px solid #666666;font: 12px Arial,Helvetica,sans-serif;
+    left: 610px;padding: 8px;text-align: justify;width: 286px;position: absolute; left: 12%;z-index:10;top:<?=$top_position?>px;">                       
+                         <h3>Inquiry <span> Details</span></h3>
+                           <fieldset style="color:#000;padding-left:40px;">                            
+                           <b>Date: </b> <?php echo date('m/d/Y',strtotime($data_val->date_created)); ?><br/><br/>
+                           <b>Time: </b> <?php echo $data_val->time ?><br/><br/>
+                           <b>First Name: </b> <?php echo $data_val->firstname ?><br/><br/>
+                           <b>Last Name: </b> <?php if(empty($data_val->lastname)) echo "N/A"; else echo $data_val->lastname ?><br/><br/>
+                           <b>Email: </b> <?php echo $data_val->email ?><br/><br/>
+                           <b>Address: </b> <?php if(empty($data_val->streetaddress)) echo "N/A"; else echo $data_val->streetaddress ?><br/><br/>
+                           <b>City: </b> <?php if(empty($data_val->city)) echo "N/A"; else echo $data_val->city ?><br/><br/>
+                           <b>State: </b> <?php if(empty($data_val->state)) echo "N/A"; else echo $data_val->state ?><br/><br/>
+                      <b>Call Duration: </b> <?php if($data_val->call_duration>60)
+									{
+										$call_duration=$data_val->call_duration%60;
+										if($call_duration<10)
+										{
+											$call_duration='0'.$call_duration;
+										}
+										
+										$time=floor($data_val->call_duration/60);
+										echo $time.":".$call_duration;
+									}
+									else{
+										$call_duration=$data_val->call_duration;
+										if($call_duration<10)
+										{
+											$call_duration='0'.$call_duration;
+										}
+										echo "0:".$call_duration;
+									} ?><br/><br/>
+                            </fieldset>
+                           </div>   
+						<?php	}?>
+						</div>											
+						<div class="total"><?php echo $this->paginator; ?></div>	
+						<div class="total"><br> <span>Monthly Calls: <?php echo $this->total_inquires;?></span>  <span>Total Calls: <?php echo $this->total_calls;?></span>  <span>Total Connections: <?php echo $this->total_connections;?></span></div>	
+						</div>										
+						<? }else{ ?>
+						 <div id="formcompanyDetails">						
+							 <div>								
+							  <span>							   
+							   <font color='black'><b>No Inquiry found.</b></font>
+							   </span>
+							 </div>
+						</div>	 
+						<? }?>
+                    </div>
+                </div>
+            </article>  
+			  </div> 
+<script type="text/javascript">
+function serach(id,columnname,page_number){
+	var cid=jQuery('#customers_top_id').val();		
+	window.location.href='<?=WEBSITE_URL?>admin/inquiry/customer_id/'+cid+'/form_id/'+id+'/page/'+page_number
+}
+
+function serach_date(page_number){
+	
+	var ftdate=jQuery('#select_billing_ajax').val();	
+	var cid=jQuery('#customers_top_id').val();	
+	var form_id=jQuery('#forms_top_id').val();
+	
+	/*alert(ftdate+'- in the 281 --');
+	if(ftdate!='){
+	 window.location.href='<?=WEBSITE_URL?>admin/inquiry/customer_id/'+cid+'/form_id/'+form_id+'/'+ftdate+'/page/'+page_number
+	}else{		*/
+		var fromdate=jQuery('#fromdate').val();		
+		var todate=jQuery('#todate').val();		
+		
+		//alert(fromdate+'- in the 288 --'+todate);
+		
+		if(cid !='' && form_id!='' && todate!='' && fromdate!=''){			
+		 window.location.href='<?=WEBSITE_URL?>admin/inquiry/customer_id/'+cid+'/form_id/'+form_id+'/fromdate/'+fromdate+'/todate/'+todate+'/page/'+page_number
+		}else if(todate!='' && fromdate!=''){				
+		 window.location.href='<?=WEBSITE_URL?>admin/inquiry/fromdate/'+fromdate+'/todate/'+todate+'/page/'+page_number
+		}
+	//}
+}
+
+
+function serach_date_by_user(serarch_fromdate_and_todate_included){		
+	var cid=jQuery('#customers_top_id').val();	
+	var form_id=jQuery('#forms_top_id').val();
+	//var page_number=jQuery('#forms_top_id').val();
+	var page_number=1;
+	
+	if(cid !='' && form_id!='' && serarch_fromdate_and_todate_included!=0){			
+		 window.location.href='<?=WEBSITE_URL?>admin/inquiry/customer_id/'+cid+'/form_id/'+form_id+'/'+serarch_fromdate_and_todate_included+'/page/'+page_number
+	}	
+}
+
+
+function serach_all_calls(values,columnname,page_number){	
+window.location.href='<?=WEBSITE_URL?>admin/inquiry/allforms/'+values+'/page/'+page_number
+}
+
+
+function ajaxserach(customer_id){ 
+		if(customer_id=='allcustomers'){
+			//alert(customer_id);
+		jQuery('#formsdiv').hide();			
+		window.location.href='<?=WEBSITE_URL?>admin/inquiry/allcustomers/1';
+		}else{			
+		jQuery('#admin_calender_first_time').hide();
+		jQuery('#user_calender_first_time').show();	
+		jQuery('#formsdiv').show();
+		jQuery('#ajaximageid').show();									
+		jQuery.post("<?php echo WEBSITE_URL?>admin/getformsusingcustomerid",{customer_id: customer_id},function(response){		
+			if(response!=''){
+				jQuery('#ajaximageid').hide();
+				jQuery('#forms_top_id').html(response);				
+				}else{
+				jQuery('#ajaximageid').hide();
+				}				
+		});	
+		
+		jQuery.post("<?php echo WEBSITE_URL?>admin/getbillingperiod",{customer_id: customer_id},function(response){		
+			if(response!=''){
+				//jQuery('#ajaximageid').hide();
+				jQuery('#select_billing_ajax').show();	
+				jQuery('#select_billing_ajax').html(response);				
+				}else{
+				//jQuery('#ajaximageid').hide();
+				}				
+		});	
+	}
+}
+
+
+$(document).ready(function() {
+	var cid=jQuery('#customers_top_id').val();	
+	
+	if(cid>0){
+		//alert(cid);
+		var selected_option=jQuery('#select_billing_ajax_hidden_for_selected').val();	
+	jQuery.post("<?php echo WEBSITE_URL?>admin/getbillingperiodselected",{customer_id: cid,selected_option: selected_option},function(response){		
+			jQuery('#admin_calender_first_time').hide();	
+			if(response!=''){
+				jQuery('#select_billing_ajax').show();
+				jQuery('#select_billing_ajax').html(response);				
+				}else{
+				//jQuery('#ajaximageid').hide();
+				}				
+		});	
+	}else{
+		jQuery('#select_billing_ajax').hide();
+		jQuery('#admin_calender_first_time').show();		
+	}     // put all your jQuery goodness in here.
+});
+
+
+
+
+</script>			  

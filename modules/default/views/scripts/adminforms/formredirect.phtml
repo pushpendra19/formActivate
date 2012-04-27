@@ -1,0 +1,165 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: overview.phtml	#
+#			Description 	: this is First step to create form builder
+#			Created date	: 16/02/2011	#	
+#			Created By		:						#
+######################################################
+?> 
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL . 'js/jquery.qtip.js' ?>"></script>
+
+<script type="text/javascript">
+
+
+    jQuery(document).ready(function($){
+
+                $('select,input[title]').qtip({
+                   position: {
+                       my: 'left center',
+                       at: 'right center'
+                    },
+                    style: {
+                       classes: ''
+                    }
+                });
+});
+
+</script>
+<div class="row-1 wrapper">
+<article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+           <div class="maxheight box">
+                        <div class="padding">    
+                        
+                        <?php /* if($this->admin_left_tab == 'admin_left_tab_for_customer'){ */ ?> 
+                        <?php //echo $this->render('admin_logged_in_left_panel.phtml'); 
+                       // } else {*/?>
+                            <?php echo $this->render('admin_form_logged_in_left_panel.phtml'); //} ?>
+                            
+                        </div>
+                    </div>
+            </article>     
+           
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-2" style="width:548px;" <? }else{?> class="maxheight col-4" style="width:706px;"<? }?> >
+                <form id="formID1" name="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>adminforms/formredirect/form_id/<?=$this->form_id?>/cid/<?=$this->cid?>">
+                 <div class="box" style="height:426px;">               
+                    <div class="forms-padding">            		
+
+                        <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Form Redirect " style="width: 56px; height: 22px;margin-bottom: 25px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Form Redirect </cufontext></cufon></h2>
+
+                        <div id="formUserDetails">
+                            <fieldset>
+                            	 <label><span>Select Type of Form Redirect<strong>*</strong></span>
+                                <select title="<?php echo REDIRECT_TYPE; ?>" name="redirect_type" id="redirect_type" onchange="hideshow(this.value)" >
+                               		 
+                                       <option value="1" <?php if($this->url_type=='1') echo "selected='selected'"; else '';?>>HTTP URL</option> 
+                                       <option value="2" <?php if($this->url_type=='2') echo "selected='selected'"; else '';?>>No Redirect</option> 
+                                </select>
+                                </label>
+                                <label id="httpurlid"><span>HTTP URL<strong>*</strong></span>
+                            	 <input title="<?php echo REDIRECT_URL; ?>"  name="url" id="url" value="<?php echo (isset($this->url))? htmlspecialchars(stripslashes($this->url)) : '';?>" maxlength="100" style="width:188px;"/>
+                            	<div class="formError" onclick="hideshowdiv('span_url2')" id="span_url2" style="display:none; top: 241px; left: 869px; margin-top: 0px; opacity: 0.87;"><div class="formErrorContent" id="span_url"><br></div></div>                 </label>
+                                                           
+                             
+                                
+                            <div class="buttonsNextPrev"> 
+                                <input class="buttonsNext"  style="width:90px;" type="button" value="Previous" onclick="go_prev('Previous');" /> 
+				                <input class="buttonsNext"  style="width:90px;" type="button" value="Next"  onclick="go_prev('Next')" /> 
+				                <input type="hidden"  name="form_id" id="form_id"   value="<?php echo (isset($this->form_id))? htmlspecialchars(stripslashes($this->form_id)) : '';?>" />
+				                <input type="hidden"  name="url_value" id="url_value"   value="<?php echo $this->url_type?>"/> 
+				                <input type="hidden" name="form_action" id="form_action" value="">  
+                                                <input type="hidden" name="jsflag" id="jsflag" value="<?php if(isset ($this->url_type)) echo $this->url_type == 1 ? 0 : 1; ?>">
+                            </fieldset>
+                            </div>                       
+                    </div>
+                </div>
+                </form>
+            </article>
+</div> 
+<script type="text/javascript">
+ function go_prev(type)
+ {
+	var jsflag=jQuery('#jsflag').val();
+	jQuery('#form_action').val(type);
+	//return false;
+ 	validate_form();
+ 	//document.form.submit();
+ 	if(jsflag==1){
+ 		document.formID1.submit();
+	}
+ 	//var myString = '<?=WEBSITE_URL?>'+'forms/overview/form_id/'+'<?=$this->form_id;?>';	window.location=myString;
+ }
+ 
+function hideshow(valuehttp){
+	//alert(valuehttp);
+	if(valuehttp==1){
+		jQuery('#httpurlid').show();
+		jQuery('#jsflag').val('0'); // FOR SUBMITTING FORM 
+	}else{
+		jQuery('#span_url2').hide();				
+		jQuery('#span_url').hide();		
+		jQuery('#httpurlid').hide();
+		jQuery('#jsflag').val('1'); // FOR SUBMITTING FORM 
+	}	
+}
+function hideshowdiv(span_url2){
+jQuery('#'+span_url2).hide();				
+}
+ 
+function validate_form(){   
+
+		var valuehttp=jQuery('#redirect_type').val();			
+		var url=jQuery('#url').val();
+
+		var url_chk= /^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.){1}([\w]+)(.[\w]+){1,2}$/;
+		
+		var url_chk1= /http[s]?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?/;
+		var testVal = url.trim(); 
+		
+		if(valuehttp==1){		
+				
+			if(url.trim()  =='')	
+			{
+				jQuery('#span_url2').show();				
+				jQuery('#span_url').show();				
+				jQuery('#span_url').html('Please enter url.');	
+				jQuery('#jsflag').val('0'); // FOR SUBMITTING FORM 
+				return false;
+			}else if(testVal.length > 9 && url_chk.test(testVal)) { 
+				jQuery('#span_url2').hide();				
+				jQuery('#span_url').hide();	
+				jQuery('#jsflag').val('1'); // FOR SUBMITTING FORM
+			}else if(url_chk1.test(testVal)) { 
+				jQuery('#span_url2').hide();				
+				jQuery('#span_url').hide();	
+				jQuery('#jsflag').val('1'); // FOR SUBMITTING FORM
+			} else { 
+				jQuery('#span_url2').show();				
+				jQuery('#span_url').show();	
+				jQuery('#url').focus();			
+				jQuery('#span_url').html('Please enter valid url.');
+				jQuery('#jsflag').val('0'); // FOR SUBMITTING FORM 
+				return false;
+			}
+		}		
+				
+	} 
+ 
+$(document).ready(function() {
+		var url_value=jQuery('#url_value').val();			
+		if(url_value==2){
+			jQuery('#span_url2').hide();				
+			jQuery('#span_url').hide();		
+			jQuery('#httpurlid').hide();
+		}  
+});	
+</script>
+
+<?php
+
+$session = new Zend_Session_Namespace('Zend_Auth');
+$session->redirect_visited = true;
+
+?>

@@ -1,0 +1,169 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: header.thtml	#
+#			Description 	: this is header to work in the front end site #
+#			Created date	: 19/01/2011	#	
+#			Created By		: Manoj Kumar Chauhan	#
+######################################################
+
+$string=$_SERVER['REQUEST_URI'];
+$find11='adminforms';
+$find='overview';
+$find2='stdfield';
+$find3='customfield';
+$find4='opthrs';
+$find5='businessrule';
+$find6='emailnotification';
+$find7='formredirect';
+$find8='reporting';
+$find9='preview';
+$find10='formhtml';
+$pos11=strpos($string,$find11); 
+$pos=strpos($string,$find);
+$pos2=strpos($string,$find2);
+$pos3=strpos($string,$find3);
+$pos4=strpos($string,$find4);
+$pos5=strpos($string,$find5);
+$pos6=strpos($string,$find6);
+$pos7=strpos($string,$find7);
+$pos8=strpos($string,$find8);
+$pos9=strpos($string,$find9);
+$pos10=strpos($string,$find10);
+
+
+$session = new Zend_Session_Namespace('Zend_Auth');
+
+?>
+<!--header start here-->	
+	<?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  	
+            <div class="maxheight box">
+                        <div class="">
+
+                            <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Customer: " style="width: 56px; height: 22px;margin-bottom: 5px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Customer: </cufontext></cufon></h2>
+
+                            <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="<?php if($this->firstname!=''){ echo htmlspecialchars(stripslashes(ucfirst($this->firstname))); echo "&nbsp;".htmlspecialchars(stripslashes(ucfirst($this->lastname))); }?>" style="width: 56px; height: 22px;margin-bottom: 25px;clear: both;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext><?php if($this->firstname!=''){ echo htmlspecialchars(stripslashes(ucfirst($this->firstname))); echo "&nbsp;".htmlspecialchars(stripslashes(ucfirst($this->lastname))); }?> </cufontext></cufon></h2>
+						<div class="leftCol">
+								<ul class="tabs">
+									<li class="active" id="accountlitab"><a href="#" onclick="settabs('accountlitab','account','formlitab','forms')" style="cursor:pointer;">Account</a></li>
+									<li id="formlitab"><a href="#"  style="cursor:pointer;" onclick="settabs('formlitab','forms','accountlitab','account')">Form</a></li>
+								</ul>
+							</div>
+							<div id="account" style="display:none;">							
+								<div class="account">
+									<ul>
+										<li class="title1"><strong>Account</strong></li>
+										<?php 
+									if($_SESSION['Zend_Auth']['user_type']==0){?>
+									<li <?php if($this->actionNameLeftPanel == 'left_customers'){?> class="active"<? }?>> <a href="<?php echo WEBSITE_URL?>customers/myaccount/id/<?php echo $this->cid?>">Overview</a></li>
+									<? }else{?> 
+									<li <?php if($this->actionNameLeftPanel == 'left_customers'){?> class="active"<? }?>> <a href="<?php echo WEBSITE_URL?>/forms/cid/<?php echo $this->cid?>">Form List</a></li>
+									<li <?php if($this->actionNameLeftPanel == 'left_customers'){?> class="active"<? }?>> <a href="<?php echo WEBSITE_URL?>customers/edit/id/<?php echo $this->cid?>">Overview</a></li>
+									<? }?>
+									<li <?php if($this->actionNameLeftPanel == 'editaccountdetails'){?> class="active"<? }?>>	
+									<a href="<?php echo WEBSITE_URL?>customers/editaccountdetails/id/<?php echo $this->cid?>">Edit Account Details </a></li>
+									
+									<li <?php if($this->actionNameLeftPanel == 'changepassword'){?> class="active" <? }?>><a href="<?php echo WEBSITE_URL?>customers/changepassword/id/<?php echo $this->cid?>">Change Password<a/></li>
+									<li <?php if($this->actionNameLeftPanel == 'editplandetails'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/editplandetails/id/<?php echo $this->cid?>">Edit Plan Details</a></li>
+									</ul>
+								</div>
+								
+								<br>
+                            	<div class="account">
+                                <ul>
+									<li class="billing"><strong>Billing</strong></li>
+									<li <?php if($this->actionNameLeftPanel == 'billinghistory'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/billinghistory/id/<?php echo $this->cid?>">Billing History</a></li>
+									<li <?php if($this->actionNameLeftPanel == 'editpaymentdetails'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/editpaymentdetails/id/<?php echo $this->cid?>">Edit Payment Details</a></li>
+									<li <?php if($this->actionNameLeftPanel == 'cancelsubscription'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/cancelsubscription/id/<?php echo $this->cid?>">Cancel Subscription</a></li>
+								</ul>
+                            </div>   
+                            </div>                         	
+							
+							<div id="forms">
+								<div class="account">
+									<ul>
+										<li class="title1"><strong>Setup</strong></li>
+										<!--<li>Overview</li>
+										<li>Standard Form Fields</li>
+										<li>Custom Form Fields</li>
+										<li>Hours of Operations</li>
+										<li>Business Logic</li>
+										<li>Email Notification</li>
+										<li>Form Redirect</li>
+										<li>Reporting</li>-->
+						
+                                                <li><a href="<?php echo WEBSITE_URL?>adminforms/index/cid/<?php echo $this->cid?>">Form List</a></li>
+                                                <li class="<?php if($pos===false){ echo ""; } else {?> active<? }?>"><a href="<?php echo WEBSITE_URL?>adminforms/overview/form_id/<?php echo $this->form_id?>/cid/<?php echo $this->cid?>">Overview</a><?php if($session->overview_done): ?><img title="This section is complete" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'OK.png'; ?>"/> <?php elseif($session->overview_visited): ?> <img title="This section is required" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'Error.png'; ?>"/> <?php endif; ?></li>
+                                                <li class="<?php if($pos2===false){ echo ""; } else {?> active<? }?>"><a href="<?php echo WEBSITE_URL?>adminforms/stdfield/form_id/<?php echo $this->form_id?>/cid/<?php echo $this->cid?>">Standard Form Fields</a><?php if($session->standard_form_done): ?><img title="This section is complete" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'OK.png'; ?>"/> <?php elseif($session->standard_form_visited): ?> <img title="This section is required" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'Error.png'; ?>"/> <?php endif; ?></li>
+                                                <li class="<?php if($pos3===false){ echo ""; } else {?> active<? }?>"><a href="<?php echo WEBSITE_URL?>adminforms/customfield/form_id/<?php echo $this->form_id?>/cid/<?php echo $this->cid?>">Custom Form Fields</a><?php if($session->custom_form_done): ?><img title="This section is complete" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'OK.png'; ?>"/> <?php else: ?> <img title="This section is optional" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'Stop.png'; ?>"/> <?php endif; ?></li>
+                                                <li class="<?php if($pos4===false){ echo ""; } else {?> active<? }?>"><a href="<?php echo WEBSITE_URL?>adminforms/opthrs/form_id/<?php echo $this->form_id?>/cid/<?php echo $this->cid?>">Hours <br /> of Operation</a><?php if($session->hoo_form_done): ?><img title="This section is complete" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'OK.png'; ?>"/> <?php else: ?> <img width="16" height="16" title="This section is optional" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'Stop.png'; ?>"/> <?php endif; ?></li>
+                                                <li class="<?php if($pos5===false){ echo ""; } else {?> active<? }?>"><a href="<?php echo WEBSITE_URL?>adminforms/businessrule/form_id/<?php echo $this->form_id?>/cid/<?php echo $this->cid?>">Business Rules</a><?php if($session->business_rule_done): ?><img title="This section is complete" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'OK.png'; ?>"/> <?php else: ?> <img width="16" height="16" title="This section is optional" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'Stop.png'; ?>"/> <?php endif; ?></li>
+                                                <li class="<?php if($pos6===false){ echo ""; } else {?> active<? }?>"><a href="<?php echo WEBSITE_URL?>adminforms/emailnotification/form_id/<?php echo $this->form_id?>/cid/<?php echo $this->cid?>">Email <br /> Notification</a><?php if($session->emailnotification_done): ?><img title="This section is complete" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'OK.png'; ?>"/> <?php elseif($session->emailnotification_visited): ?> <img title="This section is required" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'Error.png'; ?>"/> <?php endif; ?></li>
+                                                <li class="<?php if($pos7===false){ echo ""; } else {?> active<? }?>"><a href="<?php echo WEBSITE_URL?>adminforms/formredirect/form_id/<?php echo $this->form_id?>/cid/<?php echo $this->cid?>">Form Redirect</a><?php if($session->redirect_done): ?><img title="This section is complete" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'OK.png'; ?>"/> <?php elseif($session->redirect_visited): ?> <img title="This section is required" width="16" height="16" class="form_stat" src="<?php echo WEBSITE_IMG_URL.'Error.png'; ?>"/> <?php endif; ?></li>
+                                                <li class="<?php if($pos8===false){ echo ""; } else {?> active<? }?>"><a href="<?php echo WEBSITE_URL?>adminforms/reporting/form_id/<?php echo $this->form_id?>/cid/<?php echo $this->cid?>">Reporting </a></li>
+
+
+
+
+
+									</ul>
+								</div>
+								<br>
+                            	<div class="account">
+                                <ul>
+                                    <li class="billing"><strong>Form</strong></li>
+                                    <li <?php if($pos9===false){ echo ""; } else {?> class="active"<? }?>><a <?php if ($session->overview_done && $session->standard_form_done && $session->emailnotification_done && $session->redirect_done): ?> href="<?php echo WEBSITE_URL?>adminforms/preview/form_id/<?php echo $this->form_id?>/cid/<?php echo $this->cid?>" <?php else: ?> class="grayout"  <?php endif; ?> >Preview</a></li>
+                                    <li <?php if($pos10===false){ echo ""; } else {?> class="active"<? }?>><a <?php if ($session->overview_done && $session->standard_form_done && $session->emailnotification_done && $session->redirect_done): ?>  href="<?php echo WEBSITE_URL?>adminforms/formhtml/form_id/<?php echo $this->form_id?>/cid/<?php echo $this->cid?>" <?php else: ?> class="grayout"  <?php endif; ?>>Generate HTML</a></li>
+
+                                    </ul>
+                            </div>
+							</div>
+							
+                        </div>
+                    </div>
+           <? }else{?> 
+<h3>My <span>Account</span></h3> 
+     <div class="account">
+                                <ul>
+									<li class="title1"><strong>Account</strong></li>
+									<?php 
+									if($_SESSION['Zend_Auth']['user_type']==0){?>
+									<li <?php if($this->actionNameLeftPanel == 'left_customers'){?> class="active"<? }?>> <a href="<?php echo WEBSITE_URL?>customers/myaccount/id/<?php echo $this->cid?>">Overview</a></li>
+									<? }else{?> 
+									<li <?php if($this->actionNameLeftPanel == 'left_customers'){?> class="active"<? }?>> <a href="<?php echo WEBSITE_URL?>customers/edit/id/<?php echo $this->cid?>">Overview</a></li>
+									<? }?>
+									<li <?php if($this->actionNameLeftPanel == 'editaccountdetails'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/editaccountdetails/id/<?php echo $this->cid?>">Edit Account Details</a></li>									
+									<li <?php if($this->actionNameLeftPanel == 'changepassword'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/changepassword/id/<?php echo $this->cid?>">Change Password</a></li>
+									<li <?php if($this->actionNameLeftPanel == 'editplandetails'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/editplandetails/id/<?php echo $this->cid?>">Edit Plan Details</a></li>
+								</ul>
+                            </div>
+							<br>
+                            <div class="account">
+                                <ul>
+									<li class="billing"><strong>Billing</strong></li>
+									<li <?php if($this->actionNameLeftPanel == 'billinghistory'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/billinghistory/id/<?php echo $this->cid?>">Billing History</a></li>
+									<li <?php if($this->actionNameLeftPanel == 'editpaymentdetails'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/editpaymentdetails/id/<?php echo $this->cid?>">Edit Payment Details</a></li>
+									<li <?php if($this->actionNameLeftPanel == 'cancelsubscription'){?> class="active"<? }?>><a href="<?php echo WEBSITE_URL?>customers/cancelsubscription/id/<?php echo $this->cid?>">Cancel Subscription</a></li>
+								</ul>
+      </div> 
+      
+        <?php 
+							if($_SESSION['Zend_Auth']['user_type']!=0){?><br>
+                            <div class="account">
+                                <ul>
+									<li class="billing"><strong>Miscellaneous</strong></li>
+                            		<li><a href="<?php echo WEBSITE_URL?>admin/pages">Corporate Page</a></li>											    <li><a href="<?php echo WEBSITE_URL?>admin/businessrule">Business Rule</a></li>											<li><a href="<?php echo WEBSITE_URL?>admin/inquiry">Inquiry</a></li>	
+							</div>
+							<? }?>
+        <? }?>
+<!--==============================content================================-->
+
+<script type="text/javascript">
+function settabs(tabidfirst,dividfirst,tabidsecond,dividsecond){	
+jQuery('#'+tabidfirst).show();	
+jQuery('#'+tabidfirst).addClass('active');	
+jQuery('#'+tabidsecond).removeClass('active');	
+jQuery('#'+dividfirst).show();	
+jQuery('#'+dividsecond).hide();	
+}
+</script>

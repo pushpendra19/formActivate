@@ -1,0 +1,81 @@
+<div class="row-1 wrapper">
+         <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+                    <div class="maxheight box">
+                        <div class="padding">  
+                            <?php echo $this->render('logged_in_left_panel.phtml'); ?>
+                        </div>
+                    </div>
+            </article>  
+             <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-2" style="width:548px;" <? }else{?> class="maxheight col-4" style="width:630px;"<? }?> >
+                <div class="maxheight box">
+                    <div class="padding">    
+
+                    <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Cancel Subscription " style="width: 56px; height: 22px;margin-bottom: 25px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Cancel Subscription </cufontext></cufon></h2>
+                    <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+
+							if(isset($obj->loginError))
+								{?>
+									<label><span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['loginError'];
+									unset($_SESSION['Zend_Auth']['loginError']);?><br><br> </span></label>
+								<? }else{?>
+								<label><span class="loginmessage" >
+								 <?php echo $this->plan_message; ?><br><br/> </span></label>
+								 <?
+								}
+				 		?>
+                        <div style="clear: both;"></div>
+
+                        <div id="formcompanyDetails">
+
+                            <?php if($this->plan_id == 5): ?>
+                            <fieldset>
+                                <p>
+                                    You are now free user, please give us your payment details, if you want to be a paid user.
+                                    <a href="<?php echo WEBSITE_URL.'customers/editpaymentdetails/id/'.$this->id; ?>">Pay Now</a>
+                                </p>
+                            </fieldset>
+                            <?php else: ?>
+                            <fieldset>                                
+                               <p> We're sorry to see you go. If you would like to cancel your subscription, please click the Cancel subscription button below. Your subscription will remain active until the end of the current billing cycle, at which time it will not be renewed. Formactive does not prorate service for partial or incomplete months of usage.</p>                                
+                                  <div class="buttonsNextPrevNo" style="width:500px;">
+                                  <!-- 
+                                   
+                                    </form>
+                                    <form id="formID2" class="formular" method="post" action="<?php echo WEBSITE_URL?>customers/cancelsubscription/id/<?php echo $this->id?>">
+                                    <input class="buttonsNext" type="submit" value="Yes, Cancel my Subscription"  style="width:250px;"/>                            
+									<input type="hidden"  name="id" id="id"   value="<?php echo (isset($this->id))? htmlspecialchars(stripslashes($this->id)) : '';?>"/>                          
+									<input type="hidden"  name="cancel_type" id="cancel_type"   value="2"/>                           
+                                    </form>-->
+                                </div>
+                                
+                               
+                                 <div class="buttonsNextPrev">
+                                  <?php
+                                if($this->plan_status==2){?>
+								<form id="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>customers/cancelsubscription/id/<?php echo $this->id?>">                                  
+                                <!--<input onmouseover="this.style.background='#303030'" onmouseout="this.style.background='#5B5B5B'" type="submit" style="width: 250px; float: right; background: none repeat scroll 0% 0% rgb(111, 112, 112); font-size: 13px; padding: 9px; color: rgb(255, 255, 255); border: 1px none rgb(102, 102, 102);cursor:pointer;" value="No, Don't Cancel my Subscription">             <input type="hidden"  name="id" id="id"   value="<?php echo (isset($this->id))? htmlspecialchars(stripslashes($this->id)) : '';?>"/>
+                                   <input type="hidden"  name="cancel_type" id="cancel_type"   value="1"/>                            -->
+                                   </form>
+                                   <? }?>
+                                   
+                                 <form id="formID2" class="formular" method="post" action="<?php echo WEBSITE_URL?>customers/cancelsubscription/id/<?php echo $this->id?>">    
+                                 
+                                 <?php
+                                 if($this->plan_status!=2){?>
+                                 	
+                                 	<input onmouseover="this.style.background='#303030'" onmouseout="this.style.background='#5B5B5B'" type="submit" value="YES, CANCEL MY SUBSCRIPTION"  style="width:250px;float:right;background:#6F7070;font-size:13px;padding:9px;color:#fff;border:1px #666666;cursor:pointer;height: 35px;" onclick="alert('Your plan will be cancelled.');"/>
+                               <?php  }  else { ?>
+                                 <!-- <input class="buttonsNext" type="submit" value="Yes, Cancel my Subscription"  style="width:250px;float:right;cursor:pointer;"/>  -->         <?php } ?>                 
+									<input type="hidden"  name="id" id="id"   value="<?php echo (isset($this->id))? htmlspecialchars(stripslashes($this->id)) : '';?>"/>                          
+									<input type="hidden"  name="cancel_type" id="cancel_type"   value="2"/>                           
+									</form>
+                                </div>                                                           
+                            </fieldset>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </article>      
+			  </div>            
+        

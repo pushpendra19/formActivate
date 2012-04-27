@@ -1,0 +1,109 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: layout.thtml	#
+#			Description 	: this is layout to work in the front end site #
+#			Created date	: 19/01/2011	#	
+#			Created By		: Manoj Kumar Chauhan	#
+######################################################
+?>
+<!DOCTYPE html>
+<html lang="en">
+    <head profile="http://gmpg.org/xfn/11">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><?php echo WEBSITE_NAME; ?></title>
+        <meta name="robots" content="noodp, noydir" />
+        <meta name="description" content="From lead to phone call in under 20 seconds" />
+        <link rel="stylesheet" href="<?php echo WEBSITE_CSS_URL . 'style.css' ?>" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="<?php echo WEBSITE_CSS_URL . 'layout.css' ?>" type="text/css" media="screen, projection" />
+        <!--[if lte IE 8]><link rel="stylesheet" href="<?php echo WEBSITE_CSS_URL . 'ie.css' ?>" type="text/css" media="screen, projection" /><![endif]-->
+        <link rel="stylesheet" href="<?php echo WEBSITE_CSS_URL . 'custom.css' ?>" type="text/css" media="screen, projection" />
+
+        <link rel='stylesheet' id='contact-form-7-css'  href='<?php echo WEBSITE_URL . 'plugins/styles.css' ?>' type='text/css' media='all' />
+        <script type='text/javascript' src='<?php echo WEBSITE_URL . 'js/l10n.js' ?>'></script>
+        <script type='text/javascript' src='<?php echo WEBSITE_URL . 'js/jquery-1.4.2.min.js' ?>'></script>
+
+        <!-- Cufon -->
+        <script type="text/javascript" src="<?php echo WEBSITE_URL . 'js/cufon-yui.js' ?>"></script>
+        <script type="text/javascript" src="<?php echo WEBSITE_URL . 'js/helb_700.font.js' ?>"></script>
+
+        <script type="text/javascript">
+
+            jQuery(document).ready(function($){
+
+
+                // Add Last to list
+                $('ul').each(function(){
+                    $('li:last', this).addClass('last');
+                    $('li:first', this).addClass('first');
+                });
+
+                // Add Last to Footer Widget
+                $('#footer-widget-box-1 .footer-widget-row-1:first').addClass('first');
+
+                // Cufon
+                var helb = "#title-box h1, .entry-title, .sidebar h3, #how-bottom-box .l-text, #demo-bottom-box .l-text, #demo-confirm-bottom-box .l-text strong, #pricing-table th, #pricing-table .price, #pricing-table-head h1, .home #home-title, .home #home-content .left h2";
+                Cufon.replace(helb, {
+                    fontFamily: 'helb',
+                    hover: true
+                });
+
+                // Pricing Table
+                $('.plan-col').mouseout(function(){
+                    $('.plan-col').removeClass('active').removeClass('ie-active');
+                });
+                $('.plan-1').mouseover(function(){
+                    $('.plan-col').removeClass('active').removeClass('ie-active');
+
+                    if($.browser.msie) $('.plan-1').addClass('ie-active');
+                    else $('.plan-1').addClass('active');
+                });
+                $('.plan-2').mouseover(function(){
+                    $('.plan-col').removeClass('active').removeClass('ie-active');
+
+                    if($.browser.msie) $('.plan-2').addClass('ie-active');
+                    else $('.plan-2').addClass('active');
+                });
+                $('.plan-3').mouseover(function(){
+                    $('.plan-col').removeClass('active').removeClass('ie-active');
+
+                    if($.browser.msie) $('.plan-3').addClass('ie-active');
+                    else $('.plan-3').addClass('active');
+                });
+                $('.plan-4').mouseover(function(){
+                    $('.plan-col').removeClass('active').removeClass('ie-active');
+
+                    if($.browser.msie) $('.plan-4').addClass('ie-active');
+                    else $('.plan-4').addClass('active');
+                });
+
+            });
+
+        </script>
+
+    </head>
+    <body class="custom home custom-template">
+
+        <?php
+                $obj=new Zend_Session_Namespace('Zend_Auth');
+
+                if(isset($obj->member_id) && ($obj->user_type==0))
+                {
+                        echo $this->render('header_loggedin.phtml');
+                }else if(isset($obj->member_id) && ($obj->user_type==1))
+                {
+                        echo $this->render('header_admin.phtml');
+                }else
+                {
+                        echo $this->render('header.phtml');
+                }
+        ?>
+        
+        <div id="content_area" class="full_width">
+            <?php echo $this->layout()->content ?>
+        </div>
+
+        <?php echo $this->render('footer.phtml'); ?>
+        
+    </body>
+</html>

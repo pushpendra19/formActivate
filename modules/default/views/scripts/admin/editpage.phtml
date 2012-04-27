@@ -1,0 +1,70 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: overview.phtml	#
+#			Description 	: this is First step to create form builder
+#			Created date	: 16/02/2011	#	
+#			Created By		:						#
+######################################################
+?> 
+<!-- <script type="text/javascript" src="<?php echo WEBSITE_URL?>js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript">
+	tinyMCE.init({
+		mode : "textareas",
+		theme : "advanced"
+	});
+</script> -->
+<script src="<?php echo WEBSITE_URL?>js/ckeditor/ckeditor.js"></script>
+<script>
+CKEDITOR.replace( 'page_body' );
+</script>	
+<div class="row-1 wrapper">
+<?php  // echo $this->render('forms_left_panel.phtml'); ?>
+            <article class="col-2">
+            <form id="formID1" name="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>admin/editpage">
+                <div  style="width:800px;">
+                    <div class="forms-padding">            		
+                        <h3>Edit <span>Page</span></h3>
+                          <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+
+							if(isset($obj->loginError))
+								{?>
+									<label><span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['loginError'];
+									unset($_SESSION['Zend_Auth']['loginError']);?><br><br> </span></label>
+								<? }
+				 		?>
+                        <div id="formUserDetails" style="height900px;">
+                            <fieldset>
+                                <label><span>Page Title<strong>*</strong></span>
+                            	 <input name="page_title" id="page_title" class="validate[required]" value="<?php echo (isset($this->data->page_title))? htmlspecialchars(stripslashes($this->data->page_title)) : '';?>" maxlength="150" style="width:660px;"/>
+                                </label>
+             
+                                <label><span>Page Name<strong>*</strong></span>
+                            	 <input name="page_name" id="page_name" class="validate[required]" value="<?php echo (isset($this->data->page_name))? htmlspecialchars(stripslashes($this->data->page_name)) : '';?>" maxlength="150"  style="width:660px;"/>
+                                </label>
+                                
+                               <div style="height800px;"><span style="font-weight:bold;color:black;">Page Body<strong style="color:red;">*</strong><br>
+                               Note:- Please don't insert Big Image.</span>                            	
+                               <textarea id="page_body" name="page_body" style="width:200px;"/>
+                               <?php echo (isset($this->data->page_body))? htmlspecialchars(stripslashes($this->data->page_body)) : '';?>
+                               </textarea>
+                                </div>
+                                
+                            <div class="buttonsNextPrevEditpage" style="float:right;">
+                               	<input type="hidden"  name="id" id="id"   value="<?php echo (isset($this->id))? htmlspecialchars(stripslashes($this->id)) : '';?>" />                                
+                                 <a href="<?php echo WEBSITE_URL?>admin/pages" class="buttonsNext">Cancel</a>
+                                 	<input class="buttonsNext"  style="width:80px;" type="submit" value="Update"  onclick="validate_form()"/> 
+                            </div>
+                                
+                            </fieldset>
+                            </div>                       
+                    </div>
+                </div>
+                </form>
+            </article>
+            <div style="clear:both"></div>
+</div> 
+<script type="text/javascript">
+				CKEDITOR.replace( 'page_body' );
+			</script>

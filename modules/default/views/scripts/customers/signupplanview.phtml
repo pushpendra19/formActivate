@@ -1,0 +1,122 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<div id="title-box"><h1><cufon style="width: 102px; height: 40px;" alt="Confirm your Purchase" class="cufon cufon-canvas"><canvas style="width: 124px; height: 39px; top: 0px; left: -1px;" height="39" width="124"></canvas><cufontext>Confirm your Purchase</cufontext></cufon></h1></div>
+<?php if($this->price>0){?>
+<form id="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>customers/signupplanview/status/purchase/id/<?=$this->id?>">
+<? } else{?> 
+<form id="formID1" class="formular" method="post" action="#">
+<?}?>
+ 	<div class="row-1 wrapper">
+            <article class="maxheight col-3">
+                <div class="maxheight box">
+                    <div class="padding">            		
+                        
+                        <div id="formPlanDetails" style="margin-top: -25px !important;">
+
+							<input type="hidden" name="orginalCardNum" value="<?php echo $this->card_num_orginal;?>">
+							<input type="hidden" name="orginalCvv" value="<?php echo $this->card_cvv_original;?>">
+                         <fieldset>
+
+                             <?php
+
+                                    if(isset($this->paymentError))
+                                    { ?>
+                                            <span class="loginmessage" > <?php echo $this->paymentError;
+                                            ?><br><br> </span>
+                             <div class="clear"></div>
+                                    <? }
+                            ?>
+                      	 <?php if($this->firstname!=''){ ?>   <p><?php echo htmlspecialchars(stripslashes(ucfirst($this->firstname)));?> <?php echo htmlspecialchars(stripslashes(ucfirst($this->lastname)));?></p> <?php }?>
+						 <?php if($this->companyname!=''){ ?>  <p><?php echo htmlspecialchars(stripslashes(ucfirst($this->companyname)));?></p><?php }?>
+						 <?php if($this->email!=''){ ?>  <p><?php echo htmlspecialchars(stripslashes($this->email));?></p><?php }?>
+						 
+                                                 <?php if($this->plan_id != '5'):
+
+                                                      if($this->address1!=''){ ?>  <p><?php echo htmlspecialchars(stripslashes(ucfirst($this->address1)));?></p><?php }?>
+                                                     <?php if($this->address2!=''){ ?>  <p><?php echo htmlspecialchars(stripslashes(ucfirst($this->address2)));?></p>   <?php }?>
+                                                     <?php if($this->city!=''){ ?>  <p><?php echo htmlspecialchars(stripslashes(ucfirst($this->city)));?>,<?php }?>
+                                                     <?php if($this->state!=''){ ?>  <?php echo htmlspecialchars(stripslashes(ucfirst($this->state)));?>,<?php }?>
+                                                     <?php if($this->zip!=''){ ?>   <?php echo htmlspecialchars(stripslashes($this->zip));?></p><?php }?>
+                                                     <?php if($this->phone!=''){ ?>  <p><?php echo htmlspecialchars(stripslashes($this->phone));?></p> <?php }
+
+                                                 endif; ?>
+						 </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article class="maxheight col-4">
+                <div class="maxheight box">
+                    <div class="padding">     
+                        <div id="formcompanyDetails">
+                            <fieldset style="margin-top: -25px !important;color:#303030;">
+                             <?php if($this->plan_id != '5'):
+                                     if($this->card_type!=''){ ?><p><?php echo htmlspecialchars(stripslashes($this->card_type));?></p>
+                                    <?php }?>
+
+                                    <?php if($this->card_num!=''){ ?>
+                                              <p>XXX XXX XXX <?php echo htmlspecialchars(stripslashes($this->card_num))?></p>
+                                    <?php }else{?> 
+                                    <p>XXX XXX XXX ----</p>
+                                    <?php }?>         
+
+                                   <?php if($this->expiry_month!=''){ ?>
+
+                                            <p>Exp: <?php echo htmlspecialchars(stripslashes($this->expiry_month));?> /
+                                            <?php if($this->expiry_year!=''){ ?><?php echo htmlspecialchars(stripslashes($this->expiry_year));?><?php }?>
+                                            </p>
+
+                                    <?php }?>
+
+                                    <?php if($this->card_name!=''){ ?>
+                                             <p><?php echo htmlspecialchars(ucfirst(stripslashes($this->card_name)));?></p>
+                                    <?php }?>
+                                    <?php if($this->card_cvv!=''){ ?>
+                                             <p>CVV: <?php echo htmlspecialchars(stripslashes($this->card_cvv));?></p>
+                                    <?php }
+                                endif; ?>
+                                <?php if($this->plan_name!=''){ ?>
+                                         <p><?php echo  strpos($this->plan_name, 'free') ? 'Plan:' : ''; ?> <?php echo $this->plan_name; ?></p>
+                                 <?php }?>                                 
+                                <p>
+                                <a href="<?php echo WEBSITE_URL?>customers/signupplan/id/<?php echo htmlspecialchars(stripslashes($this->id));?>">Click here to modify your details or plan</a>
+                                </p>
+
+                    <?php if($this->plan_id != '5'): ?>
+                               <p> By clicking the Purchase button below, you agree to our terms and conditions. Your credit card will be 
+charged for the amount shown above and will continue to be charged on a monthly basis. you may cancel your
+subscription at any time. </p>
+                               <?php else : ?>
+                               <p style="width: 800px;"> Your 7 day trial will begin now. You may upgrade to any of our other subscription plans at any time. </p>
+    <?php endif; ?>
+                               
+<div class="buttonsNextPrev float_right">
+                                    <input name="submit" value="Back" style="width: 100px;" class="big-orange-bt float_left pad_0" type="button" onclick="window.location.href='<?php echo WEBSITE_URL?>customers/signupplan/id/<?php echo htmlspecialchars(stripslashes($this->id));?>'"/>
+<?php if((int)$this->price > 0){?>
+       <input name="submit" value="Purchase" style="width: 110px;margin-left: 10px;" class="big-orange-bt float_left pad_0" type="submit">
+    <? }else{?><input name="submit" value="Start Trial" style="width: 110px;margin-left: 10px;" class="big-orange-bt float_left pad_0" type="button" onclick="window.location.href='<?php echo WEBSITE_URL?>customers/thanks'"/> <? }?>
+                                   	<input type="hidden"  name="id" id="id"   value="<?php echo (isset($this->id))? htmlspecialchars(stripslashes($this->id)) : '';?>"/>                                
+                                </div>                               
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </article>  
+          
+			  </div>    
+		    <input type="hidden" name="first_name"  value="<?=$this->firstname?>" />
+            <input type="hidden" name="last_name" value="<?=$this->lastname?>" />
+            <input type="hidden" name="email" value="<?=$this->email?>" />
+            <input type="hidden" name="order_id" value="<?=$this->order_id?>" />
+            <input type="hidden" name="customer_id" value="<?=$this->id?>" />             
+            <input type="hidden" name="number" value="<?=$this->card_num?>" />
+            <input type="hidden" name="expiration_date" value="<?=$this->expiry_month?>/<?=$this->expiry_year?>" />
+            <input type="hidden" name="cvv" value="<?=$this->card_cvv?>" />
+            <input type="hidden" name="amount" value="<?=$this->price?>"/>
+        </form>              
+<div id="bottom-box">
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>

@@ -1,0 +1,43 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: header.thtml	#
+#			Description 	: this is header to work in the front end site #
+#			Created date	: 19/01/2011	#	
+#			Created By		: Manoj Kumar Chauhan	#
+######################################################
+?>
+
+<!--header start here-->
+<div id="header_area" class="full_width">
+
+    <div class="page">
+        <div id="header">
+            <p id="logo"><a href="<?php echo WEBSITE_URL?>">Web Form to Phone Call Processing</a></p>
+            <h1 id="tagline">From lead to phone call in under 20 seconds</h1>
+        </div>
+        <?php if($this->actionName == 'demo' || $this->actionName ==  'demo-confirm'): ?>
+        <div class="menu-menu-container"><ul id="menu-menu" class="menu">
+                <li id="menu-item-102" class="<?php if($this->actionName == 'how-it-works') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-102"><a href="<?php echo WEBSITE_URL?>how-it-works">How it Works</a></li>
+                <li id="menu-item-111" class="<?php if($this->actionName == 'demo' || $this->actionName ==  'demo-confirm') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-111"><a href="<?php echo WEBSITE_URL?>demo">Demo</a></li>
+                <li id="menu-item-113" class="<?php if($this->actionName == 'pricing') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-113"><a href="<?php echo WEBSITE_URL?>pricing">Pricing</a></li>
+                <li id="menu-item-112" class="<?php if($this->actionName == 'support') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-112"><a href="<?php echo WEBSITE_URL?>support">Support</a></li>
+                <li id="menu-item-103" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-103"><a href="<?php echo WEBSITE_URL?>blog">Blog</a></li>
+                <li id="menu-item-45" class="<?php if($this->actionName == 'contacts') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="<?php echo WEBSITE_URL?>contact">Contact</a></li>
+            </ul></div>
+        <?php else : ?>
+        <div class="menu-menu-container">
+            <ul id="menu-menu" class="menu">
+                <li id="menu-item-102" class="<?php if($this->actionName == 'forms') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-102"><a href="<?php echo WEBSITE_URL ?>forms/">Forms</a></li>
+                <li id="menu-item-111" class="<?php if($this->actionName == 'reporting') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-111"><a href="<?php echo WEBSITE_URL ?>customers/reporting">Reporting</a></li>
+                <li id="menu-item-113" class="<?php if($this->actionName == 'myaccount') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-113"><a href="<?php echo WEBSITE_URL ?>customers/myaccount/id/<?php echo $this->loggedin_customer_id; ?>">My Account</a></li>
+            </ul>
+        </div>
+        <?php endif; ?>
+        <div id="header-right-box">
+	CALL 888-FORM-514	<a href="<?php echo WEBSITE_URL ?>customers/logout" id="signin-bt" class="bt">Sign out</a></div>
+
+    </div>
+</div>
+
+<!--==============================content================================-->

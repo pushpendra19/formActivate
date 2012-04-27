@@ -1,0 +1,72 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<form id="formID1" class="formular" method="post" action="#">
+ 	<div class="row-1 wrapper">
+            <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+                    <div class="maxheight box">
+                        <div class="padding">            		
+                           <?php   echo $this->render('logged_in_left_panel.phtml'); ?>
+
+                            <style type="text/css">
+                                .coloms_billing  {
+                                     width: 71px;
+                                }
+
+                                .table .lastbill {
+                                    border-right: 0 none;
+                                    width: 80px;
+                                }
+                            </style>
+                        </div>
+                    </div>
+            </article>  
+            <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-2" style="width:548px;" <? }else{?> class="maxheight col-4" style="width:630px;"<? }?> >
+              
+               <div class="maxheight box">
+                    <div class="padding"> 	
+
+                        <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Billing History " style="width: 56px; height: 22px;margin-bottom: 25px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Billing History </cufontext></cufon></h2>
+                        <div id="formcompanyDetails" style="<?php if($session->user_type==1) echo "margin-left: -35px;width: 552px"; ?>">
+						<?php 
+						if(!empty($this->paginator) && count($this->paginator)>0)
+							{?>
+						<div class="table">
+							<div class="topRow1">								
+								<span class="coloms_billing">Date</span>
+								<span class="coloms_billing <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>call76<? }else{?>call6<? }?>">Plan</span>
+								<span class="coloms_billing" style="width:50px;">Calls</span>
+								<span class="coloms_billing">Connections</span>
+								<span class="coloms_billing">Amount</span>
+								<span class="coloms_billing">Card</span>
+								<span class="coloms_billing  lastbill">Number</span>
+							</div>
+							
+					<?php 
+					$i=0; 
+					foreach ($this->paginator as $data_key =>$data_val) {
+					?>
+							<div <?php if( (($i)%2) == 0 ) { echo 'class="grayRow"';} else { echo 'class="whiteRow"'; } ?>>						
+								<span class="coloms_billing"><?php echo date('m/d/y',strtotime($data_val->created_on)); ?></span>
+								<span class="coloms_billing <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>call76<? }else{?>call6<? }?>"><?php echo stripslashes(ucfirst($data_val->name)); ?></span>
+								<span class="coloms_billing"  style="width:50px;">0</span>
+								<span class="coloms_billing">0</span>
+								<span class="coloms_billing"><?php echo number_format(stripslashes(ucfirst($data_val->amount)),2,'.',''); ?></span>
+								<span class="coloms_billing"><?php echo stripslashes(ucfirst($data_val->card_type)); ?></span>
+								<span class="coloms_billing lastbill">**** <?php //echo stripslashes(ucfirst(substr($data_val->card_number,-4))); ?></span>
+							</div>
+							<?php 					
+							$i++;
+							}?>
+						</div>						
+						<div class="total"><?php echo $this->paginator; ?></div>
+						<? }else{ ?>
+						<div class="total"><font color='black'><b>No result found.</b></font></div>
+						<? }?>
+                        </div>
+                    </div>
+                </div>
+            </article>  
+			  </div>            
+</form>

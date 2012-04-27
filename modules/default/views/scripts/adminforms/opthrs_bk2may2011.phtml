@@ -1,0 +1,283 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: opthrs.phtml	#
+#			Description 	: this step to create opthrs form builder
+#			Created date	: 17/02/2011	#	
+#			Created By		:						#
+######################################################
+?> 
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<?php
+$data=array(1=>'Monday',2=>'Tuesday',3=>'Wednesday',4=>'Thursday',5=>'Friday',6=>'Saturday',7=>'Sunday');
+/*$time_data=array(1=>'01:00',2=>'02:00',3=>'03:00',4=>'04:00',5=>'05:00',6=>'06:00',7=>'07:00',8=>'08:00',9=>'09:00',10=>'10:00',11=>'11:00',12=>'12:00',13=>'13:00',14=>'14:00',15=>'15:00',16=>'16:00',17=>'17:00',18=>'18:00',19=>'19:00',20=>'20:00',21=>'21:00',22=>'22:00',23=>'23:00',24=>'24:00');*/
+
+$i=1;
+if(count($this->selected_fields)>0)
+{
+	foreach($this->selected_fields as $selected_fields)
+	{
+		$time_zone_selected[$i]=$selected_fields['time_zone'];
+		$week_day[$i]=$selected_fields['week_day'];
+		$start_time[$i]=$selected_fields['start_time'];
+		$end_time[$i]=$selected_fields['end_time'];
+		$i++;
+	}
+}
+if(isset($time_zone_selected[1]))
+$selected_time_zone=$time_zone_selected[1];
+else 
+$selected_time_zone='-28800';
+?>
+
+<div class="row-1 wrapper">
+   <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;height:520px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+           <div class="maxheight box">
+                        <div class="padding">    
+                            <?php echo $this->render('admin_form_logged_in_left_panel.phtml'); //} ?>
+                        </div>
+                    </div>
+            </article>     
+           
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="col-2" style="width:619px;" <? }else{?> class="col-4" style="width:706px;"<? }?> ><form id="formID1" name="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>adminforms/opthrs/form_id/<?=$this->form_id?>/cid/<?=$this->cid?>">
+                <div class="box" style="height:520px;">
+                    <div class="forms-padding">            		
+                        <h3>Hours  <span>of Operation</span></h3>
+                        <div id="formUserDetailsStd">
+                        <br/>
+                        <div style="height: 25px;padding: 5px 0 5px 100px;color:#303030;font-weight:bold;background-color:#EFF0F0;">Business TimeZone                
+                    <select name="time_zone" id="time_zone"  style="width:300px;">
+      <option value="-43200" <?php if($selected_time_zone=="-43200") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -12:00) Eniwetok, Kwajalein</option>
+      <option value="-39600" <?php if($selected_time_zone=="-39600") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -11:00) Midway Island, Samoa</option>
+      <option value="-36000" <?php if($selected_time_zone=="-36000") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -10:00) Hawaii</option>
+      <option value="-32400" <?php if($selected_time_zone=="-32400") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -9:00) Alaska</option>
+      <option value="-28800" <?php if($selected_time_zone=="-28800") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+      <option value="-25200" <?php if($selected_time_zone=="-25200") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+      <option value="-21600" <?php if($selected_time_zone=="-21600") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
+      <option value="-18000" <?php if($selected_time_zone=="-18000") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
+      <option value="-14400" <?php if($selected_time_zone=="-14400") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+      <option value="-12600" <?php if($selected_time_zone=="-12600") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -3:30) Newfoundland</option>
+      <option value="-10800" <?php if($selected_time_zone=="-10800") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+      <option value="-7200" <?php if($selected_time_zone=="-7200") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -2:00) Mid-Atlantic</option>
+      <option value="-3600" <?php if($selected_time_zone=="-3600") {echo "selected='selected'"; } else {echo '';} ?>>(GMT -1:00 hour) Azores, Cape Verde Islands</option>
+      <option value="0.0" <?php if($selected_time_zone=="0.0") {echo "selected='selected'"; } else {echo '';} ?>>(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+      <option value="3600" <?php if($selected_time_zone=="3600") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
+      <option value="7200" <?php if($selected_time_zone=="7200") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +2:00) Kaliningrad, South Africa</option>
+      <option value="10800" <?php if($selected_time_zone=="10800") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+      <option value="12600" <?php if($selected_time_zone=="12600") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +3:30) Tehran</option>
+      <option value="14400" <?php if($selected_time_zone=="14400") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+      <option value="16200" <?php if($selected_time_zone=="16200") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +4:30) Kabul</option>
+      <option value="18000" <?php if($selected_time_zone=="18000") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+      <option value="19800" <?php if($selected_time_zone=="19800") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
+      <option value="20700" <?php if($selected_time_zone=="20700") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +5:45) Kathmandu</option>
+      <option value="21600" <?php if($selected_time_zone=="21600") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +6:00) Almaty, Dhaka, Colombo</option>
+      <option value="25200" <?php if($selected_time_zone=="25200") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+      <option value="28800" <?php if($selected_time_zone=="28800") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+      <option value="32400" <?php if($selected_time_zone=="32400") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+      <option value="34200" <?php if($selected_time_zone=="34200") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +9:30) Adelaide, Darwin</option>
+      <option value="36000" <?php if($selected_time_zone=="36000") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+      <option value="39600" <?php if($selected_time_zone=="39600") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+      <option value="43200" <?php if($selected_time_zone=="43200") {echo "selected='selected'"; } else {echo '';} ?>>(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+</select>    
+                        
+                                        
+                        </div><br/>
+                        	<table cellpadding="0" cellspacing="0" width="100%">
+                        	<tr>
+		                  		
+		                  		<td style='background-color:#EFF0F0;width:24px;'><b>Day of Week</b></td>
+		                     	<td style='background-color:#EFF0F0;width:24px;'><b>Start Time</b></td>
+		                  		<td style='background-color:#EFF0F0;width:124px;'><b>End Time</b></td>
+		                  		
+		                  	</tr>
+                        <?php
+                        
+                         //echo ($timetable_datas[0]['timevalue']);
+                        for($i=1;$i<=7;$i++)
+                        {
+                        	//echo $fields['label'].'<br/>';	
+                        	
+                        	if($i%2==0)
+                        	{
+                        		$style="style='background-color:#EFF0F0'";
+                        	}
+                        	else {
+                        		$style="";
+                        	}
+                        ?>
+                  	      	<tr>
+		                  		<input type="hidden" name="week_day[<?=$i?>]" value="<?=$data[$i]?>" readonly />
+		                  		<td <?=$style?>><?=$data[$i]?></td>
+		                  		
+		                  		<td <?=$style?>>
+		                  		
+		                  		 <select name="start_time[<?=$i?>]" id="start_time<?=$i?>" onchange="validate_start_time('<?=$i?>','start_time');">
+							                  	
+		                  						<?php
+		                  						
+		                  						if(!isset($start_time[$i]))
+		                  						$start_time[$i]="1";
+		                  						?>
+		                  						<option value="9999_9999"  <?php if($start_time[$i]=="9999_9999"){echo "selected='selected'"; } else {echo '';}?>>Closed</option>
+		                  						<?php 
+		                  						foreach($this->timetable_datas as $key=>$val)
+		                  						{		                  							
+		                  						?>
+		                  						 <option value="<?=$val['id_seconds']?>" <?php if($start_time[$i]==$val['id_seconds']){echo "selected='selected'"; } else {echo '';}?>><?=$val['timevalue']?></option> 
+							                  	<?php
+                        						}
+                        						?>								                  		
+							                  	 </select>
+		                  		</td> 
+                        						
+                        		
+		                  		
+		                  		
+		                  		<td <?=$style?>><select name="end_time[<?=$i?>]" id="end_time<?=$i?>" onchange="validate_end_time('<?=$i?>','end_time');">
+
+      							<?php
+      							if(!isset($end_time[$i]))
+      							$end_time[$i]="1"; ?>
+      							<option value="9999_9999"  <?php if($end_time[$i]=="9999_9999"){echo "selected='selected'"; } else {echo '';}?>>Closed</option>
+      							<?php
+          						foreach($this->timetable_datas as $key=>$val)
+		                  			{		
+          						?>
+          							<option value="<?=$val['id_seconds']?>"  <?php if($end_time[$i]==$val['id_seconds']){echo "selected='selected'"; } else {echo '';}?>><?=$val['timevalue']?></option>
+			                  	<?php
+        						}
+            					?>
+							               
+							   
+		                  						</select>
+		                  					<div class="formErrorContent" id="invalidtime<?=$i?>" style="display:none;position:relative;float:right;color:#ff0000;margin-top:-5px;font-size:11px; line-height: 1.2em;">* Please select valid start <br/>time & end time <br></div>
+		                  		</td>
+		                  		
+		                  	</tr>
+                          	
+                        <?php
+						
+                         }
+                        ?>
+                        
+                        </table>
+                        </div>
+                         <div class="buttonsNextPrev" style="padding-right:3px;">                                
+                           <input class="buttonsNextSignin" type="button" value="Previous" onclick="go_prev();" /> 
+                           <input class="buttonsNextSignin" type="submit" value="Next"  onclick="validate_form()"/> 
+                               	
+                         </div>      	
+                     </div>
+                </div>
+                </form>
+            </article>
+</div> 
+<script type="text/javascript">
+ function validate_form(){
+              // binds form submission and fields to the validation engine
+             jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
+ }
+ 
+  function go_prev()
+ {
+	var myString = '<?=WEBSITE_URL?>'+'adminforms/customfield/form_id/'+'<?=$this->form_id;?>';	window.location=myString;
+ }
+ 
+ 
+  function validate_start_time(id){   	
+  	//if(id)
+  	
+	var start_time=jQuery('#start_time'+id).val();	
+	var end_time=jQuery('#end_time'+id).val();	
+	
+	
+	//jQuery('#start_time'+id).val('<option value="9999_9999">Closed</option>');
+	
+	start_time=start_time.split("_");
+	
+	end_time=end_time.split("_");
+	start_time=eval(start_time[1]);
+	end_time=eval(end_time[1]);	
+	
+	//alert(start_time);
+	
+	 if(start_time==9999){
+			jQuery('#end_time'+id).val('<option value="9999_9999">Closed</option>');
+			jQuery('#invalidtime'+id).hide();	
+	}else{
+
+	if(start_time==9999 && end_time!=9999){
+		jQuery('#invalidtime'+id).show();		
+		return false;
+	}else if(start_time!=9999 && end_time==9999){
+		jQuery('#invalidtime'+id).show();
+		return false;
+	}else if(start_time==9999 && end_time==9999){
+			jQuery('#invalidtime'+id).hide();	
+	}	
+	
+	if(start_time!='' && end_time !=''){
+		if(end_time<=start_time){	
+			jQuery('#invalidtime'+id).show();
+			return false;
+		}else{
+			jQuery('#invalidtime'+id).hide();	
+		}	
+	}
+	}
+	return ;
+	
+ }	
+ 
+  function validate_end_time(id){   	
+  	//if(id)
+  	
+	var start_time=jQuery('#start_time'+id).val();	
+	var end_time=jQuery('#end_time'+id).val();	
+	
+	start_time=start_time.split("_");
+	
+	end_time=end_time.split("_");
+	start_time=eval(start_time[1]);
+	end_time=eval(end_time[1]);	
+	
+	 if(end_time==9999){
+			jQuery('#start_time'+id).val('<option value="9999_9999">Closed</option>');
+			jQuery('#invalidtime'+id).hide();
+			return;	
+	}
+	
+	if(start_time==9999){
+			jQuery('#end_time'+id).val('<option value="9999_9999">Closed</option>');
+			jQuery('#invalidtime'+id).hide();	
+			return;
+	}else{
+	if(start_time==9999 && end_time!=9999){
+		jQuery('#invalidtime'+id).show();		
+		return false;
+	}else if(start_time!=9999 && end_time==9999){
+		jQuery('#invalidtime'+id).show();
+		return false;
+	}else if(start_time==9999 && end_time==9999){
+			jQuery('#invalidtime'+id).hide();	
+	}
+	
+	if(start_time!='' && end_time !=''){
+		if(end_time<=start_time){	
+			jQuery('#invalidtime'+id).show();
+			return false;
+		}else{
+			jQuery('#invalidtime'+id).hide();	
+		}	
+	}
+  }
+	return ;
+	
+ }
+
+ 
+ 
+</script>

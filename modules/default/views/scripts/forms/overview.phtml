@@ -1,0 +1,405 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: overview.phtml	#
+#			Description 	: this is First step to create form builder
+#			Created date	: 16/02/2011	#
+#			Created By		:						#
+######################################################
+?>
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL . 'js/jquery.qtip.js' ?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL . 'js/jquery.selectboxes.js' ?>"></script>
+<style type="text/css">
+    #formUserDetails label span {width: 152px}
+</style>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function($){
+
+                $('select,input[title]').qtip({
+                   position: {
+                       my: 'left center',
+                       at: 'right center'
+                    },
+                    style: {
+                       classes: ''
+                    }
+                });
+});
+
+</script>
+
+<div class="row-1 wrapper" >
+<?php   echo $this->render('forms_left_panel.phtml'); ?>
+            <article class="maxheight col-2" style="width:630px;">
+            <form id="formID1" name="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>forms/overview">
+                <div class="maxheight box" style="width:706px;height:650px;">
+                    <div class="forms-padding">
+                        <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Form Overview " style="width: 56px; height: 22px;margin-bottom: 25px;clear: both;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Form Overview </cufontext></cufon></h2>
+                        <div id="formUserDetails">
+                        	<b title="<?php echo FORM_OVERVIEW_HELP; ?>" class="shelp">What is Form Overview? <img alt="no image" src='<?php echo WEBSITE_URL . 'images/info_icon.png' ?>' width="18" />  </b><br /><br />
+                            <fieldset>
+                                <label><span>Form Name<strong>*</strong></span>
+                            	 <input title="<?php echo OVERVIEW_FORM_NAME; ?>" name="formname" id="formname" class="validate[required,custom[formname]]" value="<?php echo (isset($this->formname))? htmlspecialchars(stripslashes($this->formname)) : '';?>" maxlength="50"/>
+                                </label>
+								
+								 <label><span>Form Type</span>
+                                <select name="formType" id="formType" class="validate[required]" style="width:222px;">
+	                                <option value="web" <?php if($this->formType=='web') echo "selected='selected'"; else '';?>>Web form</option>
+	                                <option value="wufoo" <?php if($this->formType=='wufoo') echo "selected='selected'"; else '';?>>Wufoo form</option>
+	                                <option value="api" <?php if($this->formType=='api') echo "selected='selected'"; else '';?>>API</option>
+                                </select>
+                                </label>
+				
+				<?php
+									if(trim($this->form_id) != '')
+									{ 
+									?>
+								<label><span>Form Id</span>
+                            	 	<input readonly="readonly" name="formid" id="formid"  value="<?php echo $this->form_id; ?>" maxlength="50"/>
+                                </label>
+									<?php }?>
+				<?php
+									if(trim($this->form_id) != '')
+									{ 
+									$apiURL = PROCESS_URL."api/api-key/".$this->apikey."/form-id/".$this->form_id;
+									?>
+								<label style='height:55px;'>
+									<span>API Endpoint</span>
+                            	 					<div style='font-size:8pt'><?php echo $apiURL; ?></div>
+								</label>
+							<?php }?>
+									
+
+                                <label><span>Form Status</span>
+                                <select name="status" id="status" class="validate[required]" style="width:222px;">
+                                <option value="1" <?php if($this->status=='1') echo "selected='selected'"; else '';?>>Active</option>
+                                <option value="0" <?php if($this->status=='0') echo "selected='selected'"; else '';?>>Inactive</option>
+                                </select>
+                                </label>
+
+                                <label><span>Business Hours Connection Number<strong>*</strong></span><input title="<?php echo OVERVIEW_FORM_BUSNESPH; ?>" onchange="showDefault('business_phone_status', 1);hideme2('div_prorate', $('#business_phone').val(), 'business_phone_status','');" name="business_phone" id="business_phone"  value="<?php echo (isset($this->business_phone))? htmlspecialchars(stripslashes($this->business_phone)) : '';?>"  class="validate[required,custom[phone]]" maxlength="20" />
+                                    <span id="business_phone_status_ok" class="<?php echo (@$this->business_phone_validated == 1) ? 'show' : 'hide'; ?>">
+                                        <img src="<?php echo WEBSITE_URL.'images/OK.png' ?>"/>
+                                    </span>
+
+                                    <span id="business_phone_status_error" class="hide" >
+                                        <input class="buttonsNext" type="button"  value="Validate Phone Number"  onclick="validatePhoneNumber($('#business_phone').val(), 'business_phone_status','business_phone_validated');"/>
+<!--                                        Error, Try again-->
+                                    </span>
+
+                                    <span id="business_phone_status_default" class="<?php echo (@$this->business_phone_validated == 1) ? 'hide' : 'show'; ?>">
+                                        <input class="buttonsNext" type="button"  value="Validate Phone Number"  onclick="validatePhoneNumber($('#business_phone').val(), 'business_phone_status', 'business_phone_validated');"/>
+                                    </span>
+                                    <span id="business_phone_status_Validating" class="hide">Validating...</span>
+                                </label>
+
+
+                                <label><span>After Hours Connection Number</span><input title="<?php echo OVERVIEW_FORM_HOMEPH; ?>" onchange="showDefault('home_phone_status', 2);hideme2('div_prorate', $('#home_phone').val(), 'home_phone_status','');"  name="home_phone" id="home_phone"  value="<?php echo (isset($this->home_phone))? htmlspecialchars(stripslashes($this->home_phone)) : '';?>"  maxlength="20" />
+                                    <span id="home_phone_status_ok" class="<?php echo (@$this->home_phone_validated == 1) ? 'show' : 'hide'; ?>">
+                                        <img src="<?php echo WEBSITE_URL.'images/OK.png' ?>"/>
+                                    </span>
+
+                                    <span id="home_phone_status_error" class="hide">
+                                        <input class="buttonsNext" type="button" value="Validate Phone Number"  onclick="validatePhoneNumber($('#home_phone').val(), 'home_phone_status', 'home_phone_validated');"/>
+<!--                                        Error, Try again-->
+                                    </span>
+									<span id="home_phone_status_Validating" class="hide">Validating...</span>
+                                    <span id="home_phone_status_default" class="<?php echo (@$this->home_phone_validated == 1) ? 'hide' : 'show'; ?>">
+                                        <input class="buttonsNext" type="button" value="Validate Phone Number"  onclick="validatePhoneNumber($('#home_phone').val(), 'home_phone_status', 'home_phone_validated');"/>
+                                    </span>
+
+                                </label>
+
+
+                                <label><span>Caller Id<strong>*</strong></span>
+                                    <?php $caller_id = (isset($this->caller_id)) ? $this->caller_id : '';  ?>
+                                    
+                                    <?php if($caller_id == ''){ ?>
+                                        <input type="hidden" name="business_phone_status" id="business_phone_status" value="0"/>
+                                        <input type="hidden" name="home_phone_status" id="home_phone_status" value="0"/>
+                                    <?php } else
+                                    {
+                                    	if($this->home_phone_validated == '1' && $this->business_phone_validated == '1')
+                                        { ?>
+	                                        <input type="hidden" name="business_phone_status" id="business_phone_status" value="1"/>
+	                                        <input type="hidden" name="home_phone_status" id="home_phone_status" value="1"/>
+	                                        <?php
+                                   		 } 
+                                        else if($this->home_phone_validated == '1'){
+                                         	
+                                         ?>
+                                        <input type="hidden" name="home_phone_status" id="home_phone_status" value="1"/>
+                                        <input type="hidden" name="business_phone_status" id="business_phone_status" value="0"/>
+                                        <?php }
+                                     	 else if($this->business_phone_validated == '1')
+                                         { ?>
+                                       <input type="hidden" name="business_phone_status" id="business_phone_status" value="1"/>
+                                        <input type="hidden" name="home_phone_status" id="home_phone_status" value="0"/>
+                                    <?php }
+                                    	}
+                                     ?>
+                                        
+                                    <select title="<?php echo OVERVIEW_FORM_CALLER_ID; ?>" class="validate[required,custom[caller_id]]" name="caller_id" id="caller_id" style="width: 250px;">
+
+                                        <?php if($caller_id == ''): ?>
+                                        
+                                        <option value="">Please validate one or more numbers</option>
+                                        <?php else:
+										$sl1 = "";
+										$sl2 = "";
+                                        ?>
+                                            <?php if($this->business_phone_validated == '1'): if($caller_id == $this->business_phone) $sl1 = 'selected'; ?>
+                                                <option <?php echo $sl1; ?> value="<?php echo @$this->business_phone; ?>">
+                                                    Business Hours Connection Number
+                                                </option>
+                                            <?php endif; ?>
+
+                                            <?php if($this->home_phone_validated  == '1'):  if($caller_id == $this->home_phone) $sl2 = 'selected'; ?>
+                                                <option <?php echo $sl2; ?> value="<?php echo @$this->home_phone; ?>">
+                                                    After Hours Connection Number
+                                                </option>
+                                            <?php endif; ?>
+
+                                        <?php endif; ?>
+
+                                    </select>
+
+                                </label>
+								
+								<label><span>Number of Times to Repeat Announcement</span>
+                                <select name="toRepeatTheAnnouncement" id="toRepeatTheAnnouncement" class="validate[required]" style="width:50px;">
+	                                <option value="1" <?php if($this->toRepeatTheAnnouncement=='1') echo "selected='selected'"; else '';?>>1</option>
+	                                <option value="2" <?php if($this->toRepeatTheAnnouncement=='2') echo "selected='selected'"; else '';?>>2</option>
+	                                <option value="3" <?php if($this->toRepeatTheAnnouncement=='3') echo "selected='selected'"; else '';?>>3</option>
+	                                <option value="4" <?php if($this->toRepeatTheAnnouncement=='4') echo "selected='selected'"; else '';?>>4</option>
+	                                <option value="5" <?php if($this->toRepeatTheAnnouncement=='5') echo "selected='selected'"; else '';?>>5</option>
+	                                <option value="10" <?php if($this->toRepeatTheAnnouncement=='10') echo "selected='selected'"; else '';?>>10</option>
+	                                <option value="15" <?php if($this->toRepeatTheAnnouncement=='15') echo "selected='selected'"; else '';?>>15</option>
+	                                <option value="20" <?php if($this->toRepeatTheAnnouncement=='20') echo "selected='selected'"; else '';?>>20</option>
+	                                <option value="25" <?php if($this->toRepeatTheAnnouncement=='25') echo "selected='selected'"; else '';?>>25</option>
+	                                <option value="30" <?php if($this->toRepeatTheAnnouncement=='30') echo "selected='selected'"; else '';?>>30</option>
+                                </select>
+                                </label>
+								
+								
+                                <div class="buttonsNextPrev" style="margin-right: 85px;">
+                            	<input class="buttonsNext"  style="width:90px;" type="button" value="Cancel"  onclick="window.location.href='<?php echo WEBSITE_URL?>forms/'"/>
+			                    <input class="buttonsNext"  style="width:90px;" type="submit" value="Next"  onclick="validate_form()"/>
+                               	<input type="hidden"  name="form_id" id="form_id"   value="<?php echo (isset($this->form_id))? htmlspecialchars(stripslashes($this->form_id)) : '';?>" />
+                               	</div>
+                            </fieldset>
+                            </div>
+                    </div>
+                </div>
+
+                <div id="div_prorate"></div>
+                </form>
+
+            </article>
+</div>
+
+<script type="text/javascript">
+ function validate_form(){
+
+              // binds form submission and fields to the validation engine
+             // jQuery("#formID1").validationEngine('attach', {promptPosition : "topLeft"});
+				jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
+              // jQuery("#formID1").validationEngine('attach', {promptPosition : "bottomLeft"});
+		      // jQuery("#formID1").validationEngine('attach', {promptPosition : "bottomRight"});
+		     //  jQuery("#formID1").validationEngine('attach', {promptPosition : "topLeft"});
+		     document.formID1.submit();
+ }
+
+</script>
+
+<script type="text/javascript">
+
+var hasOnePhoneNumber1 = $("#business_phone_status").val() == 1 ? true : false;
+var hasOnePhoneNumber2 = $("#home_phone_status").val() == 1 ? true : false;
+
+ function validatePhoneNumber(number, number_type, phoneType){
+
+	 var formId = document.getElementById('form_id').value;
+		if(number.trim() !='')
+			{
+                $("#"+number_type+"_Validating").removeClass('hide');
+                $("#"+number_type+"_Validating").addClass('show');
+                $("#"+number_type+"_default").removeClass('show');
+                $("#"+number_type+"_default").addClass('hide');
+                
+		jQuery.post("<?php echo WEBSITE_URL?>forms/validate-phone-number",{number: number, number_type: number_type, form_id: formId,phone_type:phoneType},function(response){
+				if(response!=''){
+						jQuery('#div_prorate').show();
+						 jQuery('#div_prorate').html('');
+						jQuery('#div_prorate').html(response);
+				}else{
+				jQuery('#div_prorate').hide();
+				}
+		});	}else{
+			jQuery('#formUserDetailsdiverror').show();
+		}
+ }
+ 
+
+ function showDefault(number_type, hideopt)
+ {
+    $("#"+number_type+"_ok").removeClass('show');
+    $("#"+number_type+"_ok").addClass('hide');
+
+    $("#"+number_type+"_error").removeClass('show');
+    $("#"+number_type+"_error").addClass('hide');
+
+    $("#"+number_type+"_default").removeClass('hide');
+    $("#"+number_type+"_default").addClass('show');
+
+    $("#"+number_type+"_default").html($("#"+number_type+"_error").html());
+
+    if($('#caller_id option').size() == 1)
+         {
+        if(hideopt == 1 && hasOnePhoneNumber2 == false){
+            $("#caller_id").removeOption(0);
+            hasOnePhoneNumber1 = false;
+            $("#business_phone_status").val(0);
+        }
+        else if (hideopt == 2 && hasOnePhoneNumber1 == false){
+            $("#caller_id").removeOption(0);
+            hasOnePhoneNumber2 = false;
+            $("#home_phone_status").val(0);
+        }
+    }  
+
+    if($('#caller_id option').size() == 2)
+    {
+        if(hideopt == 1){
+            $("#caller_id").removeOption(0);
+            hasOnePhoneNumber1 = false;
+            $("#business_phone_status").val(0);
+        }
+        else if (hideopt == 2){
+            $("#caller_id").removeOption(1);
+            hasOnePhoneNumber2 = false;
+            $("#home_phone_status").val(0);
+        }
+    }
+
+    if($('#caller_id option').size() == 0)
+    {
+        $("#caller_id").append("<option selected value=''>Please validate one or more numbers</option>");
+        hasOnePhoneNumber1 = false; hasOnePhoneNumber2 = false;
+        $("#business_phone_status").val(0);
+        $("#home_phone_status").val(0);
+    }
+ }
+
+ 
+ function hideme2(div_prorate, number, number_type,isDBCheck)
+ {
+    jQuery('#'+div_prorate).hide();
+    if(number.trim() == '' || number_type == '') return false;
+
+    
+    var formId = document.getElementById('form_id').value;
+    
+   
+            var url  = "<?php echo WEBSITE_URL?>forms/get-phone-validate-status";
+
+            $.ajax({
+                type: "post",
+                url : url,
+                data: {number:number, number_type:number_type, form_id:formId, database:isDBCheck},
+                success: function(response){
+                	 $("#"+number_type+"_Validating").removeClass('show');
+                     $("#"+number_type+"_Validating").addClass('hide');	
+                		
+                    if(response != '')
+                     {
+                		var temp = response.split('@@');
+						//alert(temp[0]+'-'+temp[1]);
+                        if(number_type == 'business_phone_status' && temp[0] == '1')
+                            {
+	                        	$("#"+number_type+"_default").removeClass('show');
+	                            $("#"+number_type+"_default").addClass('hide');
+                            
+	                        	$("#"+number_type+"_ok").removeClass('hide');
+	                            $("#"+number_type+"_ok").addClass('show');
+                            
+	                            var bn = jQuery.trim($("#business_phone").val());
+	                            var btext = $("#caller_id option[value='"+bn+"']").text();
+	                            if(btext.indexOf('Business Hours Connection Number') == -1)
+	                            {
+	                                if(hasOnePhoneNumber1 == false && hasOnePhoneNumber2 == false)
+	                                    $("#caller_id").removeOption(0);
+	                                $("#caller_id").append("<option value='"+bn+"'>Business Hours Connection Number</option>");
+	                                hasOnePhoneNumber1 = true;
+	                                $("#business_phone_status").val(1);
+	                            }
+
+                        	}
+                        if(number_type == 'business_phone_status' && temp[0] == '0')
+                        {
+                        	 $("#"+number_type+"_default").removeClass('hide');
+                             $("#"+number_type+"_default").addClass('show');
+
+                            	 $("#"+number_type+"_ok").removeClass('show');
+	                            $("#"+number_type+"_ok").addClass('hide');
+                        }
+                            
+                        if(number_type == 'home_phone_status' && temp[1] == '1')
+                        {
+                        	$("#"+number_type+"_default").removeClass('show');
+                            $("#"+number_type+"_default").addClass('hide');
+                        
+                        	$("#"+number_type+"_ok").removeClass('hide');
+                            $("#"+number_type+"_ok").addClass('show');
+                            
+                            var hn = jQuery.trim($("#home_phone").val());
+                            var htext = $("#caller_id option[value='"+hn+"']").text();
+                            if(htext.indexOf('After Hours Connection Number') == -1){
+                                if(hasOnePhoneNumber1 == false && hasOnePhoneNumber2 == false)
+                                    $("#caller_id").removeOption(0);
+                                $("#caller_id").append("<option value='"+hn+"'>After Hours Connection Number</option>");
+                                hasOnePhoneNumber2 = true;
+                                $("#home_phone_status").val(1);
+                            }
+                        }
+                        if(number_type == 'home_phone_status' && temp[1] == '0')
+                        {
+                        	$("#"+number_type+"_default").removeClass('hide');
+                            $("#"+number_type+"_default").addClass('show');
+
+                           	 $("#"+number_type+"_ok").removeClass('show');
+	                         $("#"+number_type+"_ok").addClass('hide');
+                        }
+                    }
+                    else
+                        {
+	                        $("#"+number_type+"_ok").removeClass('show');
+	                        $("#"+number_type+"_ok").addClass('hide');
+	
+	                        $("#"+number_type+"_default").removeClass('show');
+	                        $("#"+number_type+"_default").addClass('hide');
+	
+	                        $("#"+number_type+"_error").removeClass('hide');
+	                        $("#"+number_type+"_error").addClass('show');
+                    }
+                }
+            });
+ }
+ function getradiovalue(radvalue){
+ jQuery('#current_radiovalue').val(radvalue);
+ }
+
+</script>
+
+<?php
+
+$session = new Zend_Session_Namespace('Zend_Auth');
+$session->overview_visited = true;
+
+?>

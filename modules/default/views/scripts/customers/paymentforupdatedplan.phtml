@@ -1,0 +1,18 @@
+<form id="form_payment" name="form_payment" class="formular" method="post" action="<?php echo WEBSITE_URL?>payments/indexvault.php">
+		    <input type="hidden" name="first_name"  value="<?=$this->firstname?>" />
+            <input type="hidden" name="last_name" value="<?=$this->lastname?>" />
+            <input type="hidden" name="email" value="<?=$this->email?>" />
+            <input type="hidden" name="order_id" value="<?=$this->order_id?>" />
+            <input type="hidden" name="others" value="<?=$this->id?>_<?=$this->loggedin_member_id_and_user_type?>"/>
+            <input type="hidden" name="customer_id" value="<?=$this->id?>"/>
+            <input type="hidden" name="number" value="<?=$this->card_num?>" />
+            <input type="hidden" name="expiration_date" value="<?=$this->expiry_month?>/<?=$this->expiry_year?>" />
+            <input type="hidden" name="cvv" value="<?=$this->card_cvv?>" />
+            <input type="hidden" name="amount" value="<?=$this->price?>"/>
+        </form>              
+
+<script type="text/javascript">
+ $(document).ready(function() {
+   document.form_payment.submit();
+ });
+</script>

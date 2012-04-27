@@ -1,0 +1,168 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: signup.phtml	#
+#			Description 	: this is First signup Page  to work in the front end site #
+#			Created date	: 19/01/2011	#	
+#			Created By		: Manoj Kumar Chauhan	#
+######################################################
+?> 
+<link href="<?php echo WEBSITE_CSS_URL.'style_edit_account_detail.css'?>" media="screen" rel="stylesheet" type="text/css" >
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL . 'js/jquery.qtip.js' ?>"></script>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function($){
+
+                $('label[title]').qtip({
+                   position: {
+                       my: 'left center',
+                       at: 'right center'
+                    },
+                    style: {
+                       classes: 'signupcss'
+                    }
+                });
+});
+
+</script>
+
+<style type="text/css">
+    #formcompanyDetails label span{width: 107px !important;}
+    #formcompanyDetails .editAccountColom input {
+    width: 203px !important;
+}
+</style>
+
+<form id="formID1" name="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>customers/editaccountdetails/id/<?php echo $this->id;?>">
+ 		<div class="row-1 wrapper">             
+             <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+                    <div class="maxheight box">
+                        <div class="padding">         
+                            <?php echo $this->render('logged_in_left_panel.phtml'); ?>
+                        </div>
+                    </div>
+            </article>              
+            
+             <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-2" style="width:548px;" <? }else{?> class="maxheight col-4" style="width:630px;"<? }?> >
+              <div class="maxheight box">
+                <div class="padding">
+                  <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Edit Account Details " style="width: 56px; height: 22px;margin-bottom: 25px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Edit Account Details </cufontext></cufon></h2>
+                  <div id="formcompanyDetails">
+                    <div <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="editAccountColom1" <? }else{?> class="editAccountColom"<? }?>>
+                      <fieldset>
+                      <label title="<?php echo SIGNUP_FIRST_NAME; ?>"><span>First Name<strong>*</strong></span>
+                         <input type="text" name="firstname" id="firstname" class="validate[required,custom[firstname]]" value="<?php echo (isset($this->firstname))? htmlspecialchars(stripslashes($this->firstname)) : '';?>"/>
+                      </label>
+                      <label title="<?php echo SIGNUP_LAST_NAME; ?>"><span>Last Name<strong>*</strong></span>
+                       <input  type="text" name="lastname" id="lastname" class="validate[required,custom[lastname]]"  value="<?php echo (isset($this->lastname))? htmlspecialchars(stripslashes($this->lastname)) : '';?>" />
+                      </label>
+                      <label><span>Company Name</span>
+                        <input  type="text" name="companyname" id="companyname"  value="<?php echo (isset($this->companyname))? htmlspecialchars(stripslashes($this->companyname)) : '';?>"/>
+                      </label>					  
+					  <label title="<?php echo SIGNUP_EMAIL; ?>"><span>Email Address<strong>*</strong></span>
+                       <input  type="text" readonly name="email" id="email"  value="<?php echo (isset($this->email))? htmlspecialchars(stripslashes($this->email)) : '';?>"  class="validate[required,custom[email]]" onblur="validate_email()"/>
+                                <div id="div_email" style="color:red;padding-left: 125px;"></div>
+                      </label>
+                      <label title="<?php echo SIGNUP_ADDRESS1; ?>"><span>Address 1<strong>*</strong></span>
+                        <input  type="text" name="address1"  id="address1" maxlength="250"   value="<?php echo (isset($this->address1))? htmlspecialchars(stripslashes($this->address1)) : '';?>" class="validate[required,custom[address1]]"/>
+                      </label>                     
+                      </fieldset>
+                    </div>
+					
+                    <div <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="editAccountColom1" <? }else{?> class="editAccountColom"<? }?>>
+                      <fieldset>
+                    
+                      <label><span>Address 2</span>
+                        <input  type="text" name="address2" id="address2" maxlength="250"  value="<?php echo (isset($this->address2))? htmlspecialchars(stripslashes($this->address2)) : '';?>" />
+                      </label>
+                      <label title="<?php echo SIGNUP_CITY; ?>"><span>City<strong>*</strong></span>
+                       <input  type="text" name="city" id="city"  value="<?php echo (isset($this->city))? htmlspecialchars(stripslashes($this->city)) : '';?>"  maxlength="50"  class="validate[required,custom[city]]"/>
+                      </label>
+                      
+                      <label title="<?php echo SIGNUP_STATE; ?>"> <span>State<strong>*</strong></span>
+                      <input  type="text" name="state" id="state"  value="<?php echo (isset($this->state))? htmlspecialchars(stripslashes($this->state)) : '';?>"  maxlength="50"  class="validate[required,custom[state]]"/></label>
+                      
+                      <label title="<?php echo SIGNUP_ZIP; ?>"> <span>Zip<strong>*</strong></span>
+                      <input  type="text" name="zip" id="zip"  value="<?php echo (isset($this->zip))? htmlspecialchars(stripslashes($this->zip)) : '';?>"  maxlength="8"  class="validate[required,custom[zip]]"/></label>
+                      
+                      <label title="<?php echo SIGNUP_PHONE; ?>"> <span>Phone<strong>*</strong></span>
+                      <input  type="text" name="phone" id="phone"  value="<?php echo (isset($this->phone))? htmlspecialchars(stripslashes($this->phone)) : '';?>"  maxlength="15"  class="validate[required,custom[phone]]"/></label>
+                        
+                     <!-- <span style="width: 40px !important; padding-left: 18px;">Zip<strong>*</strong></span>
+                       <input name="zip" maxlength="8"   value="<?php echo (isset($this->zip))? htmlspecialchars(stripslashes($this->zip)) : '';?>"  style="width: 50px;" id="zip"  class="validate[required,custom[zip]]"/>
+                      </label>
+                      <label><span>Phone<strong>*</strong></span>
+                        <input  name="phone" id="phone"   value="<?php echo (isset($this->phone))? htmlspecialchars(stripslashes($this->phone)) : '';?>" maxlength="15" class="validate[required,custom[phone]]"/>
+                      </label> -->
+                      
+                      </fieldset>
+                    </div>
+					<div class="clear"></div>
+					<div class="buttonsNextPrev"> 
+					
+					<?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?> 
+					<input class="buttonsNext" style="width:90px;" type="button" value="Cancel"  onclick="window.location.href='<?php echo WEBSITE_URL?>customers/edit/id/<?php echo $this->id?>'"/>
+					<? }else{?>
+					<input class="buttonsNext" style="width:90px;" type="button" value="Cancel"  onclick="window.location.href='<?php echo WEBSITE_URL?>customers/myaccount/id/<?php echo $this->id?>'"/>
+					<? }?> 					
+					<input class="buttonsNext" style="width:90px;" type="submit" value="Update"  onclick="validate_signup()"/>  </div>
+					<input type="hidden"  name="id" id="id"   value="<?php echo (isset($this->id))? htmlspecialchars(stripslashes($this->id)) : '';?>"/>                                
+                    <input type="hidden"  name="oldemail" id="oldemail"   value="<?php echo (isset($this->id))? htmlspecialchars(stripslashes($this->email)) : '';?>"/>      
+                  </div>
+                </div>
+              </div>
+            </article>
+        </div>      
+ 	</form>        
+<script type="text/javascript">
+ function validate_signup(){
+              // binds form submission and fields to the validation engine
+             // jQuery("#formID1").validationEngine('attach', {promptPosition : "topLeft"});
+				jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
+              // jQuery("#formID1").validationEngine('attach', {promptPosition : "bottomLeft"});
+		      // jQuery("#formID1").validationEngine('attach', {promptPosition : "bottomRight"});
+		     //  jQuery("#formID1").validationEngine('attach', {promptPosition : "topLeft"});
+		     //document.formID1.submit();
+ }
+ 
+ function validate_email(){ 
+		var email=jQuery('#email').val();	
+		var oldemail=jQuery('#oldemail').val();	
+		
+		var id=jQuery('#id').val();
+		jQuery.post("<?php echo WEBSITE_URL?>customers/emailvalidation",{dos:'eck', email: email, id: id},function(response){		
+			//alert(response);
+				if(response>0){
+				jQuery('#email').val('');
+				jQuery('#email').val(oldemail);
+				//jQuery('#email').focus();						
+				jQuery('#div_email').html(email+' already exists.');				
+				}else{
+				jQuery('#div_email').html('');				
+				}				
+		});	
+}
+	
+ function validate_confirm_pass(){ 	
+	var pass1=jQuery('#pass').val();
+	var pass2=jQuery('#re_pass').val();
+	if(pass1!=pass2){		
+		jQuery('#passwordnotmatched').show();
+		jQuery('#re_pass').val('');
+		//jQuery('#re_pass').focus();
+	}else{
+	jQuery('#passwordnotmatched').hide();
+	}
+ }
+
+ function hide_by_id(idvalue){ 	
+		jQuery('#'+idvalue).hide();
+ }
+ 
+ 
+</script>

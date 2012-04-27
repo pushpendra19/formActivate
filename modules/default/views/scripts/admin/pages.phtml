@@ -1,0 +1,46 @@
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<div class="row-1 wrapper">   
+  <article class="maxheight" >
+                <div class="maxheight box">
+                    <div class="padding"> 	
+                       <span style="float:right;margin-right:27px;"><a class="buttonsNextEdit" href="#" onClick="history.back()">Back</a></span>
+						<div class="topRow"> 
+						</div>				           		
+                        <h3>Static Pages</h3>
+                          <?php
+							$obj=new Zend_Session_Namespace('Zend_Auth');
+
+							if(isset($obj->deleteError))
+								{?>
+									<label><span class="loginmessage" > <?php echo $_SESSION['Zend_Auth']['deleteError'];
+									unset($_SESSION['Zend_Auth']['deleteError']);?><br><br> </span></label>
+								<? }
+				 		?>
+                        <div id="formcompanyDetails">
+						
+						<div class="table">
+							<div class="topRow1">								
+								<span class="coloms"  style="width:300px;">Page Title</span>								
+								<span class="coloms"  style="width:250px;">Page Name</span>
+								<span class="coloms">Modified Date</span>
+								<span class="coloms last">Action</span>									
+							</div>
+					<?php 
+					$i=0; 
+					foreach ($this->staticpages_data as $data_key =>$data_val) {
+					?>
+							<div <?php if( (($i)%2) == 0 ) { echo 'class="grayRow"';} else { echo 'class="whiteRow"'; } ?>>							
+								<span class="coloms" style="width:300px;"><?php echo stripslashes(ucfirst($data_val->page_title)); ?></span>
+								<span class="coloms"  style="width:250px;"><?php echo stripslashes(ucfirst($data_val->page_name)); ?></span>
+								<span class="coloms"><?php echo $data_val->modified_date; ?></span>
+								<span class="coloms last"><A href="<?=WEBSITE_URL?>admin/editpage/id/<?php echo stripslashes($data_val->id); ?>"><img src="<?=WEBSITE_URL?>images/pen.png" alt="Edit Page" title="Edit Page"></A></span>									
+							</div>							
+						<?php 					
+							$i++;
+							}?>
+						</div>											
+                        </div>
+                    </div>
+                </div>
+            </article>  
+			  </div> 

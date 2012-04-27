@@ -1,0 +1,296 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: wufooformfield.phtml	#
+#			Description 	: this is First step to create form builder
+#			Created date	: 16/02/2011	#	
+#			Created By		:						#
+######################################################
+?> 
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL . 'js/jquery.qtip.js' ?>"></script>
+
+<script type="text/javascript">
+
+
+    jQuery(document).ready(function($){
+
+                $('.buttonsNextPreviewSignin[title], .ptip[title]').qtip({
+                   position: {
+                       my: 'right center',
+                       at: 'left center'
+                    },
+                    style: {
+                       classes: ''
+                    }
+                });
+
+                $('.shelp[title]').qtip({
+                   position: {
+                       my: 'left center',
+                       at: 'right center'
+                    },
+                    style: {
+                       classes: ''
+                    }
+                });
+});
+
+</script>
+
+<div class="row-1 wrapper">
+<?php  echo $this->render('forms_left_panel.phtml'); ?>
+ 
+
+            <article class="maxheight col-2" style="width:630px;">
+            <form id="formID1" name="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>forms/wufooformfield/form_id/<?=$this->form_id?>">
+                <div class="maxheight box" style="height:800px;">
+                    <div class="forms-padding"> 
+                        <span style="float:right;">
+                        	<?php if($this->form_type != "wufoo") {?>
+                             <?php $session = new Zend_Session_Namespace('Zend_Auth'); if ($session->overview_done && $session->standard_form_done && $session->emailnotification_done && $session->redirect_done): ?> 
+                             		
+                             		<a style="border: solid 1px #CECECE;color: #949494;padding: 5px;" href="<?php echo WEBSITE_URL?>forms/preview/form_id/<?php echo $this->form_id?>" title="<?php echo STDFIELD_PREVIEW; ?>" type="button" class="buttonsNextPreviewSignin">Preview Form</a>
+                             		
+                             <?php else: ?>
+
+                                <span class="ptip" title="<?php echo STDFIELD_PREVIEW; ?>" style="border: solid 1px #CECECE;color: #949494;padding: 5px;">
+                                    Preview Form
+                                </span>
+                             <?php endif; ?>
+                             <?php }?>
+                        </span>
+
+                        <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Wufoo Form Fields " style="width: 56px; height: 22px;margin-bottom: 25px;clear: both;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Wufoo Form Fields </cufontext></cufon></h2>
+                        <div id="formUserDetailsStd">                                            
+                            <b title="<?php echo WUFOOSTDFIELD_HELP; ?>" class="shelp">What is Wufoo? <img alt="no image" src='<?php echo WEBSITE_URL . 'images/info_icon.png' ?>' width="18" />  </b><br />
+                            <?php if(count($this->fields) > 0)
+                            {
+                            ?>
+                            	<a style="border: solid 1px #CECECE;color: #949494;padding: 5px;float: right;" href="<?php echo WEBSITE_URL?>forms/deletewufoomapping/form_id/<?php echo $this->form_id?>" title="<?php echo "Erase mappings and re-connect to Wufoo"; ?>" type="button" class="buttonsNextPreviewSignin">Erase mappings and re-connect to Wufoo</a>
+                            <br/>  <br/>
+                           <?php }
+                           		if(count($this->fields) > 0)
+                           {
+                           ?> 
+                        	<table cellpadding="0" cellspacing="0" width="100%" style="border: 0pt solid red">
+                        	<tr>
+		                  		<td><b>Wufoo Field Name</b></td>
+		                  		<td><b>Field Mapping</b></td>
+		                  		<td><b>Custom Field Name</b></td>		                  		
+		                  		<td><b>Announce</b></td>
+		                  		
+		                  	</tr>
+                        <?php
+                        $i=0;
+                        $key='';
+                        foreach ($this->fields as $fields)
+                        {
+                        	//echo $fields['label'].'<br/>';	
+                        	
+                        	$customerId = $fields['customer_id'];
+                        	
+                        	if($i%2==0)
+                        	{
+                        		$style="style='background-color:#EFF0F0'";
+                        	}
+                        	else {
+                        		$style="";
+                        	}
+                        ?>
+                  	      	<tr>
+		                  		<td <?=$style?>>
+		                  			<?php
+		                  				$fieldId = trim($fields['field_id']);
+		                  				
+		                  			 	if(is_numeric($fieldId))
+		                  					$fieldId = "Field".$fieldId;
+		                  					
+		                  					$info = "Field Name: ".$fieldId."<br/>Field Label: ".$fields['label']."<br/>Field Value: ".$fields['field_value'];
+		                  					
+		                  			?>
+		                  			<b title="<?php echo $info;?>" class="shelp" style="font-weight: normal;"><?php echo $fields['label'] ;?>&nbsp;<img alt="no image" src='<?php echo WEBSITE_URL . 'images/info_icon.png' ?>' width="15" /></b>
+		                  			<input type="hidden"   name="fieldId[]"  id="fieldId"  value="<?php echo $fieldId?>"/>
+		                  			<input type="hidden"   name="formStdtableId[]"  id="formStdtableId"  value="<?php echo $fields['id']?>"/>
+		                  			<input type="hidden"   name="fieldValue[]"  id="fieldValue"  value="<?php echo $fields['field_value']?>"/>
+		                  			<input type="hidden"   name="fieldLable[]"  id="fieldLable"  value="<?php echo $fields['label']?>"/>
+		                  		</td>
+		                  		<td <?=$style?> >
+		                  				
+		                  				<select name="field_mapping[]" style="width:100px;" onchange="reRenderCustomFields(this,<?php echo $fields['id']?>)">
+		                  					<option value="ignore" <?php if($fields['inquiry_table_field']=='ignore') { echo "selected='selected'"; }?>>Ignore</option>
+					                  		<option value="firstname" <?php if($fields['inquiry_table_field']=='firstname') { echo "selected='selected'"; }?>>First Name</option>
+					                  		<option value="lastname" <?php if($fields['inquiry_table_field']=='lastname') { echo "selected='selected'"; }?>>Last Name</option>
+					                  		<option value="email" <?php if($fields['inquiry_table_field']=='email') { echo "selected='selected'"; }?>>Email Address</option>
+					                  		<option value="phonenumber" <?php if($fields['inquiry_table_field']=='phonenumber') { echo "selected='selected'"; }?>>Phone Number</option>
+					                  		<option value="company" <?php if($fields['inquiry_table_field']=='company') { echo "selected='selected'"; }?>>Company Name</option>
+					                  		<option value="streetaddress" <?php if($fields['inquiry_table_field']=='streetaddress') { echo "selected='selected'"; }?>>Street Address</option>
+					                  		<option value="city" <?php if($fields['inquiry_table_field']=='city') { echo "selected='selected'"; }?>>City</option>
+					                  		<option value="state" <?php if($fields['inquiry_table_field']=='state') { echo "selected='selected'"; }?>>State</option>
+					                  		<option value="zip" <?php if($fields['inquiry_table_field']=='zip') { echo "selected='selected'"; }?>>Zip</option>
+					                  		<option value="country" <?php if($fields['inquiry_table_field']=='country') { echo "selected='selected'"; }?>>Country</option>
+					                  		<option value="custom" <?php if($fields['inquiry_table_field']=='custom') { echo "selected='selected'"; }?>>Custom</option>
+							              </select>
+		                  		
+		                  		</td>
+		                  		
+		                  		<td <?=$style?>>
+		                  			<?php
+		                  			 
+		                  				$styleForCustom="style='display: none;'";
+		                  				
+		                  				if($fields['field_status'] == "custom" && ($fields['field_status'] != "" || $fields['field_status'] != 'Null' )) 	
+		                  					$styleForCustom="style='display: block;'";
+		                  					
+		                  			 ?>
+		                  			
+		                  			<input type="text" <?=$styleForCustom?>  name="customField[]" id="<?php echo $fields['id']?>"  value="<?php echo $fields['label'];?>" />
+		                  				
+		                  		</td>
+		                  		
+		                  		<td <?=$style?>>
+		                  				<select name="field_announce[]"  style="width:73px;">							                  		
+                                                        <option value="no" <?php if($fields['field_announce']=='no') { echo "selected='selected'"; }?> >No</option>
+                                                        <option value="yes" <?php if($fields['field_announce']=='yes') { echo "selected='selected'"; }?>>Yes</option>
+                                                </select>
+		                  		</td>
+		                  		
+		                  		
+		                  		
+		                  		
+		                  	</tr>
+                          	
+                        <?php
+						$i++; 
+                         }
+                        ?>
+                        
+                        </table>
+                       <?php 
+                           } 
+                           else
+                           { 
+                       ?> 
+                       		<br/><b  class="shelp">To set up your Wufoo form, please follow the steps below:</b><br /><br/>
+                       		
+                       		
+                       			Before we can map the WuFoo form fields, it is necessary to connect the Wufoo Webhook to FormActivate.
+                       			To do this, point the Wufoo Webhook to the following URL: <br/><br/>    
+                       			
+                       			<b><?php echo WEBSITE_URL."wufoo/call";?></b><br/><br/>
+                       			
+                       			Please remember to specify the following as your Wufoo HandshakeKey: <br/>
+                       			
+                       			<?php echo "<b>".$this->api_key."|".$this->form_id."</b>"; ?> <br/><br/>
+                       			
+                       			One the Webhook is pointed to FormActivate , and your form has been set up in Wufoo, please submit a test form to this URL. This will allow us to easily map the Wufoo form fields to their corresponding FormActivate form fields - and you may then select which fields should be announced when a new call is received.  
+                       			
+                       			
+                       			
+                       <?php }?>
+                        </div>
+                         <div class="buttonsNextPrev">                                
+                             <input class="buttonsNext" style="width: 90px;" type="button" value="Previous"  onclick="go_prev('Previous');"/>
+                             <input class="buttonsNext" style="width: 90px;" type="button" value="Next"  onclick="go_prev('Next')"/>
+                             <input type="hidden" name="preview_hidden_value" id="preview_hidden_value" value="<?php echo $this->preview_hidden_value;?>">  
+                             <input type="hidden" name="formid" id="formid" value="<?php echo $this->form_id;?>">   
+                             <input type="hidden" name="countOfRow" id="countOfRow" value="<?php echo count($this->fields);?>">     	
+                             <input type="hidden" name="form_action" id="form_action" value="">    	
+                         </div>      	
+                     </div>
+                </div>
+                </form>
+            </article>
+</div> 
+<div id="previewhiddendiv"></div>
+<script type="text/javascript">
+
+function reRenderCustomFields(selected,id)
+{
+	//alert(selected.value);
+	//alert(document.getElementById(id).style.display);
+	if(selected.value == "custom")
+		document.getElementById(id).style.display = 'block';
+	else
+		document.getElementById(id).style.display = 'none';
+	
+}
+
+ function preventUncheck()
+ {
+     $("#ucheck").attr('checked', 'checked');
+////     alert($("#ucheck").is(':checked'));
+////     return ;
+//     if($("#ucheck").is(':checked') == true)
+//     {
+//         $("#ucheck").attr('checked', 'checked');
+//     }
+//     else
+//         alert('unchecked');
+ }
+ function validate_form(){
+              // binds form submission and fields to the validation engine          
+				jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
+ }
+ 
+ function go_prev(type)
+ {
+	 
+	jQuery('#form_action').val(type);
+	//alert(jQuery('#form_action').val(type));
+	//exit;
+ 	validate_form();
+ 	//document.form.submit();
+ 	document.formID1.submit();
+ 	//var myString = '<?=WEBSITE_URL?>'+'forms/overview/form_id/'+'<?=$this->form_id;?>';	window.location=myString;
+ }
+ 
+ 
+</script>
+
+<script type="text/javascript">
+
+function validate_form(){
+    // binds form submission and fields to the validation engine          
+		jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
+}
+ 
+function savepreviewform(){  	         
+       jQuery('#preview_hidden_value').val('1');				       
+       document.formID1.submit();
+ } 
+ 
+
+$(document).ready(function() {
+	 var preview_hidden_value=jQuery('#preview_hidden_value').val();	
+	if(preview_hidden_value==2){
+  var id=jQuery('#formid').val();
+		jQuery.post("<?php echo WEBSITE_URL?>forms/popupstdpreview",{form_id:id},function(response){		
+				if(response!=''){
+					jQuery("#previewhiddendiv").show();
+					jQuery('#previewhiddendiv').html(response);	
+				}else{
+				jQuery('#previewhiddendiv').html('');				
+				}									
+		});	
+		jQuery('#preview_hidden_value').val('');
+	}else{
+	jQuery('#preview_hidden_value').val('');	
+	}
+});
+
+
+function hideme(hidediv){              
+           	  jQuery("#"+hidediv).hide();
+ }
+</script>
+
+<?php
+
+$session = new Zend_Session_Namespace('Zend_Auth');
+$session->standard_form_visited = true;
+
+?>

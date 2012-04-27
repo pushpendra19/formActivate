@@ -1,0 +1,232 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: overview.phtml	#
+#			Description 	: this is First step to create form builder
+#			Created date	: 16/02/2011	#	
+#			Created By		:						#
+######################################################
+?> 
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_URL . 'js/jquery.qtip.js' ?>"></script>
+
+<script type="text/javascript">
+
+
+    jQuery(document).ready(function($){
+
+                $('select,input[title]').qtip({
+                   position: {
+                       my: 'left center',
+                       at: 'right center'
+                    },
+                    style: {
+                       classes: ''
+                    }
+                });
+});
+
+</script>
+<div class="row-1 wrapper">
+<?php   echo $this->render('forms_left_panel.phtml'); ?>
+ 		 
+            <article class="maxheight col-2" style="width: 630px;">
+                        
+            <form id="formID1" name="formID1" class="formular" method="post" action="<?php echo WEBSITE_URL?>forms/newbusinessrule/form_id/<?=$this->form_id?>">
+                <div class="maxheight box" style="height:407px;">
+                    <div class="forms-padding">
+                     <div style="float:left"><?php
+                  if(!empty($this->id)){ ?>
+                        <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Update Business Rule " style="width: 56px; height: 22px;margin-bottom: 25px;clear: both;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Update Business Rule </cufontext></cufon></h2>
+                    <?php } else { ?>
+                        <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Create Business Rule " style="width: 56px; height: 22px;margin-bottom: 25px;clear: both;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Create Business Rule </cufontext></cufon></h2>
+                    <?php }
+                    ?>        		
+                     </div>
+                        <div class="clear"></div> 
+                        <div id="formUserDetails">
+                            <fieldset>
+                                <label><span>Rule Name<strong>*</strong></span>
+                                    <input title="<?php echo BISNESRULE_RULE_NAME; ?>" name="rule_name" id="rule_name" class="validate[required,custom[rule_name]]" value="<?php echo (isset($this->rule_name))? htmlspecialchars(stripslashes($this->rule_name)) : '';?>" maxlength="50"/>
+                                </label>
+                                
+                                <label><span>Status<strong>*</strong></span>
+                                <select title="<?php echo BISNESRULE_STATUS; ?>" name="status" id="status" class="validate[required]" style="width:212px;">
+                                <option value="1" <?php if($this->status=='1') echo "selected='selected'"; else '';?>>Active</option> 
+                                <option value="0" <?php if($this->status=='0') echo "selected='selected'"; else '';?>>Inactive</option> 
+                                </select>
+                                </label>
+                                <label><span>Rule Condition<strong>*</strong></span>
+                                <select title="<?php echo BISNESRULE_CONDITION; ?>" name="rule_id" id="rule_id" style="width: 428px;" onchange="showhide_brule(this.value);">
+                                 
+                                <?php 
+                                foreach ($this->rule_data as $rule_data)
+                                {?>
+                                 <option value="<?=$rule_data['rule_id']?>" <?php if($rule_data['rule_id']==$this->rule_id) echo "selected='selected'"; else '';?>><?=$rule_data['rule_desc']?></option> 	
+                                <?php }
+                                ?>
+                                 </select>
+                                </label>
+                                
+                                <label id="timeb"><span>Time<strong>*</strong></span>
+                               <!--  <input name="prefered_time" id="prefered_time"  value="<?php echo (isset($this->prefered_time))? htmlspecialchars(stripslashes($this->prefered_time)) : '';?>" class="validate[required,custom[time]]"   maxlength="20" /> -->
+                               <select title="<?php echo BISNESRULE_TIME; ?>" name="prefered_time" id="prefered_time">      <?php
+		                  			foreach($this->timetable_datas as $key=>$val)
+		                  			{		                  							
+		                  			?>
+		                  			 <option value="<?=$val['id_seconds']?>" <?php if($this->prefered_time==$val['id_seconds']){echo "selected='selected'"; } else {echo '';}?>><?=$val['actualtime']?></option> 				                  	<?php
+               						}
+               						?>		
+                                </select>
+                                </label>
+                                
+                                <label id="fieldb"><span>Standard/Custom Fields</span>
+                                    <select title="<?php echo BISNESRULE_CUSTOM_FIELD; ?>" name="field_data" id="field_data">
+                                <option value="0">Select</option>
+                                <?php 													
+								foreach ($this->formstd_data as $data_key =>$data_val) { ?>
+                                <option value="<?php if($data_val['field_status']=='custom'){
+								echo $data_val['field_status'].$data_val['field_id'];}else{ 
+								echo $data_val['field_id']; } ?>" 
+								
+								<?php if($data_val['field_status']=='custom'){
+								 if($data_val['field_status'].$data_val['field_id']==$this->default_selected_sorting_column){ echo "selected";}
+								}else{ if($data_val['field_id']==$this->default_selected_sorting_column){ echo "selected";} } ?>>                               
+                                <?php echo stripslashes(ucfirst($data_val['label'])); ?></option>
+                                <? }?>
+                                </select>
+                                </label>
+                                
+                                   <label id="field_data_valueb"><span>Standard/Custom Value</span><input title="<?php echo BISNESRULE_CUSTOM_FIELD_VALUE; ?>" name="field_data_value" id="field_data_value"  value="<?php echo (isset($this->field_data_value))? htmlspecialchars(stripslashes($this->field_data_value)) : '';?>" maxlength="200" /></label>
+                                
+                                   <label id="connectionb"><span>Connection Number<strong>*</strong></span><input title="<?php echo BISNESRULE_CON_NUMBER; ?>" name="phone" id="phone"  value="<?php echo (isset($this->phone))? htmlspecialchars(stripslashes($this->phone)) : '';?>" class="validate[required,custom[phone]]" maxlength="20" /></label>
+                            
+                                
+<div class="buttonsNextPrev" style="padding-right:20px;">  
+   <input type="hidden"  name="form_id" id="form_id"   value="<?php echo (isset($this->form_id))? htmlspecialchars(stripslashes($this->form_id)) : '';?>" />  
+<input type="hidden"  name="rule_id_for_js" id="rule_id_for_js"   value="<?=$rule_data['rule_id']?>"/>  
+<input type="hidden"  name="select_rule_id" id="select_rule_id"   value="<?=$this->rule_id?>"/>  
+   <input type="hidden"  name="id" id="id"   value="<?php echo (isset($this->id))? htmlspecialchars(stripslashes($this->id)) : '';?>" />                                   
+   <input class="buttonsNext" type="button" value="Cancel"  onclick="window.location.href='<?php echo WEBSITE_URL?>forms/businessrule/form_id/<?=$this->form_id?>'" style="width:90px;"/>  
+   <?php
+  if(!empty($this->id)) { ?>
+    <input class="buttonsNext" type="submit" value="Update"  onclick="validate_form()" style="width:90px;"/> 
+    <?php } else { ?>
+  <input class="buttonsNext" type="submit" value="Save"  onclick="validate_form()" style="width:90px;"/> 
+  <?php    }    ?>  
+ </div>                          
+ </fieldset>
+ </div>                       
+ </div>
+                </div>
+                </form>
+            </article>
+</div> 
+<script type="text/javascript">
+ function validate_form(){             
+				jQuery("#formID1").validationEngine('attach', {promptPosition : "centerRight"});
+ }
+ 
+ function go_prev()
+ {
+	var myString = '<?=WEBSITE_URL?>'+'forms/opthrs/form_id/'+'<?=$this->form_id;?>';	window.location=myString;
+ }
+ 
+ function showhide_brule(rulevalue)
+ {
+ 	
+ 	if(rulevalue!=0){
+ 	
+ 	 if(rulevalue==5 || rulevalue==6 || rulevalue==7 || rulevalue==8 || rulevalue==9 || rulevalue==10 || rulevalue==11 || rulevalue==12){
+	 	jQuery("#fieldb").show();	 
+	 	}else{
+	 	jQuery("#fieldb").hide();	 
+	 }
+	 //alert(rulevalue);
+	 if(rulevalue==9 || rulevalue==10 || rulevalue==11 || rulevalue==12){
+	// 	alert('i am inside 9,10,11,12');
+	 	jQuery("#field_data_valueb").show();	 
+	 	}else{
+	 //		alert('i am not inside 9,10,11,12');
+	 	jQuery("#field_data_valueb").hide();	 
+	 }
+	 
+ 	/* if(rulevalue==9 || rulevalue==10 || rulevalue==11 || rulevalue==12){	
+	 	jQuery("#connectionb").removeClass('validate[required,custom[phone]]');
+	 	jQuery("#timeb").removeClass('validate[required,custom[time]]'); 	
+	 	jQuery(".prefered_timeformError").hide();
+		jQuery(".phoneformError").hide(); 	 	
+ 	}*/
+ 		
+ if(rulevalue==2 || rulevalue==4 || rulevalue==6 || rulevalue==8 || rulevalue==10 || rulevalue==12){
+ 	jQuery("#phone").val('');
+ 		
+ 	if(rulevalue==2 || rulevalue==4 || rulevalue==6){
+	 	jQuery("#prefered_time").val('');
+	 	jQuery("#timeb").show();
+	 	jQuery("#timeb").removeClass('validate[required,custom[time]]'); 	
+	 	jQuery(".prefered_timeformError").hide();
+ 	}else{
+ 	 	jQuery("#prefered_time").val('');
+	 	jQuery("#timeb").hide();
+	 	jQuery("#timeb").removeClass('validate[required,custom[time]]'); 	
+	 	jQuery(".prefered_timeformError").hide();
+ 	}
+ 	
+ 	jQuery("#connectionb").hide(); 	
+ 	jQuery("#connectionb").removeClass('validate[required,custom[phone]]'); 	
+	jQuery(".phoneformError").hide(); 	
+ 	
+ 	}else{
+ 	jQuery("#connectionb").show();
+ 	jQuery("#timeb").show();
+ 	jQuery(".prefered_timeformError").html('');
+	jQuery(".phoneformError").html(''); 	
+ 	}
+ 	}
+ 	if(rulevalue==5 || rulevalue==6 || rulevalue==7 || rulevalue==8 || rulevalue==9 || rulevalue==10 || rulevalue==11 || rulevalue==12){
+	 	jQuery("#timeb").hide();	 
+	 	}else{
+	 	jQuery("#timeb").show();	 
+	 	}
+ }
+ 
+ $(document).ready(function() {
+  var rulevalue=jQuery("#select_rule_id").val();   	
+  
+  if(rulevalue==5 || rulevalue==6 || rulevalue==7 || rulevalue==8 || rulevalue==9 || rulevalue==10 || rulevalue==11 || rulevalue==12){
+	 	jQuery("#fieldb").show();	 
+	 	}else{
+	 	jQuery("#fieldb").hide();	 
+	 	}
+	 	
+	 if(rulevalue==9 || rulevalue==10 || rulevalue==11 || rulevalue==12){
+	 	jQuery("#field_data_valueb").show();	 
+	 	}else{
+	 	jQuery("#field_data_valueb").hide();	 
+	 }
+	  	
+  
+	if(rulevalue==2 || rulevalue==4 || rulevalue==6 || rulevalue==8 || rulevalue==10 || rulevalue==12){
+	 	jQuery("#connectionb").hide();	 	
+	 	jQuery("#connectionb").removeClass('validate[required,custom[phone]]');	 
+		jQuery(".phoneformError").hide(); 	
+			if(rulevalue==2 || rulevalue==4 || rulevalue==6){
+			 	jQuery("#prefered_time").val('');
+			 	jQuery("#timeb").show();
+			 	jQuery("#timeb").removeClass('validate[required,custom[time]]'); 	
+			 	jQuery(".prefered_timeformError").hide();
+	 		}
+	 	}
+	 	
+	 	if(rulevalue==5 || rulevalue==6 || rulevalue==7 || rulevalue==8 || rulevalue==9 || rulevalue==10 || rulevalue==11 || rulevalue==12){
+	 	jQuery("#timeb").hide();	 
+	 	}else{
+	 	jQuery("#timeb").show();	 
+	 	}
+	 	
+ }); 
+</script>

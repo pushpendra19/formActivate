@@ -1,0 +1,44 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: header.thtml	#
+#			Description 	: this is header to work in the front end site #
+#			Created date	: 19/01/2011	#	
+#			Created By		: Manoj Kumar Chauhan	#
+######################################################
+?>
+
+<div id="header_area" class="full_width">
+    <div class="page">
+        <div id="header">
+            <p id="logo"><a href="<?php echo WEBSITE_URL?>">Web Form to Phone Call Processing</a></p>
+            <h1 id="tagline">From lead to phone call in under 20 seconds</h1>
+        </div>
+        <div class="menu-menu-container"><ul id="menu-menu" class="menu">
+                <li id="menu-item-102" class="<?php if($this->actionName == 'how-it-works') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-102"><a href="<?php echo PUBLIC_SITE_URL ?>how-it-works">How it Works</a></li>
+                <li id="menu-item-111" class="<?php if($this->actionName == 'demo') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-111"><a href="<?php echo PUBLIC_SITE_URL ?>demo">Demo</a></li>
+                <li id="menu-item-113" class="<?php if($this->actionName == 'pricing') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-113"><a href="<?php echo PUBLIC_SITE_URL ?>pricing">Pricing</a></li>
+                <li id="menu-item-112" class="<?php if($this->actionName == 'support') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-112"><a href="<?php echo PUBLIC_SITE_URL ?>support">Support</a></li>
+                <li id="menu-item-103" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-103"><a href="<?php echo PUBLIC_SITE_URL ?>blog">Blog</a></li>
+                <li id="menu-item-45" class="<?php if($this->actionName == 'contacts') echo 'current '; ?>menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="<?php echo PUBLIC_SITE_URL ?>contact">Contact</a></li>
+            </ul></div>
+
+        <div id="header-right-box">
+	CALL 888-FORM-514
+        <a href="<?php echo WEBSITE_URL . 'customers/login' ?>" id="signin-bt" class="bt">Sign in</a>
+
+        <a href="<?php echo WEBSITE_URL . 'customers/signup' ?>" id="signin-bt" class="bt">Sign up</a>
+
+        </div>
+
+    </div>
+</div>
+
+<?php if($this->actionName == 'pricing'): ?>
+
+<div id="pricing-table-head"><div class="page">
+<h1 style="color:#000;"><cufon class="cufon cufon-canvas" alt="Free " style="width: 80px; height: 40px;"><canvas width="112" height="39" style="width: 112px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>Free </cufontext></cufon><cufon class="cufon cufon-canvas" alt="7-day " style="width: 102px; height: 40px;"><canvas width="135" height="39" style="width: 135px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>7-day </cufontext></cufon><cufon class="cufon cufon-canvas" alt="trial. " style="width: 83px; height: 40px;"><canvas width="115" height="39" style="width: 115px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>trial. </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Priced " style="width: 112px; height: 40px;"><canvas width="144" height="39" style="width: 144px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>Priced </cufontext></cufon><cufon class="cufon cufon-canvas" alt="to " style="width: 42px; height: 40px;"><canvas width="74" height="39" style="width: 74px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>to </cufontext></cufon><cufon class="cufon cufon-canvas" alt="grow " style="width: 92px; height: 40px;"><canvas width="124" height="39" style="width: 124px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>grow </cufontext></cufon><cufon class="cufon cufon-canvas" alt="with " style="width: 81px; height: 40px;"><canvas width="113" height="39" style="width: 113px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>with </cufontext></cufon><cufon class="cufon cufon-canvas" alt="your " style="width: 81px; height: 40px;"><canvas width="114" height="39" style="width: 114px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>your </cufontext></cufon><cufon class="cufon cufon-canvas" alt="business." style="width: 153px; height: 40px;"><canvas width="186" height="39" style="width: 186px; height: 39px; top: 0px; left: -1px;"></canvas><cufontext>business.</cufontext></cufon></h1>
+<p>Get set up within a few minutes&mdash;No programming skills needed</p>
+</div></div>
+
+<?php endif; ?>

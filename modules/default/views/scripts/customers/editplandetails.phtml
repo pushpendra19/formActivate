@@ -1,0 +1,101 @@
+<link href="<?php echo WEBSITE_CSS_URL.'validationEngine.jquery.css'?>" media="screen" rel="stylesheet" type="text/css" >	
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery-1.4.2.min.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine-en.js'?>"></script>
+<script type="text/javascript" src="<?php echo WEBSITE_EXTERNALJS_URL.'jquery.validationEngine.js'?>"></script>
+<form id="formID11" class="formular" method="post" action="<?php echo WEBSITE_URL?>customers/editplandetails/id/<?php echo $this->id?>">
+ 	<div class="row-1 wrapper">
+            <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-1" style="width:307px;" <? }else{?> class="maxheight col-1" style="width:220px;"<? }?> >
+                    <div class="maxheight box">
+                        <div class="padding">            		
+                           <?php echo $this->render('logged_in_left_panel.phtml'); ?>
+                        </div>
+                    </div>
+            </article>      
+           <article <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?>  class="maxheight col-2" style="width:548px;" <? }else{?> class="maxheight col-4" style="width:630px;"<? }?> >
+                <div class="maxheight box">
+                    <div class="padding">
+                        <h2 class="entry-title"><cufon class="cufon cufon-canvas" alt="Plan Details " style="width: 56px; height: 22px;"><canvas width="74" height="22" style="width: 74px; height: 22px; top: 0px; left: -1px;"></canvas><cufontext>Plan Details </cufontext></cufon></h2>
+                        <?php
+                             foreach ($this->subscriptions as $subscription){
+                             	if($this->plan_id==$subscription['id']){
+                             			$orig_price=$subscription['price'];
+                             	
+                             	?>
+                        <span style="color:black">You are currently subscribed to the <?=$subscription['name']?>($<?php echo $subscription['price'];?>) plan. Feel free to upgrade or downgrade your plan at any time.<br/><br/></span>  
+                         <?  }
+                            } 
+                            $session = new Zend_Session_Namespace('Zend_Auth');
+                            if(!empty ($session->trialMsg))
+                                echo '<span style="color:red">'.$session->trialMsg .'</span>';  $session->trialMsg = null;
+                            ?>
+                        <div id="formPlanDetails">
+                            <fieldset>
+                             <?php                                                       
+                             foreach ($this->subscriptions as $subscription){ if($this->plan_id == 5 && $subscription['id'] == 1) continue; ?>
+                            <p> <input type="radio" name="plan_id" id="plan_id" value="<?php echo $subscription['id'];?>" <?php if($this->plan_id==$subscription['id']){?> checked <?php }?> class="validate[required]" accept="ftp://" onclick="getradiovalue(this.value)"/> <?php echo $subscription['name'];?>: ($<?php echo $subscription['price'];?>)</p>
+                            <?  } ?>                            
+<!--                                <p>The $39.95 and Unlimited plans allow full customization of multiple forms, including the ability to create routing based on location, time and contom form fields.</p>-->
+                                
+                                  <div class="buttonsNextPrev">
+                                  <?php if($this->admin_left_tab == 'admin_left_tab_for_customer'){ ?> 
+                                  <input class="buttonsNext" style="width:90px;" type="button" value="Cancel"  onclick="window.location.href='<?php echo WEBSITE_URL?>customers/edit/id/<?php echo $this->id?>'"/>
+                                  <? }else{?> <input class="buttonsNext" style="width:90px;" type="button" value="Cancel"  onclick="window.location.href='<?php echo WEBSITE_URL?>customers/myaccount/id/<?php echo $this->id?>'"/>  <? }?>
+                                 <?php /*if($this->plan_status!=2){*/?>                                
+                                <input class="buttonsNext" style="width:90px;" type="button" value="Update"  onclick="return validate_signup()"/>
+                                <?//}?>
+                               <input type="hidden"  name="id" id="id"   value="<?php echo (isset($this->id))? htmlspecialchars(stripslashes($this->id)) : '';?>"/>                                
+                               <input type="hidden"  name="org_plan_id" id="org_plan_id" value="<?php echo (isset($this->plan_id))? htmlspecialchars(stripslashes($this->plan_id)) : '';?>"/> 
+                                <input type="hidden"  name="org_price" id="org_price" value="<?php echo $orig_price;?>" /> 
+                                <input type="hidden"  name="org_plan_end_date" id="org_plan_end_date" value="<?php echo (isset($this->plan_end_date))? htmlspecialchars(stripslashes($this->plan_end_date)) : '';?>" /> 
+                               
+                               <input type="hidden" name="current_radiovalue" id="current_radiovalue"/>                               
+                                </div>                               
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </article>      
+			  </div>                         
+<div id="div_prorate"></div>     
+ </form>      
+
+ <div id="formUserDetailsdfsadfsdiverror" class="hr1b1" style="display:none;position: absolute; left: 37%;top:258px;">
+            <img onclick="hideme('formUserDetailsdiverror')" src="<?=WEBSITE_URL?>images/Close.png" style="float:right;">
+                  <span class="popupmsg" style="width:275px;">Please select your different plan for updating the plan.<br><br></span><input class="buttonsNextSignin" type="button" value="Cancel"  onclick="hideme('formUserDetailsdiverror')"/>
+                   </div>  
+ 
+ 
+ 
+<script type="text/javascript">
+ function validate_signup(){  
+
+ 		var plan_id=jQuery('#plan_id').val();	
+		var org_plan_id=jQuery('#org_plan_id').val();
+		var current_radiovalue=jQuery('#current_radiovalue').val();
+		
+		var id=jQuery('#id').val();		
+		/*alert(plan_id)
+		alert(org_plan_id)*/
+		if((current_radiovalue!=org_plan_id) && (current_radiovalue!='')){
+		var id=jQuery('#id').val();
+		jQuery.post("<?php echo WEBSITE_URL?>customers/calculatproratedprice",{plan_id: current_radiovalue, id: id,org_plan_id: org_plan_id},function(response){				
+				if(response!=''){				
+				jQuery('#div_prorate').show();	
+				 jQuery('#div_prorate').html('');								
+				jQuery('#div_prorate').html(response);				
+				}else{
+				jQuery('#div_prorate').hide();				
+				}				
+		});	}else{
+			jQuery('#formUserDetailsdiverror').show();	
+		}		
+ }
+ 
+ function hideme(div_prorate){ 
+ jQuery('#'+div_prorate).hide();	
+ }
+ function getradiovalue(radvalue){
+ jQuery('#current_radiovalue').val(radvalue);	 
+ }
+ 
+</script>

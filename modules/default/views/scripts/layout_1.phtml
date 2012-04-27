@@ -1,0 +1,46 @@
+<?php
+######################################################
+#			Organisation    : Synapse communications pvt. ltd.
+#			File 			: layout.thtml	#
+#			Description 	: this is layout to work in the front end site #
+#			Created date	: 19/01/2011	#	
+#			Created By		: Manoj Kumar Chauhan	#
+######################################################
+?> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo WEBSITE_NAME;?></title>
+    <meta charset="utf-8">
+    <?php echo $this->headLink()->appendStylesheet(WEBSITE_CSS_URL.'reset.css');?>
+	<?php echo $this->headLink()->appendStylesheet(WEBSITE_CSS_URL.'style.css');?>
+	<?php echo $this->headLink()->appendStylesheet(WEBSITE_CSS_URL.'layout.css"');?>
+    <?php echo $this->headScript()->prependFile(__JS_DIRECTORY__.'maxheight.js',$type='text/javascript'); ?>      
+	<?php echo $this->headScript()->prependFile(__JS_DIRECTORY__.'jquery-1.4.2.min.js',$type='text/javascript'); ?>      
+	<!--[if lt IE 7]>
+    <link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="screen">
+    <script type="text/javascript" src="js/ie_png.js"></script>
+    <script type="text/javascript">
+        ie_png.fix('.png, .pagination, .pagination li a');
+    </script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+   		<script type="text/javascript" src="js/html5.js"></script>
+	<![endif]-->
+</head>
+<body id="page6" onLoad="new ElementMaxHeight();">
+<div class="bg">
+<div class="main">
+<!--page start here-->
+		<?php echo $this->render('header.phtml'); ?>
+		<section id="content" style="padding:0px;">
+		<?php echo $this->layout()->content ?>
+		</section>
+		<?php echo $this->render('footer.phtml'); ?>
+		
+   
+<!--page end here-->
+</div>
+</div>
+</body>
+</html>
