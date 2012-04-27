@@ -1,0 +1,3 @@
+.extra-box {zoom:1;}
+#faded .pagination li a {background:url(../../images/bull.gif) 0 0 no-repeat;}
+#faded .pagination li a:hover, #faded .pagination li.current a {background:url(../../images/bull-h.gif) 0 0 no-repeat;} 
